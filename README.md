@@ -1,7 +1,5 @@
-LP4J - A Launchpad API for Java
+LP4K - A Launchpad API for Java
 ====
-
-[![Build Status](https://travis-ci.org/OlivierCroisier/LP4J.svg)](https://travis-ci.org/OlivierCroisier/LP4J)
 
 Launchpad is a midi device built by Novation, used to drive computer-assisted music creation applications such as Ableton Live.
 
@@ -10,18 +8,18 @@ This makes the Launchpad an interesting general-purpose I/O device, where a user
 
 ![Launchpad](launchpad.jpg)
 
-LP4J is a lightweight Java API allowing any Java application to interact with a Launchpad S (second generation).
+LP4K is a lightweight Java API (initially based on sources of LP4J project on https://github.com/OlivierCroisier/LP4J) allowing any Java application to interact with a Launchpad Mini MK3.
 It also provides a embedded, web-based emulator to allow developers to design and test applications should they not have access to a physical device.
 
 The API is split in 3 submodules :
-- lp4j-api : an abstract, high-level API defining how to interact with a Launchpad (LaunchpadClient / LaunchpadListener)
-- lp4j-midi : a MIDI implementation of the API, suitable to interact with a physical device.
-- lp4j-emulator : a web-based emulator, using SVG and websockets.
+- lp4k-api : an abstract, high-level API defining how to interact with a Launchpad (LaunchpadClient / LaunchpadListener)
+- lp4k-midi : a MIDI implementation of the API, suitable to interact with a physical device.
+- lp4k-emulator : a web-based emulator, using SVG and websockets.
 
-How to use LP4J
+How to use LP4K
 ====
 
-From a developper's perspective, all interaction with LP4J are done through the high-level API.
+From a developper's perspective, all interaction with LP4K are done through the high-level API.
 
 First, you need to get a reference to a Launchpad :
 
