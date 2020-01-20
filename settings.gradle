@@ -1,0 +1,5 @@
+rootProject.name = 'lp4k'
+
+include 'lp4j-api'
+include 'lp4j-midi'
+include 'lp4j-emu-web'
