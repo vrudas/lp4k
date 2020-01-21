@@ -15,6 +15,10 @@
  *
  */
 
+plugins {
+    id "org.sonarqube" version "2.8"
+}
+
 wrapper {
     gradleVersion = "6.1"
     distributionType = Wrapper.DistributionType.ALL
@@ -25,5 +29,14 @@ allprojects {
 
     repositories {
         jcenter()
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "vrudas_lp4k"
+        property "sonar.organization", "vrudas"
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.login", "c17fb2ef79ea9f5fa1c286f24142d41fe9dc96a6"
     }
 }
