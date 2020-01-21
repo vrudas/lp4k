@@ -18,4 +18,6 @@ jobs:
           java-version: 11
 
       - name: Run SonarQube Analysis
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
         run: ./gradlew sonarqube
