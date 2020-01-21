@@ -16,14 +16,6 @@
 
 package net.thecodersbreakfast.lp4j.midi;
 
-import org.junit.Test;
-
-import static org.junit.Assert.assertTrue;
-
 public class MidiLaunchpadTest {
 
-    @Test
-    public void name() {
-        assertTrue(false);
-    }
 }
