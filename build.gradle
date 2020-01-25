@@ -29,7 +29,6 @@ sonarqube {
         property "sonar.projectKey", "vrudas_lp4k"
         property "sonar.organization", "vrudas"
         property "sonar.host.url", "https://sonarcloud.io"
-        property "sonar.login", "c17fb2ef79ea9f5fa1c286f24142d41fe9dc96a6"
     }
 }
 
@@ -39,8 +38,4 @@ allprojects {
     repositories {
         jcenter()
     }
-}
-
-subprojects {
-    apply plugin: "org.sonarqube"
 }
