@@ -15,17 +15,7 @@
  *
  */
 
-plugins {
-    id "java"
-}
-
 dependencies {
     testImplementation("junit:junit:4.11")
     testImplementation("org.mockito:mockito-core:1.9.5")
-}
-
-jacocoTestReport {
-    reports {
-        xml.enabled true
-    }
 }

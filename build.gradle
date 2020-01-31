@@ -16,8 +16,6 @@
  */
 
 plugins {
-    id "java"
-    id "jacoco"
     id "org.sonarqube" version "2.8"
 }
 
@@ -26,7 +24,7 @@ wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
 
-def allJacocoTestReportFile = project.file("$buildDir/jacoco/allJacocoTestReport/allJacocoTestReport.xml")
+def allJacocoTestReportFile = rootProject.file("$buildDir/reports/jacoco/allJacocoTestReport.xml")
 
 sonarqube {
     properties {
@@ -44,23 +42,28 @@ allprojects {
         jcenter()
     }
 
-    apply plugin: 'jacoco'
     apply plugin: 'java'
+    apply plugin: 'jacoco'
 
     jacoco {
         toolVersion = "0.8.5"
     }
-}
 
-jacocoTestReport {
-    reports {
-        xml.enabled true
+    tasks.jacocoTestReport {
+        dependsOn(tasks.test)
+
+        reports {
+            xml.enabled true
+        }
     }
 }
 
-tasks.create(name: "allJacocoTestReport", type: JacocoReport.class) {
+tasks.create(name: "allJacocoTestReport", type: JacocoReport.class, group: "verification") {
+    dependsOn(allprojects.tasks.test)
+
     reports {
         xml.enabled true
+        xml.setDestination(rootProject.file("$buildDir/reports/jacoco/allJacocoTestReport.xml"))
     }
 
     executionData(
@@ -69,11 +72,10 @@ tasks.create(name: "allJacocoTestReport", type: JacocoReport.class) {
 
     sourceSets(
             rootProject.subprojects
-                    .collect { project -> project.getConvention() }
-                    .collect { convention -> convention.findPlugin(JavaPluginConvention.class) }
-                    .findAll { javaPlugin -> javaPlugin != null }
-                    .collect { javaPlugin -> javaPlugin.getSourceSets().getByName("main") }
-                    .findAll { mainSourceSet -> mainSourceSet != null }
+                    .convention.collect { it.findPlugin(JavaPluginConvention.class) }
+                    .findAll { it != null }
+                    .collect { it.sourceSets.main }
+                    .findAll { it != null }
                     as SourceSet[]
     )
 }
