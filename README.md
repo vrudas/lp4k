@@ -1,5 +1,6 @@
 LP4K - A Launchpad API for Java
 ====
+![](https://github.com/vrudas/lp4k/workflows/build/badge.svg)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=vrudas_lp4k&metric=alert_status)](https://sonarcloud.io/dashboard?id=vrudas_lp4k)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=vrudas_lp4k&metric=ncloc)](https://sonarcloud.io/dashboard?id=vrudas_lp4k)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=vrudas_lp4k&metric=coverage)](https://sonarcloud.io/dashboard?id=vrudas_lp4k)
