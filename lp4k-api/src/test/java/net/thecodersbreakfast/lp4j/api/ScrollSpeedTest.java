@@ -1,4 +1,5 @@
 /*
+ * Copyright 2020 Vasya Rudas
  * Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,10 +17,9 @@
 
 package net.thecodersbreakfast.lp4j.api;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ScrollSpeedTest {
 
@@ -30,14 +30,14 @@ public class ScrollSpeedTest {
         assertEquals(ScrollSpeed.MIN_VALUE, scrollSpeed.getScrollSpeed());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void valueOf_tooLow() {
-        ScrollSpeed.of(ScrollSpeed.MIN_VALUE - 1);
+        assertThrows(IllegalArgumentException.class, () -> ScrollSpeed.of(ScrollSpeed.MIN_VALUE - 1));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void valueOf_tooHigh() {
-        ScrollSpeed.of(ScrollSpeed.MAX_VALUE + 1);
+        assertThrows(IllegalArgumentException.class, () -> ScrollSpeed.of(ScrollSpeed.MAX_VALUE + 1));
     }
 
 

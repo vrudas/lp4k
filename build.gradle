@@ -26,6 +26,11 @@ wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
 
+ext {
+    junitVersion = "5.6.0"
+    mockitoVersion = "3.2.4"
+}
+
 sonarqube {
     properties {
         property "sonar.projectKey", "vrudas_lp4k"
@@ -43,4 +48,8 @@ allprojects {
     }
 
     apply plugin: 'java'
+
+    tasks.test {
+        useJUnitPlatform()
+    }
 }

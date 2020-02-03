@@ -1,4 +1,5 @@
 /*
+ * Copyright 2020 Vasya Rudas
  * Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +17,7 @@
 
 package net.thecodersbreakfast.lp4j.api;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class LaunchpadExceptionTest {
 

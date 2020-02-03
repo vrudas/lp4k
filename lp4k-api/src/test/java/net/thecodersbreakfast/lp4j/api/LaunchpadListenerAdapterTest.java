@@ -1,4 +1,5 @@
 /*
+ * Copyright 2020 Vasya Rudas
  * Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,42 +17,41 @@
 
 package net.thecodersbreakfast.lp4j.api;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class LaunchpadListenerAdapterTest {
 
     private LaunchpadListenerAdapter adapter;
 
-    @Before
+    @BeforeEach
     public void init() {
         adapter = new LaunchpadListenerAdapter() {
         };
     }
 
     @Test
-    public void testOnPadPressed() throws Exception {
+    public void testOnPadPressed() {
         adapter.onPadPressed(Pad.at(0, 0), -1L);
     }
 
     @Test
-    public void testOnPadReleased() throws Exception {
+    public void testOnPadReleased() {
         adapter.onPadReleased(Pad.at(0, 0), -1L);
     }
 
     @Test
-    public void testOnButtonPressed() throws Exception {
+    public void testOnButtonPressed() {
         adapter.onButtonPressed(Button.UP, -1L);
     }
 
     @Test
-    public void testOnButtonReleased() throws Exception {
+    public void testOnButtonReleased() {
         adapter.onButtonReleased(Button.UP, -1L);
-
     }
 
     @Test
-    public void testOnTextScrolled() throws Exception {
+    public void testOnTextScrolled() {
         adapter.onTextScrolled(-1L);
     }
 }

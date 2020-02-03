@@ -1,4 +1,5 @@
 /*
+ * Copyright 2020 Vasya Rudas
  * Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,21 +18,22 @@
 package net.thecodersbreakfast.lp4j.api;
 
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BufferTest {
 
     @Test
     public void other_0() {
         Buffer other = Buffer.BUFFER_0.other();
-        Assert.assertEquals(Buffer.BUFFER_1, other);
+        assertEquals(Buffer.BUFFER_1, other);
     }
 
     @Test
     public void other_1() {
         Buffer other = Buffer.BUFFER_1.other();
-        Assert.assertEquals(Buffer.BUFFER_0, other);
+        assertEquals(Buffer.BUFFER_0, other);
     }
 
 }

@@ -1,4 +1,5 @@
 /*
+ * Copyright 2020 Vasya Rudas
  * Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,9 +17,10 @@
 
 package net.thecodersbreakfast.lp4j.api;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ColorTest {
 
@@ -34,24 +36,36 @@ public class ColorTest {
         assertEquals(Color.MAX_INTENSITY, colorMax.getGreen());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void valueOf_redTooLow() {
-        Color.of(Color.MIN_INTENSITY - 1, Color.MIN_INTENSITY);
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> Color.of(Color.MIN_INTENSITY - 1, Color.MIN_INTENSITY)
+        );
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void valueOf_redTooHigh() {
-        Color.of(Color.MAX_INTENSITY + 1, Color.MIN_INTENSITY);
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> Color.of(Color.MAX_INTENSITY + 1, Color.MIN_INTENSITY)
+        );
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void valueOf_greenTooLow() {
-        Color.of(Color.MIN_INTENSITY, Color.MIN_INTENSITY - 1);
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> Color.of(Color.MIN_INTENSITY, Color.MIN_INTENSITY - 1)
+        );
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void valueOf_greenTooHigh() {
-        Color.of(Color.MIN_INTENSITY, Color.MAX_INTENSITY + 1);
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> Color.of(Color.MIN_INTENSITY, Color.MAX_INTENSITY + 1)
+        );
     }
 
 }

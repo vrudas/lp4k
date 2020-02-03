@@ -1,4 +1,5 @@
 /*
+ * Copyright 2020 Vasya Rudas
  * Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,10 +17,9 @@
 
 package net.thecodersbreakfast.lp4j.api;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ButtonTest {
 
@@ -27,24 +27,24 @@ public class ButtonTest {
     public void at_topButton() {
         Button button = Button.atTop(0);
         assertEquals(Button.UP, button);
-        Assert.assertTrue(button.isTopButton());
+        assertTrue(button.isTopButton());
     }
 
     @Test
     public void at_rightButton() {
         Button button = Button.atRight(0);
         assertEquals(Button.VOL, button);
-        Assert.assertTrue(button.isRightButton());
+        assertTrue(button.isRightButton());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void at_coordinateTooLow() {
-        Button button = Button.atTop(Button.MIN_COORD - 1);
+        assertThrows(IllegalArgumentException.class, () -> Button.atTop(Button.MIN_COORD - 1));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void at_coordinateTooHigh() {
-        Button button = Button.atTop(Button.MAX_COORD + 1);
+        assertThrows(IllegalArgumentException.class, () -> Button.atTop(Button.MAX_COORD + 1));
     }
 
     @Test

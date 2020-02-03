@@ -1,4 +1,5 @@
 /*
+ * Copyright 2020 Vasya Rudas
  * Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,10 +17,9 @@
 
 package net.thecodersbreakfast.lp4j.api;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class PadTest {
@@ -32,24 +32,24 @@ public class PadTest {
         assertEquals(Pad.Y_MIN, pad.getY());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void at_xTooLow() {
-        Pad pad = Pad.at(Pad.X_MIN - 1, Pad.Y_MIN);
+        assertThrows(IllegalArgumentException.class, () -> Pad.at(Pad.X_MIN - 1, Pad.Y_MIN));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void at_xTooHigh() {
-        Pad pad = Pad.at(Pad.X_MAX + 1, Pad.Y_MIN);
+        assertThrows(IllegalArgumentException.class, () -> Pad.at(Pad.X_MAX + 1, Pad.Y_MIN));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void at_yTooLow() {
-        Pad pad = Pad.at(Pad.X_MIN, Pad.Y_MIN - 1);
+        assertThrows(IllegalArgumentException.class, () -> Pad.at(Pad.X_MIN, Pad.Y_MIN - 1));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void at_yTooHigh() {
-        Pad pad = Pad.at(Pad.X_MIN, Pad.Y_MAX + 1);
+        assertThrows(IllegalArgumentException.class, () -> Pad.at(Pad.X_MIN, Pad.Y_MAX + 1));
     }
 
     @Test
