@@ -31,14 +31,48 @@ public class BrightnessTest {
     }
 
     @Test
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void valueOf_tooLow() {
         assertThrows(IllegalArgumentException.class, () -> Brightness.of(Brightness.MIN_VALUE - 1));
     }
 
     @Test
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void valueOf_tooHigh() {
         assertThrows(IllegalArgumentException.class, () -> Brightness.of(Brightness.MAX_VALUE + 1));
     }
 
+    @Test
+    void call_of_more_method_returns_max_brightness() {
+        var almostMaxBrightness = Brightness.of(Brightness.MAX_VALUE - 1);
 
+        assertEquals(Brightness.BRIGHTNESS_MAX, almostMaxBrightness.more());
+    }
+
+    @Test
+    void call_of_less_method_returns_min_brightness() {
+        var almostMaxBrightness = Brightness.of(Brightness.MIN_VALUE + 1);
+
+        assertEquals(Brightness.BRIGHTNESS_MIN, almostMaxBrightness.less());
+    }
+
+    @Test
+    @SuppressWarnings("java:S3415")
+    void not_equal() {
+        assertNotEquals(Brightness.BRIGHTNESS_MAX, Brightness.BRIGHTNESS_MIN);
+    }
+
+    @Test
+    @SuppressWarnings("java:S3415")
+    void not_equal_for_different_type() {
+        assertNotEquals(Brightness.BRIGHTNESS_MAX, Brightness.MAX_VALUE);
+    }
+
+    @Test
+    void hashcode_are_equal() {
+        assertEquals(
+            Brightness.BRIGHTNESS_MIN.hashCode(),
+            Brightness.of(Brightness.MIN_VALUE).hashCode()
+        );
+    }
 }
