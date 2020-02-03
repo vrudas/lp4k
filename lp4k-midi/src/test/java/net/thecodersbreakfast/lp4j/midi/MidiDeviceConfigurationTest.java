@@ -18,16 +18,17 @@
 
 package net.thecodersbreakfast.lp4j.midi;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.sound.midi.MidiDevice;
 
-@RunWith(MockitoJUnitRunner.class)
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@ExtendWith(MockitoExtension.class)
 public class MidiDeviceConfigurationTest {
 
     @Mock
@@ -38,7 +39,7 @@ public class MidiDeviceConfigurationTest {
 
     private MidiDeviceConfiguration configuration;
 
-    @Before
+    @BeforeEach
     public void init() {
         configuration = new MidiDeviceConfiguration(inputDevice, outputDevice);
     }
@@ -46,12 +47,12 @@ public class MidiDeviceConfigurationTest {
     @Test
     public void testGetInputDevice() throws Exception {
         MidiDevice device = configuration.getInputDevice();
-        Assert.assertEquals(inputDevice, device);
+        assertEquals(inputDevice, device);
     }
 
     @Test
     public void testGetOutputDevice() throws Exception {
         MidiDevice device = configuration.getOutputDevice();
-        Assert.assertEquals(outputDevice, device);
+        assertEquals(outputDevice, device);
     }
 }

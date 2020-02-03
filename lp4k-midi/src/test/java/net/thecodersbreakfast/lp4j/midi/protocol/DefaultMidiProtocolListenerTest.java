@@ -21,9 +21,11 @@ package net.thecodersbreakfast.lp4j.midi.protocol;
 import net.thecodersbreakfast.lp4j.api.Button;
 import net.thecodersbreakfast.lp4j.api.LaunchpadListener;
 import net.thecodersbreakfast.lp4j.api.Pad;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DefaultMidiProtocolListenerTest {
 
@@ -38,7 +40,7 @@ public class DefaultMidiProtocolListenerTest {
     private MidiProtocolListener midiProtocolListener;
     private LaunchpadListener listener;
 
-    @Before
+    @BeforeEach
     public void init() {
         this.listener = Mockito.mock(LaunchpadListener.class);
         this.midiProtocolListener = new DefaultMidiProtocolListener(listener);
@@ -50,10 +52,15 @@ public class DefaultMidiProtocolListenerTest {
         Mockito.verify(listener).onButtonPressed(Button.UP, TIMESTAMP);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void onButtonOn_unknown() {
-        midiProtocolListener.onButtonOn(BUTTON_UNKNOWN, TIMESTAMP);
-        Mockito.verify(listener).onButtonPressed(Button.UP, TIMESTAMP);
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> {
+                midiProtocolListener.onButtonOn(BUTTON_UNKNOWN, TIMESTAMP);
+                Mockito.verify(listener).onButtonPressed(Button.UP, TIMESTAMP);
+            }
+        );
     }
 
     @Test
@@ -62,10 +69,15 @@ public class DefaultMidiProtocolListenerTest {
         Mockito.verify(listener).onButtonReleased(Button.UP, TIMESTAMP);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void onButtonOff_unknown() {
-        midiProtocolListener.onButtonOff(BUTTON_UNKNOWN, TIMESTAMP);
-        Mockito.verify(listener).onButtonReleased(Button.UP, TIMESTAMP);
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> {
+                midiProtocolListener.onButtonOff(BUTTON_UNKNOWN, TIMESTAMP);
+                Mockito.verify(listener).onButtonReleased(Button.UP, TIMESTAMP);
+            }
+        );
     }
 
     @Test
@@ -92,16 +104,27 @@ public class DefaultMidiProtocolListenerTest {
         Mockito.verify(listener).onPadReleased(Pad.at(0, 0), TIMESTAMP);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void onNoteOn_unknown() {
-        midiProtocolListener.onNoteOn(NOTE_UNKNOWN, TIMESTAMP);
-        Mockito.verify(listener).onPadPressed(Pad.at(0, 0), TIMESTAMP);
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> {
+                midiProtocolListener.onNoteOn(NOTE_UNKNOWN, TIMESTAMP);
+                Mockito.verify(listener).onPadPressed(Pad.at(0, 0), TIMESTAMP);
+            }
+        );
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void onNoteOff_unknown() {
-        midiProtocolListener.onNoteOff(NOTE_UNKNOWN, TIMESTAMP);
-        Mockito.verify(listener).onPadReleased(Pad.at(0, 0), TIMESTAMP);
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> {
+                midiProtocolListener.onNoteOff(NOTE_UNKNOWN, TIMESTAMP);
+                Mockito.verify(listener).onPadReleased(Pad.at(0, 0), TIMESTAMP);
+            }
+        );
+
     }
 
     @Test

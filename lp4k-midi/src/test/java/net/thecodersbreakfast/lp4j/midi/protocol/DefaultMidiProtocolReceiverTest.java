@@ -19,11 +19,13 @@
 package net.thecodersbreakfast.lp4j.midi.protocol;
 
 import net.thecodersbreakfast.lp4j.api.LaunchpadException;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import javax.sound.midi.*;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DefaultMidiProtocolReceiverTest {
 
@@ -35,29 +37,29 @@ public class DefaultMidiProtocolReceiverTest {
     private Receiver receiver;
     private MidiProtocolListener listener;
 
-    @Before
+    @BeforeEach
     public void init() {
         listener = Mockito.mock(MidiProtocolListener.class);
         receiver = new DefaultMidiProtocolReceiver(listener);
     }
 
-    @Test(expected = LaunchpadException.class)
+    @Test
     public void send_sysexMessage() {
         MidiMessage message = new SysexMessage();
-        receiver.send(message, TIMESTAMP);
+        assertThrows(LaunchpadException.class, () -> receiver.send(message, TIMESTAMP));
     }
 
-    @Test(expected = LaunchpadException.class)
+    @Test
     public void send_metaMessage() {
         MidiMessage message = new MetaMessage();
-        receiver.send(message, TIMESTAMP);
+        assertThrows(LaunchpadException.class, () -> receiver.send(message, TIMESTAMP));
     }
 
-    @Test(expected = LaunchpadException.class)
+    @Test
     public void send_shortMessage_unknown() throws Exception {
         ShortMessage message = new ShortMessage();
         message.setMessage(ShortMessage.STOP, 0, 0);
-        receiver.send(message, TIMESTAMP);
+        assertThrows(LaunchpadException.class, () -> receiver.send(message, TIMESTAMP));
     }
 
     @Test

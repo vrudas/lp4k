@@ -20,21 +20,22 @@ package net.thecodersbreakfast.lp4j.midi;
 
 import net.thecodersbreakfast.lp4j.api.*;
 import net.thecodersbreakfast.lp4j.midi.protocol.MidiProtocolClient;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.sound.midi.InvalidMidiDataException;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.anyVararg;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MidiLaunchpadClientTest {
 
     private LaunchpadClient launchpadClient;
@@ -42,7 +43,7 @@ public class MidiLaunchpadClientTest {
     @Mock
     private MidiProtocolClient midiProtocolClient;
 
-    @Before
+    @BeforeEach
     public void init() {
         midiProtocolClient = mock(MidiProtocolClient.class);
         launchpadClient = new MidiLaunchpadClient(midiProtocolClient);
@@ -59,20 +60,26 @@ public class MidiLaunchpadClientTest {
         launchpadClient.setBrightness(Brightness.BRIGHTNESS_MIN);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void setBrightness_tooLow() {
-        launchpadClient.setBrightness(Brightness.of(Brightness.MIN_VALUE - 1));
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> launchpadClient.setBrightness(Brightness.of(Brightness.MIN_VALUE - 1))
+        );
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void setBrightness_tooHigh() {
-        launchpadClient.setBrightness(Brightness.of(Brightness.MAX_VALUE + 1));
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> launchpadClient.setBrightness(Brightness.of(Brightness.MAX_VALUE + 1))
+        );
     }
 
-    @Test(expected = LaunchpadException.class)
+    @Test
     public void setBrightness_exception() throws InvalidMidiDataException {
         doThrow(new InvalidMidiDataException()).when(midiProtocolClient).brightness(anyInt(), anyInt());
-        launchpadClient.setBrightness(Brightness.BRIGHTNESS_MIN);
+        assertThrows(LaunchpadException.class, () -> launchpadClient.setBrightness(Brightness.BRIGHTNESS_MIN));
     }
 
     /*
@@ -87,10 +94,13 @@ public class MidiLaunchpadClientTest {
         verify(midiProtocolClient).doubleBufferMode(0, 1, false, false);
     }
 
-    @Test(expected = LaunchpadException.class)
+    @Test
     public void setBuffers_exception() throws InvalidMidiDataException {
         doThrow(new InvalidMidiDataException()).when(midiProtocolClient).doubleBufferMode(anyInt(), anyInt(), anyBoolean(), anyBoolean());
-        launchpadClient.setBuffers(Buffer.BUFFER_0, Buffer.BUFFER_1, false, false);
+        assertThrows(
+            LaunchpadException.class,
+            () -> launchpadClient.setBuffers(Buffer.BUFFER_0, Buffer.BUFFER_1, false, false)
+        );
     }
 
     /*
@@ -99,10 +109,13 @@ public class MidiLaunchpadClientTest {
     ================================================================================
     */
 
-    @Test(expected = LaunchpadException.class)
+    @Test
     public void setButtonLight_exception() throws InvalidMidiDataException {
         doThrow(new InvalidMidiDataException()).when(midiProtocolClient).buttonOn(anyInt(), anyInt());
-        launchpadClient.setButtonLight(Button.UP, Color.BLACK, BackBufferOperation.COPY);
+        assertThrows(
+            LaunchpadException.class,
+            () -> launchpadClient.setButtonLight(Button.UP, Color.BLACK, BackBufferOperation.COPY)
+        );
     }
 
     @Test
@@ -135,9 +148,12 @@ public class MidiLaunchpadClientTest {
         verify(midiProtocolClient).noteOn(8, 12);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void setButtonLight_XY_illegal_COPY() {
-        launchpadClient.setButtonLight(Button.atTop(-1), Color.BLACK, BackBufferOperation.COPY);
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> launchpadClient.setButtonLight(Button.atTop(-1), Color.BLACK, BackBufferOperation.COPY)
+        );
     }
 
     @Test
@@ -164,15 +180,28 @@ public class MidiLaunchpadClientTest {
         verify(midiProtocolClient).noteOn(0, 12);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void setPadLight_illegal() {
-        launchpadClient.setPadLight(Pad.at(-1, -1), Color.BLACK, BackBufferOperation.COPY);
+        assertThrows(IllegalArgumentException.class,
+            () -> launchpadClient.setPadLight(
+                Pad.at(-1, -1),
+                Color.BLACK,
+                BackBufferOperation.COPY
+            )
+        );
     }
 
-    @Test(expected = LaunchpadException.class)
+    @Test
     public void setPadLight_exception() throws InvalidMidiDataException {
         doThrow(new InvalidMidiDataException()).when(midiProtocolClient).noteOn(anyInt(), anyInt());
-        launchpadClient.setPadLight(Pad.at(1, 1), Color.BLACK, BackBufferOperation.COPY);
+        assertThrows(
+            LaunchpadException.class,
+            () -> launchpadClient.setPadLight(
+                Pad.at(1, 1),
+                Color.BLACK,
+                BackBufferOperation.COPY
+            )
+        );
     }
 
     /*
@@ -187,10 +216,10 @@ public class MidiLaunchpadClientTest {
         verify(midiProtocolClient).reset();
     }
 
-    @Test(expected = LaunchpadException.class)
+    @Test
     public void reset_exception() throws InvalidMidiDataException {
         doThrow(new InvalidMidiDataException()).when(midiProtocolClient).reset();
-        launchpadClient.reset();
+        assertThrows(LaunchpadException.class, () -> launchpadClient.reset());
         verify(midiProtocolClient).reset();
     }
 
@@ -210,10 +239,13 @@ public class MidiLaunchpadClientTest {
         verify(midiProtocolClient).lightsOn(127);
     }
 
-    @Test(expected = LaunchpadException.class)
+    @Test
     public void testLights_exception() throws InvalidMidiDataException {
         doThrow(new InvalidMidiDataException()).when(midiProtocolClient).lightsOn(anyInt());
-        launchpadClient.testLights(LightIntensity.LOW);
+        assertThrows(
+            LaunchpadException.class,
+            () -> launchpadClient.testLights(LightIntensity.LOW)
+        );
     }
 
     /*
@@ -222,20 +254,30 @@ public class MidiLaunchpadClientTest {
     ================================================================================
     */
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void setLights_null() {
-        launchpadClient.setLights(null, BackBufferOperation.NONE);
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> launchpadClient.setLights(null, BackBufferOperation.NONE)
+        );
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void setLights_odd() {
-        launchpadClient.setLights(new Color[1], BackBufferOperation.NONE);
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> launchpadClient.setLights(new Color[1], BackBufferOperation.NONE)
+        );
     }
 
-    @Test(expected = LaunchpadException.class)
+    @Test
     public void setLights_exception() throws InvalidMidiDataException {
         doThrow(new InvalidMidiDataException()).when(midiProtocolClient).notesOn((int[]) anyVararg());
-        launchpadClient.setLights(new Color[]{Color.BLACK, Color.BLACK}, BackBufferOperation.COPY);
+
+        assertThrows(
+            LaunchpadException.class,
+            () -> launchpadClient.setLights(new Color[]{Color.BLACK, Color.BLACK}, BackBufferOperation.COPY)
+        );
     }
 
     @Test
@@ -250,19 +292,41 @@ public class MidiLaunchpadClientTest {
     ================================================================================
     */
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void scrollText_speedTooLow() {
-        launchpadClient.scrollText("Hello", Color.BLACK, ScrollSpeed.of(ScrollSpeed.MIN_VALUE - 1), false, BackBufferOperation.COPY);
+        assertThrows(IllegalArgumentException.class,
+            () -> launchpadClient.scrollText("Hello", Color.BLACK,
+                ScrollSpeed.of(ScrollSpeed.MIN_VALUE - 1),
+                false,
+                BackBufferOperation.COPY)
+        );
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void scrollText_speedTooHIgh() {
-        launchpadClient.scrollText("Hello", Color.BLACK, ScrollSpeed.of(ScrollSpeed.MAX_VALUE + 1), false, BackBufferOperation.COPY);
+        assertThrows(IllegalArgumentException.class,
+            () -> launchpadClient.scrollText(
+                "Hello",
+                Color.BLACK,
+                ScrollSpeed.of(ScrollSpeed.MAX_VALUE + 1),
+                false,
+                BackBufferOperation.COPY
+            )
+        );
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void scrollText_nullColor() {
-        launchpadClient.scrollText("Hello", null, ScrollSpeed.SPEED_MIN, false, BackBufferOperation.COPY);
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> launchpadClient.scrollText(
+                "Hello",
+                null,
+                ScrollSpeed.SPEED_MIN,
+                false,
+                BackBufferOperation.COPY
+            )
+        );
     }
 
     @Test
@@ -271,10 +335,21 @@ public class MidiLaunchpadClientTest {
         verify(midiProtocolClient).text("Hello", 12, 1, false);
     }
 
-    @Test(expected = LaunchpadException.class)
+    @Test
     public void scrollText_exception() throws InvalidMidiDataException {
-        doThrow(new InvalidMidiDataException()).when(midiProtocolClient).text(anyString(), anyInt(), anyInt(), anyBoolean());
-        launchpadClient.scrollText("Hello", Color.BLACK, ScrollSpeed.SPEED_MIN, false, BackBufferOperation.COPY);
+        doThrow(new InvalidMidiDataException())
+            .when(midiProtocolClient).text(anyString(), anyInt(), anyInt(), anyBoolean());
+
+        assertThrows(
+            LaunchpadException.class,
+            () -> launchpadClient.scrollText(
+                "Hello",
+                Color.BLACK,
+                ScrollSpeed.SPEED_MIN,
+                false,
+                BackBufferOperation.COPY
+            )
+        );
     }
 
 

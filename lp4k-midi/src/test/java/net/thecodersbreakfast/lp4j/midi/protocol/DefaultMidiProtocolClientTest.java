@@ -18,23 +18,24 @@
 
 package net.thecodersbreakfast.lp4j.midi.protocol;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.sound.midi.Receiver;
 import javax.sound.midi.ShortMessage;
 import javax.sound.midi.SysexMessage;
 
-import static org.mockito.Matchers.eq;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class DefaultMidiProtocolClientTest {
 
     public static final int LIGHT_INTENSITY = 125;
@@ -50,7 +51,7 @@ public class DefaultMidiProtocolClientTest {
     private ArgumentCaptor<ShortMessage> shortMessage;
     private ArgumentCaptor<SysexMessage> sysexMessage;
 
-    @Before
+    @BeforeEach
     public void init() {
         midiProtocolClient = new DefaultMidiProtocolClient(receiver);
         shortMessage = ArgumentCaptor.forClass(ShortMessage.class);
@@ -125,7 +126,7 @@ public class DefaultMidiProtocolClientTest {
 
         verify(receiver, times(2)).send(shortMessage.capture(), eq(-1L));
         checkShortMessage(shortMessage.getValue(), ShortMessage.NOTE_ON, 42, 42);
-        Assert.assertEquals(3, shortMessage.getValue().getChannel());
+        assertEquals(3, shortMessage.getValue().getChannel());
     }
 
     /*
@@ -241,12 +242,12 @@ public class DefaultMidiProtocolClientTest {
     */
 
     private void checkShortMessage(ShortMessage message, int command, int data1, int data2) {
-        Assert.assertEquals(command, message.getCommand());
-        Assert.assertEquals(data1, message.getData1());
-        Assert.assertEquals(data2, message.getData2());
+        assertEquals(command, message.getCommand());
+        assertEquals(data1, message.getData1());
+        assertEquals(data2, message.getData2());
     }
 
     private void checkSysexMessage(SysexMessage message, byte[] data) {
-        Assert.assertArrayEquals(data, message.getData());
+        assertArrayEquals(data, message.getData());
     }
 }
