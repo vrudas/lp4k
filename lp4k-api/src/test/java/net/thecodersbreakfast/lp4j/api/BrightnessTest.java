@@ -69,6 +69,12 @@ public class BrightnessTest {
     }
 
     @Test
+    @SuppressWarnings("java:S3415")
+    void not_equal_for_null() {
+        assertNotEquals(Brightness.BRIGHTNESS_MAX, null);
+    }
+
+    @Test
     void hashcode_are_equal() {
         assertEquals(
             Brightness.BRIGHTNESS_MIN.hashCode(),
