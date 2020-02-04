@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Vasya Rudas
+ * Copyright 2020 Vasyl Rudas
  * Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
