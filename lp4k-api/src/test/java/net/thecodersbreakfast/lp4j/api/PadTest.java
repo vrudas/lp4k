@@ -19,6 +19,9 @@ package net.thecodersbreakfast.lp4j.api;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -33,21 +36,25 @@ public class PadTest {
     }
 
     @Test
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void at_xTooLow() {
         assertThrows(IllegalArgumentException.class, () -> Pad.at(Pad.X_MIN - 1, Pad.Y_MIN));
     }
 
     @Test
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void at_xTooHigh() {
         assertThrows(IllegalArgumentException.class, () -> Pad.at(Pad.X_MAX + 1, Pad.Y_MIN));
     }
 
     @Test
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void at_yTooLow() {
         assertThrows(IllegalArgumentException.class, () -> Pad.at(Pad.X_MIN, Pad.Y_MIN - 1));
     }
 
     @Test
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void at_yTooHigh() {
         assertThrows(IllegalArgumentException.class, () -> Pad.at(Pad.X_MIN, Pad.Y_MAX + 1));
     }
@@ -58,4 +65,44 @@ public class PadTest {
         assertEquals("Pad[0,0]", pad.toString());
     }
 
+    @Test
+    @SuppressWarnings("java:S3415")
+    void check_equals() {
+        assertEquals(
+            Pad.at(Pad.X_MIN, Pad.Y_MIN),
+            Pad.at(Pad.X_MIN, Pad.Y_MIN)
+        );
+    }
+
+    @Test
+    @SuppressWarnings("java:S3415")
+    void not_equal() {
+        assertNotEquals(
+            Pad.at(Pad.X_MIN, Pad.Y_MIN),
+            Pad.at(Pad.X_MAX, Pad.Y_MAX)
+        );
+    }
+
+    @Test
+    @SuppressWarnings("java:S3415")
+    void not_equal_for_different_type() {
+        assertNotEquals(Pad.at(Pad.X_MAX, Pad.Y_MAX), Pad.X_MIN);
+    }
+
+    @Test
+    @SuppressWarnings("java:S3415")
+    void not_equal_for_null() {
+        assertNotEquals(Pad.at(Pad.X_MIN, Pad.Y_MIN), null);
+    }
+
+    @Test
+    void hashcode_is_equal_for_pads_with_same_coordinates() {
+        Pad pad = Pad.at(Pad.X_MIN, Pad.Y_MIN);
+
+        Set<Pad> pads = new HashSet<>();
+        pads.add(pad);
+        pads.add(pad);
+
+        assertEquals(1, pads.size());
+    }
 }
