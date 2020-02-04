@@ -31,14 +31,47 @@ public class ScrollSpeedTest {
     }
 
     @Test
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void valueOf_tooLow() {
         assertThrows(IllegalArgumentException.class, () -> ScrollSpeed.of(ScrollSpeed.MIN_VALUE - 1));
     }
 
     @Test
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void valueOf_tooHigh() {
         assertThrows(IllegalArgumentException.class, () -> ScrollSpeed.of(ScrollSpeed.MAX_VALUE + 1));
     }
 
+    @Test
+    @SuppressWarnings("java:S3415")
+    void check_equals() {
+        assertEquals(ScrollSpeed.SPEED_MAX, ScrollSpeed.SPEED_MAX);
+    }
+
+    @Test
+    @SuppressWarnings("java:S3415")
+    void not_equal() {
+        assertNotEquals(ScrollSpeed.SPEED_MAX, ScrollSpeed.SPEED_MIN);
+    }
+
+    @Test
+    @SuppressWarnings("java:S3415")
+    void not_equal_for_different_type() {
+        assertNotEquals(ScrollSpeed.SPEED_MAX, ScrollSpeed.MAX_VALUE);
+    }
+
+    @Test
+    @SuppressWarnings("java:S3415")
+    void not_equal_for_null() {
+        assertNotEquals(ScrollSpeed.SPEED_MAX, null);
+    }
+
+    @Test
+    void hashcode_are_equal() {
+        assertEquals(
+            ScrollSpeed.SPEED_MIN.hashCode(),
+            ScrollSpeed.of(ScrollSpeed.MIN_VALUE).hashCode()
+        );
+    }
 
 }
