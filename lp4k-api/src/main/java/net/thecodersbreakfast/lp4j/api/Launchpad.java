@@ -35,7 +35,7 @@ public interface Launchpad extends Closeable {
      *
      * @return a client
      */
-    public LaunchpadClient getClient();
+    LaunchpadClient getClient();
 
     /**
      * Accepts a {@link net.thecodersbreakfast.lp4j.api.LaunchpadListener}, which will be notified of any
@@ -43,6 +43,6 @@ public interface Launchpad extends Closeable {
      *
      * @param listener The listener to be notified
      */
-    public void setListener(LaunchpadListener listener);
+    void setListener(LaunchpadListener listener);
 
 }

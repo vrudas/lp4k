@@ -27,14 +27,14 @@ public interface LaunchpadClient {
     /**
      * Reset the state of the Launchpad.
      */
-    public void reset();
+    void reset();
 
     /**
      * Lights up all the pads and buttons with the given light intensity.
      *
      * @param intensity The desired light intensity.
      */
-    public void testLights(LightIntensity intensity);
+    void testLights(LightIntensity intensity);
 
     /**
      * Bulk-set the colors of all pads and buttons.
@@ -46,7 +46,7 @@ public interface LaunchpadClient {
      * @param colors The colors to be set
      * @param operation What to do on the backbuffer
      */
-    public void setLights(Color[] colors, BackBufferOperation operation);
+    void setLights(Color[] colors, BackBufferOperation operation);
 
     /**
      * Lights up the given pad with the given color.
@@ -55,7 +55,7 @@ public interface LaunchpadClient {
      * @param color The color to use. Use {@link net.thecodersbreakfast.lp4j.api.Color#BLACK} to switch the light off.
      * @param operation What to do on the backbuffer
      */
-    public void setPadLight(Pad pad, Color color, BackBufferOperation operation);
+    void setPadLight(Pad pad, Color color, BackBufferOperation operation);
 
     /**
      * Lights up the given button with the given color.
@@ -64,14 +64,14 @@ public interface LaunchpadClient {
      * @param color The color to use. Use {@link net.thecodersbreakfast.lp4j.api.Color#BLACK} to switch the light off.
      * @param operation What to do on the backbuffer
      */
-    public void setButtonLight(Button button, Color color, BackBufferOperation operation);
+    void setButtonLight(Button button, Color color, BackBufferOperation operation);
 
     /**
      * Set the overall brightness of the pad and button lights.
      *
      * @param brightness The desired brightness.
      */
-    public void setBrightness(Brightness brightness);
+    void setBrightness(Brightness brightness);
 
     /**
      * Sets the current write and visible buffers.
@@ -83,7 +83,7 @@ public interface LaunchpadClient {
      * @param autoSwap Set to {@code true} to make the visible buffer quickly swap between the two buffers. This can be
      * used to create a blinking effect. Set back to {@code false} to stop the blinking.
      */
-    public void setBuffers(Buffer visibleBuffer, Buffer writeBuffer, boolean copyVisibleBufferToWriteBuffer, boolean autoSwap);
+    void setBuffers(Buffer visibleBuffer, Buffer writeBuffer, boolean copyVisibleBufferToWriteBuffer, boolean autoSwap);
 
     /**
      * Starts scrolling a text across the Launchpad, using the 8x8 pad grid as a font grid. Beware, this operation may
@@ -98,5 +98,5 @@ public interface LaunchpadClient {
      * @param loop Tells if the text should loop endlessly. In that case, set to {@code false} to stop the scrolling.
      * @param operation What to do on the backbuffer
      */
-    public void scrollText(String text, Color color, ScrollSpeed speed, boolean loop, BackBufferOperation operation);
+    void scrollText(String text, Color color, ScrollSpeed speed, boolean loop, BackBufferOperation operation);
 }
