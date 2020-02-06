@@ -19,8 +19,10 @@ package net.thecodersbreakfast.lp4j.api;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ColorTest {
 
@@ -66,6 +68,39 @@ public class ColorTest {
             IllegalArgumentException.class,
             () -> Color.of(Color.MIN_INTENSITY, Color.MAX_INTENSITY + 1)
         );
+    }
+
+    @Test
+    @SuppressWarnings("java:S3415")
+    void check_equals() {
+        assertEquals(Color.RED, Color.RED);
+    }
+
+    @Test
+    @SuppressWarnings("java:S3415")
+    void not_equal() {
+        assertNotEquals(Color.GREEN, Color.ORANGE);
+    }
+
+    @Test
+    @SuppressWarnings("java:S3415")
+    void not_equal_for_different_type() {
+        assertNotEquals(Color.YELLOW, Color.MIN_INTENSITY);
+    }
+
+    @Test
+    @SuppressWarnings("java:S3415")
+    void not_equal_for_null() {
+        assertNotEquals(Color.AMBER, null);
+    }
+
+    @Test
+    void hashcode_is_equal_for_same_colors() {
+        Set<Color> colors = new HashSet<>();
+        colors.add(Color.AMBER);
+        colors.add(Color.of(3, 3));
+
+        assertEquals(1, colors.size());
     }
 
 }
