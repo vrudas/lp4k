@@ -19,6 +19,8 @@ package net.thecodersbreakfast.lp4j.api;
 
 import org.junit.jupiter.api.Test;
 
+import static net.thecodersbreakfast.lp4j.api.Button.BUTTONS_RIGHT;
+import static net.thecodersbreakfast.lp4j.api.Button.BUTTONS_TOP;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ButtonTest {
@@ -60,4 +62,19 @@ public class ButtonTest {
         assertEquals("Button[UP(top,0)]", Button.UP.toString());
     }
 
+    @Test
+    void top_buttons_coordinate_are_correct() {
+        for (int expectedCoordinate = 0; expectedCoordinate < BUTTONS_TOP.length; expectedCoordinate++) {
+            int buttonCoordinate = BUTTONS_TOP[expectedCoordinate].getCoordinate();
+            assertEquals(expectedCoordinate, buttonCoordinate);
+        }
+    }
+
+    @Test
+    void right_buttons_coordinate_are_correct() {
+        for (int expectedCoordinate = 0; expectedCoordinate < BUTTONS_RIGHT.length; expectedCoordinate++) {
+            int buttonCoordinate = BUTTONS_RIGHT[expectedCoordinate].getCoordinate();
+            assertEquals(expectedCoordinate, buttonCoordinate);
+        }
+    }
 }
