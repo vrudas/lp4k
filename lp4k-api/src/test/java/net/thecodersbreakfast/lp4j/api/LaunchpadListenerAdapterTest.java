@@ -20,6 +20,8 @@ package net.thecodersbreakfast.lp4j.api;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 public class LaunchpadListenerAdapterTest {
 
     private LaunchpadListenerAdapter adapter;
@@ -32,26 +34,26 @@ public class LaunchpadListenerAdapterTest {
 
     @Test
     public void testOnPadPressed() {
-        adapter.onPadPressed(Pad.at(0, 0), -1L);
+        assertDoesNotThrow(() -> adapter.onPadPressed(Pad.at(0, 0), -1L));
     }
 
     @Test
     public void testOnPadReleased() {
-        adapter.onPadReleased(Pad.at(0, 0), -1L);
+        assertDoesNotThrow(() -> adapter.onPadReleased(Pad.at(0, 0), -1L));
     }
 
     @Test
     public void testOnButtonPressed() {
-        adapter.onButtonPressed(Button.UP, -1L);
+        assertDoesNotThrow(() -> adapter.onButtonPressed(Button.UP, -1L));
     }
 
     @Test
     public void testOnButtonReleased() {
-        adapter.onButtonReleased(Button.UP, -1L);
+        assertDoesNotThrow(() -> adapter.onButtonReleased(Button.UP, -1L));
     }
 
     @Test
     public void testOnTextScrolled() {
-        adapter.onTextScrolled(-1L);
+        assertDoesNotThrow(() -> adapter.onTextScrolled(-1L));
     }
 }
