@@ -19,26 +19,37 @@ package net.thecodersbreakfast.lp4j.api;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class LaunchpadExceptionTest {
 
     @Test
-    public void testLaunchpadException_noargs() {
-        new LaunchpadException();
-    }
-
-    @Test
     public void testLaunchpadException_message() {
-        new LaunchpadException("message");
+        String expectedMessage = "message";
+
+        LaunchpadException launchpadException = new LaunchpadException(expectedMessage);
+
+        assertEquals(expectedMessage, launchpadException.getMessage());
     }
 
     @Test
     public void testLaunchpadException_cause() {
-        new LaunchpadException(new RuntimeException());
+        RuntimeException expectedCause = new RuntimeException();
+
+        LaunchpadException launchpadException = new LaunchpadException(expectedCause);
+
+        assertEquals(expectedCause, launchpadException.getCause());
     }
 
     @Test
-    public void testLaunchpadException_both() {
-        new LaunchpadException("message", new RuntimeException());
+    public void testLaunchpadException_both_message_and_cause() {
+        String expectedMessage = "message";
+        RuntimeException expectedCause = new RuntimeException();
+
+        LaunchpadException launchpadException = new LaunchpadException(expectedMessage, expectedCause);
+
+        assertEquals(expectedMessage, launchpadException.getMessage());
+        assertEquals(expectedCause, launchpadException.getCause());
     }
 
 }

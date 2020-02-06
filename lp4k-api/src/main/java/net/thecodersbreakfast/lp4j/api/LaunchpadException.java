@@ -25,12 +25,6 @@ public class LaunchpadException extends RuntimeException {
 
     /**
      * Constructor.
-     */
-    public LaunchpadException() {
-    }
-
-    /**
-     * Constructor.
      *
      * @param message The error message.
      */
