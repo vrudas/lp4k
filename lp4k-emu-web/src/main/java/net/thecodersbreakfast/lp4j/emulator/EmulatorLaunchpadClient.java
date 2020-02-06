@@ -166,7 +166,7 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
             throw new IllegalArgumentException("Brightness must not be null");
         }
         JsonObject params = new JsonObject()
-                .putNumber("b", brightness.getBrightness());
+                .putNumber("b", brightness.getBrightnessLevel());
         publishEvent(OutputEventType.BRGHT, params);
     }
 

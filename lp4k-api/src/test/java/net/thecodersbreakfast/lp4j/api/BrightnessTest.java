@@ -27,7 +27,7 @@ public class BrightnessTest {
     public void valueOf() {
         Brightness brightness = Brightness.of(Brightness.MIN_VALUE);
         assertNotNull(brightness);
-        assertEquals(Brightness.MIN_VALUE, brightness.getBrightness());
+        assertEquals(Brightness.MIN_VALUE, brightness.getBrightnessLevel());
     }
 
     @Test

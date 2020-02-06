@@ -60,15 +60,15 @@ public final class Brightness {
     }
 
     /** Level of brightness */
-    private final int brightness;
+    private final int brightnessLevel;
 
     /**
      * Constructor.
      *
-     * @param brightness The desired level of brightess.
+     * @param brightnessLevel The desired level of brightess.
      */
-    private Brightness(int brightness) {
-        this.brightness = brightness;
+    private Brightness(int brightnessLevel) {
+        this.brightnessLevel = brightnessLevel;
     }
 
     /**
@@ -76,8 +76,8 @@ public final class Brightness {
      *
      * @return the level of brightness
      */
-    public int getBrightness() {
-        return brightness;
+    public int getBrightnessLevel() {
+        return brightnessLevel;
     }
 
     /**
@@ -86,7 +86,7 @@ public final class Brightness {
      * @return a brighter Brightness instance, or the same instance if it was already the brightest.
      */
     public Brightness more() {
-        return brightness < MAX_VALUE ? of(brightness + 1) : this;
+        return brightnessLevel < MAX_VALUE ? of(brightnessLevel + 1) : this;
     }
 
     /**
@@ -95,7 +95,7 @@ public final class Brightness {
      * @return a less bright Brightness instance, or the same instance if it was already the least bright.
      */
     public Brightness less() {
-        return brightness > MIN_VALUE ? of(brightness - 1) : this;
+        return brightnessLevel > MIN_VALUE ? of(brightnessLevel - 1) : this;
     }
 
     @Override
@@ -107,11 +107,11 @@ public final class Brightness {
             return false;
         }
         Brightness that = (Brightness) o;
-        return brightness == that.brightness;
+        return brightnessLevel == that.brightnessLevel;
     }
 
     @Override
     public int hashCode() {
-        return brightness;
+        return brightnessLevel;
     }
 }

@@ -197,7 +197,7 @@ public class MidiLaunchpadClient implements LaunchpadClient {
             throw new IllegalArgumentException("Brightness must not be null");
         }
 
-        int level = brightness.getBrightness();
+        int level = brightness.getBrightnessLevel();
         try {
             midiProtocolClient.brightness(1, 18 - level);
         } catch (InvalidMidiDataException e) {
