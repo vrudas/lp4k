@@ -62,9 +62,9 @@ public enum Button {
     public static final int MAX_COORD = 7;
 
     /** Top-row buttons, in left-to-right order */
-    public static final Button[] BUTTONS_TOP = {UP, DOWN, LEFT, RIGHT, SESSION, USER_1, USER_2, MIXER};
+    protected static final Button[] BUTTONS_TOP = {UP, DOWN, LEFT, RIGHT, SESSION, USER_1, USER_2, MIXER};
     /** Right-side buttons, in top-to-bottom order */
-    public static final Button[] BUTTONS_RIGHT = {VOL, PAN, SND_A, SND_B, STOP, TRACK_ON, SOLO, ARM};
+    protected static final Button[] BUTTONS_RIGHT = {VOL, PAN, SND_A, SND_B, STOP, TRACK_ON, SOLO, ARM};
 
     /**
      * Factory method for a top-row button.
@@ -114,7 +114,7 @@ public enum Button {
      * @param coordinate The coordinate of the button.
      * @param topButton {@code true} for a top-row button, {@code false} otherwise.
      */
-    private Button(int coordinate, boolean topButton) {
+    Button(int coordinate, boolean topButton) {
         this.coordinate = coordinate;
         this.topButton = topButton;
     }
