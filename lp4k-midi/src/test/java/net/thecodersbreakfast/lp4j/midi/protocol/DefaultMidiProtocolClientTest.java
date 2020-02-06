@@ -29,8 +29,7 @@ import javax.sound.midi.Receiver;
 import javax.sound.midi.ShortMessage;
 import javax.sound.midi.SysexMessage;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -56,6 +55,14 @@ public class DefaultMidiProtocolClientTest {
         midiProtocolClient = new DefaultMidiProtocolClient(receiver);
         shortMessage = ArgumentCaptor.forClass(ShortMessage.class);
         sysexMessage = ArgumentCaptor.forClass(SysexMessage.class);
+    }
+
+    @Test
+    void default_midi_protocol_not_created_because_of_null_receiver() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> new DefaultMidiProtocolClient(null)
+        );
     }
 
     /*
@@ -127,6 +134,14 @@ public class DefaultMidiProtocolClientTest {
         verify(receiver, times(2)).send(shortMessage.capture(), eq(-1L));
         checkShortMessage(shortMessage.getValue(), ShortMessage.NOTE_ON, 42, 42);
         assertEquals(3, shortMessage.getValue().getChannel());
+    }
+
+    @Test
+    void notesOn_failed_because_of_null_argument() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> midiProtocolClient.notesOn((int[]) null)
+        );
     }
 
     /*
