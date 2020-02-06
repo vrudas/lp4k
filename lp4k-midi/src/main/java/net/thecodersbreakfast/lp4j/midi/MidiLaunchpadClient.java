@@ -259,7 +259,7 @@ public class MidiLaunchpadClient implements LaunchpadClient {
         int rawColor = toRawColor(color, operation);
 
         try {
-            midiProtocolClient.text(text, rawColor, speed.getScrollSpeed(), loop);
+            midiProtocolClient.text(text, rawColor, speed.getSpeedValue(), loop);
         } catch (InvalidMidiDataException e) {
             throw new LaunchpadException(e);
         }

@@ -27,7 +27,7 @@ public class ScrollSpeedTest {
     public void valueOf() {
         ScrollSpeed scrollSpeed = ScrollSpeed.of(ScrollSpeed.MIN_VALUE);
         assertNotNull(scrollSpeed);
-        assertEquals(ScrollSpeed.MIN_VALUE, scrollSpeed.getScrollSpeed());
+        assertEquals(ScrollSpeed.MIN_VALUE, scrollSpeed.getSpeedValue());
     }
 
     @Test

@@ -62,15 +62,15 @@ public class ScrollSpeed {
     }
 
     /** The speed value. */
-    private final int scrollSpeed;
+    private final int speedValue;
 
     /**
      * Constructor
      *
-     * @param scrollSpeed The scrolling speed
+     * @param speedValue The scrolling speed
      */
-    private ScrollSpeed(int scrollSpeed) {
-        this.scrollSpeed = scrollSpeed;
+    private ScrollSpeed(int speedValue) {
+        this.speedValue = speedValue;
     }
 
     /**
@@ -78,8 +78,8 @@ public class ScrollSpeed {
      *
      * @return the speed value
      */
-    public int getScrollSpeed() {
-        return scrollSpeed;
+    public int getSpeedValue() {
+        return speedValue;
     }
 
     @Override
@@ -91,11 +91,11 @@ public class ScrollSpeed {
             return false;
         }
         ScrollSpeed that = (ScrollSpeed) o;
-        return scrollSpeed == that.scrollSpeed;
+        return speedValue == that.speedValue;
     }
 
     @Override
     public int hashCode() {
-        return scrollSpeed;
+        return speedValue;
     }
 }
