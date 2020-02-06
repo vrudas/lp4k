@@ -291,7 +291,7 @@ public class MidiLaunchpadClient implements LaunchpadClient {
                 flags = 12;
                 break;
         }
-        return (byte) (flags + color.getRed() + (16 * color.getGreen()));
+        return (byte) (flags + color.getRedIntensity() + (16 * color.getGreenIntensity()));
     }
 
     /**

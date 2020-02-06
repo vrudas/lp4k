@@ -77,19 +77,19 @@ public final class Color {
     }
 
     /** The red component intensity */
-    private final int red;
+    private final int redIntensity;
     /** The green component intensity */
-    private final int green;
+    private final int greenIntensity;
 
     /**
      * Constructor
      *
-     * @param red The red component
-     * @param green The green component
+     * @param redIntensity The red component
+     * @param greenIntensity The green component
      */
-    private Color(int red, int green) {
-        this.red = red;
-        this.green = green;
+    private Color(int redIntensity, int greenIntensity) {
+        this.redIntensity = redIntensity;
+        this.greenIntensity = greenIntensity;
     }
 
     /**
@@ -97,8 +97,8 @@ public final class Color {
      *
      * @return the red intensity
      */
-    public int getRed() {
-        return red;
+    public int getRedIntensity() {
+        return redIntensity;
     }
 
     /**
@@ -106,8 +106,8 @@ public final class Color {
      *
      * @return the green intensity
      */
-    public int getGreen() {
-        return green;
+    public int getGreenIntensity() {
+        return greenIntensity;
     }
 
     @Override
@@ -119,13 +119,13 @@ public final class Color {
             return false;
         }
         Color color = (Color) o;
-        return green == color.green && red == color.red;
+        return greenIntensity == color.greenIntensity && redIntensity == color.redIntensity;
     }
 
     @Override
     public int hashCode() {
-        int result = red;
-        result = 31 * result + green;
+        int result = redIntensity;
+        result = 31 * result + greenIntensity;
         return result;
     }
 }

@@ -124,7 +124,7 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
         JsonObject params = new JsonObject()
                 .putNumber("x", pad.getX())
                 .putNumber("y", pad.getY())
-                .putObject("c", new JsonObject().putNumber("r", color.getRed()).putNumber("g", color.getGreen()))
+                .putObject("c", new JsonObject().putNumber("r", color.getRedIntensity()).putNumber("g", color.getGreenIntensity()))
                 .putString("o", operation.name());
         publishEvent(OutputEventType.PADLGT, params);
     }
@@ -150,7 +150,7 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
         JsonObject params = new JsonObject()
                 .putBoolean("t", button.isTopButton())
                 .putNumber("i", button.getCoordinate())
-                .putObject("c", new JsonObject().putNumber("r", color.getRed()).putNumber("g", color.getGreen()))
+                .putObject("c", new JsonObject().putNumber("r", color.getRedIntensity()).putNumber("g", color.getGreenIntensity()))
                 .putString("o", operation.name());
         publishEvent(OutputEventType.BTNLGT, params);
     }

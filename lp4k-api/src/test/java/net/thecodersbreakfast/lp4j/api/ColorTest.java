@@ -30,12 +30,12 @@ public class ColorTest {
     public void valueOf() {
         Color color = Color.of(Color.MIN_INTENSITY, Color.MIN_INTENSITY);
         assertEquals(Color.BLACK, color);
-        assertEquals(Color.MIN_INTENSITY, color.getRed());
-        assertEquals(Color.MIN_INTENSITY, color.getGreen());
+        assertEquals(Color.MIN_INTENSITY, color.getRedIntensity());
+        assertEquals(Color.MIN_INTENSITY, color.getGreenIntensity());
         Color colorMax = Color.of(Color.MAX_INTENSITY, Color.MAX_INTENSITY);
         assertEquals(Color.AMBER, colorMax);
-        assertEquals(Color.MAX_INTENSITY, colorMax.getRed());
-        assertEquals(Color.MAX_INTENSITY, colorMax.getGreen());
+        assertEquals(Color.MAX_INTENSITY, colorMax.getRedIntensity());
+        assertEquals(Color.MAX_INTENSITY, colorMax.getGreenIntensity());
     }
 
     @Test
