@@ -49,7 +49,7 @@ public interface MidiProtocolClient {
     /**
      * Sends a "note on" command, to light up the LED under a pad or button.
      *
-     * @param note The "note" identifying the target pad or button.
+     * @param note  The "note" identifying the target pad or button.
      * @param color The color to display.
      * @throws InvalidMidiDataException If a MIDI communication error occurs.
      */
@@ -83,7 +83,7 @@ public interface MidiProtocolClient {
      * Sends a "button on" command, to light up the LED under a button.
      *
      * @param button The button to light up.
-     * @param color The desired color.
+     * @param color  The desired color.
      * @throws InvalidMidiDataException If a MIDI communication error occurs.
      */
     void buttonOn(int button, int color) throws InvalidMidiDataException;
@@ -91,7 +91,7 @@ public interface MidiProtocolClient {
     /**
      * Sets the overall brightness of the LEDs, expressed as a ratio between a numerator and a denominator.
      *
-     * @param numerator The numerator.
+     * @param numerator   The numerator.
      * @param denominator The denominator.
      * @throws InvalidMidiDataException If a MIDI communication error occurs.
      */
@@ -100,10 +100,10 @@ public interface MidiProtocolClient {
     /**
      * Scrolls the given text across the board, using an embedded 8x8 dot matrix font.
      *
-     * @param text The text to display.
+     * @param text  The text to display.
      * @param color The text color.
      * @param speed The scrolling speed.
-     * @param loop Whether to display the text once, or to loop until a new "text" command is emitted.
+     * @param loop  Whether to display the text once, or to loop until a new "text" command is emitted.
      * @throws InvalidMidiDataException If a MIDI communication error occurs.
      */
     void text(String text, int color, int speed, boolean loop) throws InvalidMidiDataException;
@@ -113,11 +113,11 @@ public interface MidiProtocolClient {
      * The "autoswap" parameter allows a "blinking" effect, where the Launchpad keeps swapping the visible and
      * non-visible buffers until autoswapping is turned off again.
      *
-     * @param visibleBuffer The buffer to set as the visible buffer.
-     * @param writeBuffer The buffer to set as the write buffer.
+     * @param visibleBuffer                  The buffer to set as the visible buffer.
+     * @param writeBuffer                    The buffer to set as the write buffer.
      * @param copyVisibleBufferToWriteBuffer Whether the visible buffer should be copied to the back buffer during the
-     * process.
-     * @param autoSwap Whether to trigger the "blinking" effect. Set to {@code false} to disable blinking.
+     *                                       process.
+     * @param autoSwap                       Whether to trigger the "blinking" effect. Set to {@code false} to disable blinking.
      * @throws InvalidMidiDataException If a MIDI communication error occurs.
      */
     void doubleBufferMode(int visibleBuffer, int writeBuffer, boolean copyVisibleBufferToWriteBuffer, boolean autoSwap) throws InvalidMidiDataException;

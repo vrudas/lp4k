@@ -26,34 +26,34 @@ public interface MidiProtocolListener {
     /**
      * Called when a note starts being emitted.
      *
-     * @param note The note emitted.
+     * @param note      The note emitted.
      * @param timestamp When the event occurred.
      */
-    public void onNoteOn(int note, long timestamp);
+    void onNoteOn(int note, long timestamp);
 
     /**
      * Called when a note is not emitted anymore.
      *
-     * @param note The note silenced.
+     * @param note      The note silenced.
      * @param timestamp When the event occurred.
      */
-    public void onNoteOff(int note, long timestamp);
+    void onNoteOff(int note, long timestamp);
 
     /**
      * Called when a button starts being pressed.
      *
-     * @param button The button pressed.
+     * @param button    The button pressed.
      * @param timestamp When the event occurred.
      */
-    public void onButtonOn(int button, long timestamp);
+    void onButtonOn(int button, long timestamp);
 
     /**
      * Called when a button is released.
      *
-     * @param button The button released.
+     * @param button    The button released.
      * @param timestamp When the event occurred.
      */
-    public void onButtonOff(int button, long timestamp);
+    void onButtonOff(int button, long timestamp);
 
     /**
      * Called when text has been fully scrolled through the board.
