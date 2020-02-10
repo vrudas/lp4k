@@ -25,6 +25,7 @@ import org.mockito.Mockito;
 
 import javax.sound.midi.*;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DefaultMidiProtocolReceiverTest {
@@ -103,9 +104,15 @@ public class DefaultMidiProtocolReceiverTest {
     }
 
     @Test
-    public void close() throws Exception {
-        receiver.close();
+    public void close() {
+        assertDoesNotThrow(() -> receiver.close());
     }
 
-
+    @Test
+    void midi_protocol_receiver_cant_be_created_if_listener_is_null() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> new DefaultMidiProtocolReceiver(null)
+        );
+    }
 }

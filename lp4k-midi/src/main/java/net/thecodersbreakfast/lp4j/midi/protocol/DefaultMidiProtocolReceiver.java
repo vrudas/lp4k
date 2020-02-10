@@ -1,17 +1,19 @@
 /*
- * Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
+ *    Copyright 2020 Vasyl Rudas
+ *    Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ *
  */
 
 package net.thecodersbreakfast.lp4j.midi.protocol;
@@ -31,8 +33,10 @@ import javax.sound.midi.ShortMessage;
  */
 public class DefaultMidiProtocolReceiver implements Receiver {
 
-    /** The MidiProtocolListener to to notify when commands are received. */
-    private MidiProtocolListener midiProtocolListener;
+    /**
+     * The MidiProtocolListener to to notify when commands are received.
+     */
+    private final MidiProtocolListener midiProtocolListener;
 
     /**
      * Constructor.
@@ -48,7 +52,7 @@ public class DefaultMidiProtocolReceiver implements Receiver {
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * THIS METHOD SHOULD ONLY BE CALLED BY THE LAUNCHPAD DEVICE.
      */
     @Override
@@ -63,7 +67,7 @@ public class DefaultMidiProtocolReceiver implements Receiver {
     /**
      * Parses and routes MIDI short messages to adequate sub-handlers.
      *
-     * @param message The inconming message.
+     * @param message   The incoming message.
      * @param timestamp When the message arrived.
      */
     protected void handleShortMessage(ShortMessage message, long timestamp) {
@@ -83,8 +87,8 @@ public class DefaultMidiProtocolReceiver implements Receiver {
     /**
      * Parses "note on" messages and notifies the to the higher-level {@code midiProtocolListener}
      *
-     * @param note The activated note.
-     * @param velocity The note velocity.
+     * @param note      The activated note.
+     * @param velocity  The note velocity.
      * @param timestamp When the note was activated.
      */
     protected void handleNoteOnMessage(int note, int velocity, long timestamp) {
@@ -98,8 +102,8 @@ public class DefaultMidiProtocolReceiver implements Receiver {
     /**
      * Parses "control" messages and notifies the to the higher-level {@code midiProtocolListener}
      *
-     * @param note The activated note.
-     * @param velocity The note velocity.
+     * @param note      The activated note.
+     * @param velocity  The note velocity.
      * @param timestamp When the note was activated.
      */
     protected void handleControlChangeMessage(int note, int velocity, long timestamp) {
