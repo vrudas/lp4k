@@ -49,6 +49,14 @@ public class MidiLaunchpadClientTest {
         launchpadClient = new MidiLaunchpadClient(midiProtocolClient);
     }
 
+    @Test
+    void instance_creation_failed_for_null_midi_protocol_client() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> new MidiLaunchpadClient(null)
+        );
+    }
+
     /*
     ================================================================================
     setBrightness
@@ -56,8 +64,21 @@ public class MidiLaunchpadClientTest {
     */
 
     @Test
-    public void setBrightness() {
+    void brightness_was_not_set_for_null_argument() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> launchpadClient.setBrightness(null)
+        );
+    }
+
+    @Test
+    public void brightness_set_successful() throws InvalidMidiDataException {
+        int expectedNumerator = 1;
+        int expectedDenominator = 18 - Brightness.BRIGHTNESS_MIN.getBrightnessLevel();
+
         launchpadClient.setBrightness(Brightness.BRIGHTNESS_MIN);
+
+        verify(midiProtocolClient).brightness(expectedNumerator, expectedDenominator);
     }
 
     @Test
@@ -103,6 +124,32 @@ public class MidiLaunchpadClientTest {
         );
     }
 
+    @Test
+    void set_buffers_failed_for_null_visible_buffer() {
+        assertThrows(
+            IllegalArgumentException.class,
+            ()->launchpadClient.setBuffers(
+                null,
+                Buffer.BUFFER_1,
+                true,
+                true
+            )
+        );
+    }
+
+    @Test
+    void set_buffers_failed_for_null_write_buffer() {
+        assertThrows(
+            IllegalArgumentException.class,
+            ()->launchpadClient.setBuffers(
+                Buffer.BUFFER_0,
+                null,
+                false,
+                false
+            )
+        );
+    }
+
     /*
     ================================================================================
     setButtonLight
@@ -115,6 +162,42 @@ public class MidiLaunchpadClientTest {
         assertThrows(
             LaunchpadException.class,
             () -> launchpadClient.setButtonLight(Button.UP, Color.BLACK, BackBufferOperation.COPY)
+        );
+    }
+
+    @Test
+    void set_button_light_failed_for_null_button() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> launchpadClient.setButtonLight(
+                null,
+                Color.RED,
+                BackBufferOperation.NONE
+            )
+        );
+    }
+
+    @Test
+    void set_button_light_failed_for_null_color() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> launchpadClient.setButtonLight(
+                Button.MIXER,
+                null,
+                BackBufferOperation.NONE
+            )
+        );
+    }
+
+    @Test
+    void set_button_light_failed_for_null_operation() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> launchpadClient.setButtonLight(
+                Button.MIXER,
+                Color.RED,
+                null
+            )
         );
     }
 
@@ -204,6 +287,42 @@ public class MidiLaunchpadClientTest {
         );
     }
 
+    @Test
+    void set_pad_light_failed_for_null_pad() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> launchpadClient.setPadLight(
+                null,
+                Color.AMBER,
+                BackBufferOperation.NONE
+            )
+        );
+    }
+
+    @Test
+    void set_pad_light_failed_for_null_color() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> launchpadClient.setPadLight(
+                Pad.at(Pad.X_MAX, Pad.Y_MAX),
+                null,
+                BackBufferOperation.NONE
+            )
+        );
+    }
+
+    @Test
+    void set_pad_light_failed_for_null_operation() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> launchpadClient.setPadLight(
+                Pad.at(Pad.X_MAX, Pad.Y_MAX),
+                Color.AMBER,
+                null
+            )
+        );
+    }
+
     /*
     ================================================================================
     reset
@@ -248,6 +367,14 @@ public class MidiLaunchpadClientTest {
         );
     }
 
+    @Test
+    void test_lights_failed_because_of_null_input() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> launchpadClient.testLights(null)
+        );
+    }
+
     /*
     ================================================================================
     setLights
@@ -284,6 +411,14 @@ public class MidiLaunchpadClientTest {
     public void setLights_COPY() throws InvalidMidiDataException {
         launchpadClient.setLights(new Color[]{Color.BLACK, Color.BLACK}, BackBufferOperation.COPY);
         verify(midiProtocolClient).notesOn(12, 12);
+    }
+
+    @Test
+    void set_lights_failed_for_null_operation() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> launchpadClient.setLights(new Color[]{}, null)
+        );
     }
 
     /*
@@ -352,5 +487,31 @@ public class MidiLaunchpadClientTest {
         );
     }
 
+    @Test
+    void set_scroll_text_failed_for_null_speed() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> launchpadClient.scrollText(
+                "text",
+                Color.ORANGE,
+                null,
+                true,
+                BackBufferOperation.NONE
+            )
+        );
+    }
 
+    @Test
+    void set_scroll_text_failed_for_null_operation() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> launchpadClient.scrollText(
+                "text",
+                Color.ORANGE,
+                ScrollSpeed.SPEED_MAX,
+                true,
+                null
+            )
+        );
+    }
 }
