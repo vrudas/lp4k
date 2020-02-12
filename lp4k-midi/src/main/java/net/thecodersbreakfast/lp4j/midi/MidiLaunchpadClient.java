@@ -30,7 +30,9 @@ import javax.sound.midi.InvalidMidiDataException;
  */
 public class MidiLaunchpadClient implements LaunchpadClient {
 
-    /** Low-level MIDI client to communicate with the Launchpad. */
+    /**
+     * Low-level MIDI client to communicate with the Launchpad.
+     */
     private final MidiProtocolClient midiProtocolClient;
 
     /**
@@ -42,6 +44,7 @@ public class MidiLaunchpadClient implements LaunchpadClient {
         if (midiProtocolClient == null) {
             throw new IllegalArgumentException("MidiClient must not be null.");
         }
+
         this.midiProtocolClient = midiProtocolClient;
     }
 
@@ -51,7 +54,9 @@ public class MidiLaunchpadClient implements LaunchpadClient {
     ================================================================================
     */
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reset() {
         try {
@@ -97,7 +102,7 @@ public class MidiLaunchpadClient implements LaunchpadClient {
     /**
      * {@inheritDoc}
      *
-     * @param colors {@inheritDoc} Must be of even size.
+     * @param colors    {@inheritDoc} Must be of even size.
      * @param operation {@inheritDoc} Must not be null.
      */
     @Override
@@ -105,13 +110,14 @@ public class MidiLaunchpadClient implements LaunchpadClient {
         if (colors == null) {
             throw new IllegalArgumentException("Colors must not be null");
         }
+
         int nbColors = colors.length;
         if ((nbColors & 1) != 0) {
             throw new IllegalArgumentException("The number of colors for a batch update must be even.");
         }
-        if (operation == null) {
-            throw new IllegalArgumentException("BackBuffer operation must not be null.");
-        }
+
+        requireNotNullBackBufferOperation(operation);
+
         int[] rawColors = new int[nbColors];
         for (int i = 0; i < nbColors; i++) {
             rawColors[i] = toRawColor(colors[i], operation);
@@ -127,8 +133,8 @@ public class MidiLaunchpadClient implements LaunchpadClient {
     /**
      * {@inheritDoc}
      *
-     * @param pad {@inheritDoc} Must not be null.
-     * @param color {@inheritDoc} Must not be null.
+     * @param pad       {@inheritDoc} Must not be null.
+     * @param color     {@inheritDoc} Must not be null.
      * @param operation {@inheritDoc} Must not be null.
      */
     @Override
@@ -136,12 +142,8 @@ public class MidiLaunchpadClient implements LaunchpadClient {
         if (pad == null) {
             throw new IllegalArgumentException("Pad must not be null.");
         }
-        if (color == null) {
-            throw new IllegalArgumentException("Color must not be null.");
-        }
-        if (operation == null) {
-            throw new IllegalArgumentException("BackBuffer operation must not be null.");
-        }
+        requireNotNullColor(color);
+        requireNotNullBackBufferOperation(operation);
 
         int rawCoords = toRawCoords(pad.getX(), pad.getY());
         int rawColor = toRawColor(color, operation);
@@ -156,8 +158,8 @@ public class MidiLaunchpadClient implements LaunchpadClient {
     /**
      * {@inheritDoc}
      *
-     * @param button {@inheritDoc} Must not be null.
-     * @param color {@inheritDoc} Must not be null.
+     * @param button    {@inheritDoc} Must not be null.
+     * @param color     {@inheritDoc} Must not be null.
      * @param operation {@inheritDoc} Must not be null.
      */
     @Override
@@ -165,12 +167,8 @@ public class MidiLaunchpadClient implements LaunchpadClient {
         if (button == null) {
             throw new IllegalArgumentException("Button must not be null.");
         }
-        if (color == null) {
-            throw new IllegalArgumentException("Color must not be null.");
-        }
-        if (operation == null) {
-            throw new IllegalArgumentException("BackBuffer operation must not be null.");
-        }
+        requireNotNullColor(color);
+        requireNotNullBackBufferOperation(operation);
 
         try {
             int rawColor = toRawColor(color, operation);
@@ -209,7 +207,7 @@ public class MidiLaunchpadClient implements LaunchpadClient {
      * {@inheritDoc}
      *
      * @param visibleBuffer {@inheritDoc} Must not be null.
-     * @param writeBuffer {@inheritDoc} Must not be null.
+     * @param writeBuffer   {@inheritDoc} Must not be null.
      */
     @Override
     public void setBuffers(Buffer visibleBuffer, Buffer writeBuffer, boolean copyVisibleBufferToWriteBuffer, boolean autoSwap) {
@@ -240,21 +238,15 @@ public class MidiLaunchpadClient implements LaunchpadClient {
     /**
      * {@inheritDoc}
      *
-     * @param color {@inheritDoc} Must not be null.
-     * @param speed {@inheritDoc} Must not be null.
+     * @param color     {@inheritDoc} Must not be null.
+     * @param speed     {@inheritDoc} Must not be null.
      * @param operation {@inheritDoc} Must not be null.
      */
     @Override
     public void scrollText(String text, Color color, ScrollSpeed speed, boolean loop, BackBufferOperation operation) {
-        if (color == null) {
-            throw new IllegalArgumentException("Color must not be null.");
-        }
-        if (speed == null) {
-            throw new IllegalArgumentException("Speed must not be null.");
-        }
-        if (operation == null) {
-            throw new IllegalArgumentException("Operation must not be null.");
-        }
+        requireNotNullColor(color);
+        requireNotNullScrollSpeed(speed);
+        requireNotNullBackBufferOperation(operation);
 
         int rawColor = toRawColor(color, operation);
 
@@ -262,6 +254,12 @@ public class MidiLaunchpadClient implements LaunchpadClient {
             midiProtocolClient.text(text, rawColor, speed.getSpeedValue(), loop);
         } catch (InvalidMidiDataException e) {
             throw new LaunchpadException(e);
+        }
+    }
+
+    private void requireNotNullScrollSpeed(ScrollSpeed speed) {
+        if (speed == null) {
+            throw new IllegalArgumentException("Speed must not be null.");
         }
     }
 
@@ -274,22 +272,22 @@ public class MidiLaunchpadClient implements LaunchpadClient {
     /**
      * Converts a Color into its Launchpad-specific low-level representation
      *
-     * @param color The Color to convert. Must not be null.
+     * @param color     The Color to convert. Must not be null.
      * @param operation What to do on the backbuffer. Must not be null.
      * @return A binary representation of the color and how it should be applied to the Launchpad's buffers.
      */
     private byte toRawColor(Color color, BackBufferOperation operation) {
-        int flags = 0;
+        int flags;
         switch (operation) {
-            case NONE:
-                flags = 0;
-                break;
             case CLEAR:
                 flags = 8;
                 break;
             case COPY:
                 flags = 12;
                 break;
+            case NONE:
+            default:
+                flags = 0;
         }
         return (byte) (flags + color.getRedIntensity() + (16 * color.getGreenIntensity()));
     }
@@ -305,4 +303,15 @@ public class MidiLaunchpadClient implements LaunchpadClient {
         return x + 16 * y;
     }
 
+    private void requireNotNullColor(Color color) {
+        if (color == null) {
+            throw new IllegalArgumentException("Color must not be null.");
+        }
+    }
+
+    private void requireNotNullBackBufferOperation(BackBufferOperation operation) {
+        if (operation == null) {
+            throw new IllegalArgumentException("BackBuffer operation must not be null.");
+        }
+    }
 }

@@ -29,10 +29,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import javax.sound.midi.InvalidMidiDataException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.anyVararg;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -399,7 +399,7 @@ public class MidiLaunchpadClientTest {
 
     @Test
     public void setLights_exception() throws InvalidMidiDataException {
-        doThrow(new InvalidMidiDataException()).when(midiProtocolClient).notesOn((int[]) anyVararg());
+        doThrow(new InvalidMidiDataException()).when(midiProtocolClient).notesOn(any());
 
         assertThrows(
             LaunchpadException.class,
