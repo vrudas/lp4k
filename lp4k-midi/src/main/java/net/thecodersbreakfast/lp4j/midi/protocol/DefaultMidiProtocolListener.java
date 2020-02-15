@@ -36,15 +36,15 @@ public class DefaultMidiProtocolListener implements MidiProtocolListener {
      * @param listener The high-level LaunchpadListener to notify.
      */
     public DefaultMidiProtocolListener(LaunchpadListener listener) {
+        if (listener == null) {
+            throw new IllegalArgumentException("Listener must not be null.");
+        }
         this.listener = listener;
     }
 
     /** {@inheritDoc} */
     @Override
     public void onNoteOn(int note, long timestamp) {
-        if (listener == null) {
-            return;
-        }
         int x = note % 16;
         int y = note / 16;
         if (x >= 8) {
@@ -61,9 +61,6 @@ public class DefaultMidiProtocolListener implements MidiProtocolListener {
     /** {@inheritDoc} */
     @Override
     public void onNoteOff(int note, long timestamp) {
-        if (listener == null) {
-            return;
-        }
         int x = note % 16;
         int y = note / 16;
         if (x >= 8) {
@@ -80,9 +77,6 @@ public class DefaultMidiProtocolListener implements MidiProtocolListener {
     /** {@inheritDoc} */
     @Override
     public void onButtonOn(int note, long timestamp) {
-        if (listener == null) {
-            return;
-        }
         int value = note - 104;
         Button button = Button.atTop(value);
         listener.onButtonPressed(button, timestamp);
@@ -91,9 +85,6 @@ public class DefaultMidiProtocolListener implements MidiProtocolListener {
     /** {@inheritDoc} */
     @Override
     public void onButtonOff(int note, long timestamp) {
-        if (listener == null) {
-            return;
-        }
         int value = note - 104;
         Button button = Button.atTop(value);
         listener.onButtonReleased(button, timestamp);

@@ -47,6 +47,14 @@ public class DefaultMidiProtocolListenerTest {
     }
 
     @Test
+    void default_midi_protocol_listener_not_created_because_of_null_launchpad_listener() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> new DefaultMidiProtocolListener(null)
+        );
+    }
+
+    @Test
     public void onButtonOn_up() {
         midiProtocolListener.onButtonOn(BUTTON_UP, TIMESTAMP);
         Mockito.verify(listener).onButtonPressed(Button.UP, TIMESTAMP);
