@@ -25,10 +25,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.sound.midi.MidiDevice;
+import javax.sound.midi.MidiUnavailableException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith({MockitoExtension.class, })
 public class MidiDeviceConfigurationTest {
 
     @Mock
@@ -45,14 +47,36 @@ public class MidiDeviceConfigurationTest {
     }
 
     @Test
-    public void testGetInputDevice() throws Exception {
+    public void testGetInputDevice() {
         MidiDevice device = configuration.getInputDevice();
         assertEquals(inputDevice, device);
     }
 
     @Test
-    public void testGetOutputDevice() throws Exception {
+    public void testGetOutputDevice() {
         MidiDevice device = configuration.getOutputDevice();
         assertEquals(outputDevice, device);
     }
+
+    @Test
+    void auto_detection_not_found_launchpad_midi_input_device() throws MidiUnavailableException {
+        assertNull(MidiDeviceConfiguration.autodetectInputDevice());
+    }
+
+    @Test
+    void auto_detection_not_found_launchpad_midi_output_device() throws MidiUnavailableException {
+        assertNull(MidiDeviceConfiguration.autodetectOutputDevice());
+    }
+
+    @Test
+    void auto_detection_not_found_launchpad_midi_input_and_output_device() throws MidiUnavailableException {
+        MidiDeviceConfiguration deviceConfiguration = MidiDeviceConfiguration.autodetect();
+
+        MidiDevice inputDevice = deviceConfiguration.getInputDevice();
+        MidiDevice outputDevice = deviceConfiguration.getOutputDevice();
+
+        assertNull(inputDevice);
+        assertNull(outputDevice);
+    }
+
 }
