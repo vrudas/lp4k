@@ -16,10 +16,8 @@
 
 package net.thecodersbreakfast.lp4j.midi.protocol;
 
-import net.thecodersbreakfast.lp4j.api.LaunchpadException;
-
 import javax.sound.midi.*;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Default implementation of a  {@link net.thecodersbreakfast.lp4j.midi.protocol.MidiProtocolClient}.
@@ -116,7 +114,7 @@ public class DefaultMidiProtocolClient implements MidiProtocolClient {
             color += 64;
         }
         byte[] header = {(byte) 240, 0, 32, 41, 9, (byte) color};
-        byte[] chars = text == null ? new byte[]{} : text.getBytes(Charset.forName("ASCII"));
+        byte[] chars = text == null ? new byte[]{} : text.getBytes(StandardCharsets.US_ASCII);
         byte[] message = new byte[chars.length + 8];
         System.arraycopy(header, 0, message, 0, header.length);
         message[header.length] = (byte) speed;
@@ -143,13 +141,13 @@ public class DefaultMidiProtocolClient implements MidiProtocolClient {
     // Utils
     // ================================================================================
 
-    private void sendShortMessage(int command, int controller, int data) throws LaunchpadException, InvalidMidiDataException {
+    private void sendShortMessage(int command, int controller, int data) throws InvalidMidiDataException {
         ShortMessage message = new ShortMessage();
         message.setMessage(command, controller, data);
         send(message);
     }
 
-    private void sendShortMessage(int command, int channel, int controller, int data) throws LaunchpadException, InvalidMidiDataException {
+    private void sendShortMessage(int command, int channel, int controller, int data) throws InvalidMidiDataException {
         ShortMessage message = new ShortMessage();
         message.setMessage(command, channel, controller, data);
         send(message);
