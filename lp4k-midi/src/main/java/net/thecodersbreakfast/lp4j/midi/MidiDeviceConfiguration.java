@@ -33,12 +33,18 @@ import javax.sound.midi.MidiUnavailableException;
  */
 public class MidiDeviceConfiguration {
 
-    /** Device signature of a Launchpad S, used for autodetection. */
+    /**
+     * Device signature of a Launchpad S, used for autodetection.
+     */
     public static final String DEVICE_SIGNATURE = "Launchpad S";
 
-    /** Inbound communication channel. */
+    /**
+     * Inbound communication channel.
+     */
     private final MidiDevice inputDevice;
-    /** Outbound communication channel. */
+    /**
+     * Outbound communication channel.
+     */
     private final MidiDevice outputDevice;
 
     /**
@@ -48,6 +54,21 @@ public class MidiDeviceConfiguration {
      * @throws MidiUnavailableException If an error occurs during device probing.
      */
     public static MidiDeviceConfiguration autodetect() throws MidiUnavailableException {
+        return autodetect(DEVICE_SIGNATURE);
+    }
+
+    /**
+     * Tries to auto-detect a MIDI Launchpad based on its device signature.
+     *
+     * @param deviceSignature The MIDI device signature used for device detection. Must be not null or not blank.
+     * @return The auto-detected configuration.
+     * @throws MidiUnavailableException If an error occurs during device probing.
+     */
+    static MidiDeviceConfiguration autodetect(String deviceSignature) throws MidiUnavailableException {
+        if (deviceSignature == null || deviceSignature.isBlank()) {
+            throw new IllegalArgumentException("Not valid deviceSignature = '" + deviceSignature + "'");
+        }
+
         MidiDevice inputDevice = autodetectInputDevice();
         MidiDevice outputDevice = autodetectOutputDevice();
         return new MidiDeviceConfiguration(inputDevice, outputDevice);
@@ -56,7 +77,7 @@ public class MidiDeviceConfiguration {
     /**
      * Constructor.
      *
-     * @param inputDevice The inbound Midi channel.
+     * @param inputDevice  The inbound Midi channel.
      * @param outputDevice The outbound midi channel.
      */
     public MidiDeviceConfiguration(MidiDevice inputDevice, MidiDevice outputDevice) {
@@ -90,9 +111,20 @@ public class MidiDeviceConfiguration {
      * @throws MidiUnavailableException if the requested device is not available due to resource restrictions
      */
     public static MidiDevice autodetectOutputDevice() throws MidiUnavailableException {
+        return autodetectOutputDevice(DEVICE_SIGNATURE);
+    }
+
+    /**
+     * Tries to detect a valid outbound communication channel, based on a device signature
+     *
+     * @param deviceSignature The MIDI device signature used for device detection.
+     * @return A valid outbound communication channel, or {@code null} if non was found.
+     * @throws MidiUnavailableException if the requested device is not available due to resource restrictions
+     */
+    static MidiDevice autodetectOutputDevice(String deviceSignature) throws MidiUnavailableException {
         MidiDevice.Info[] midiDeviceInfo = MidiSystem.getMidiDeviceInfo();
         for (MidiDevice.Info info : midiDeviceInfo) {
-            if (info.getDescription().contains(DEVICE_SIGNATURE) || info.getName().contains(DEVICE_SIGNATURE)) {
+            if (info.getDescription().contains(deviceSignature) || info.getName().contains(deviceSignature)) {
                 MidiDevice device = MidiSystem.getMidiDevice(info);
                 if (device.getMaxReceivers() == -1) {
                     return device;
@@ -110,14 +142,24 @@ public class MidiDeviceConfiguration {
      * @throws MidiUnavailableException if the requested device is not available due to resource restrictions
      */
     public static MidiDevice autodetectInputDevice() throws MidiUnavailableException {
+        return autodetectInputDevice(DEVICE_SIGNATURE);
+    }
+
+    /**
+     * Tries to detect a valid inbound communication channel, based on a device signature
+     *
+     * @param deviceSignature The MIDI device signature used for device detection.
+     * @return A valid outbound communication channel, or {@code null} if non was found.
+     * @throws MidiUnavailableException if the requested device is not available due to resource restrictions
+     */
+    static MidiDevice autodetectInputDevice(String deviceSignature) throws MidiUnavailableException {
         MidiDevice.Info[] midiDeviceInfo = MidiSystem.getMidiDeviceInfo();
         for (MidiDevice.Info info : midiDeviceInfo) {
-            if (info.getDescription().contains(DEVICE_SIGNATURE) || info.getName().contains(DEVICE_SIGNATURE)) {
+            if (info.getDescription().contains(deviceSignature) || info.getName().contains(deviceSignature)) {
                 MidiDevice device = MidiSystem.getMidiDevice(info);
                 if (device.getMaxTransmitters() == -1) {
                     return device;
                 }
-                device.close();
             }
         }
         return null;

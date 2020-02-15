@@ -27,11 +27,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiUnavailableException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith({MockitoExtension.class, })
+@ExtendWith({MockitoExtension.class,})
 public class MidiDeviceConfigurationTest {
+
+    public static final String JDK_MIDI_DEVICE_NAME = "Real Time Sequencer";
+    public static final String JDK_MIDI_DEVICE_DESCRIPTION = "Software sequencer";
 
     @Mock
     private MidiDevice inputDevice;
@@ -44,6 +46,26 @@ public class MidiDeviceConfigurationTest {
     @BeforeEach
     public void init() {
         configuration = new MidiDeviceConfiguration(inputDevice, outputDevice);
+    }
+
+    private void assertMidiInputDevice(MidiDevice inputDevice) {
+        int expectedMaxTransmittersValue = -1;
+
+        assertNotNull(inputDevice);
+        assertEquals(
+            expectedMaxTransmittersValue,
+            inputDevice.getMaxTransmitters()
+        );
+    }
+
+    private void assertMidiOutputDevice(MidiDevice outputDevice) {
+        int expectedMaxReceiversValue = -1;
+
+        assertNotNull(outputDevice);
+        assertEquals(
+            expectedMaxReceiversValue,
+            outputDevice.getMaxReceivers()
+        );
     }
 
     @Test
@@ -77,6 +99,58 @@ public class MidiDeviceConfigurationTest {
 
         assertNull(inputDevice);
         assertNull(outputDevice);
+    }
+
+    @Test
+    void auto_detection_failed_because_of_null_device_signature() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> MidiDeviceConfiguration.autodetect(null)
+        );
+    }
+
+    @Test
+    void auto_detection_failed_because_of_empty_device_signature() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> MidiDeviceConfiguration.autodetect("")
+        );
+    }
+
+    @Test
+    void auto_detection_failed_because_of_blank_device_signature() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> MidiDeviceConfiguration.autodetect(" ")
+        );
+    }
+
+    @Test
+    void detect_by_name_software_midi_input_device_provided_from_jdk() throws MidiUnavailableException {
+        MidiDevice inputDevice = MidiDeviceConfiguration.autodetectInputDevice(JDK_MIDI_DEVICE_NAME);
+
+        assertMidiInputDevice(inputDevice);
+    }
+
+    @Test
+    void detect_by_description_software_midi_input_device_provided_from_jdk() throws MidiUnavailableException {
+        MidiDevice inputDevice = MidiDeviceConfiguration.autodetectInputDevice(JDK_MIDI_DEVICE_DESCRIPTION);
+
+        assertMidiInputDevice(inputDevice);
+    }
+
+    @Test
+    void detect_by_name_software_midi_output_device_provided_from_jdk() throws MidiUnavailableException {
+        MidiDevice outputDevice = MidiDeviceConfiguration.autodetectOutputDevice(JDK_MIDI_DEVICE_NAME);
+
+        assertMidiOutputDevice(outputDevice);
+    }
+
+    @Test
+    void detect_by_description_software_midi_output_device_provided_from_jdk() throws MidiUnavailableException {
+        MidiDevice outputDevice = MidiDeviceConfiguration.autodetectOutputDevice(JDK_MIDI_DEVICE_DESCRIPTION);
+
+        assertMidiOutputDevice(outputDevice);
     }
 
 }
