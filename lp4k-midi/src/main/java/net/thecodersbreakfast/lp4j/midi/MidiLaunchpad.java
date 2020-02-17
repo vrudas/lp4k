@@ -29,7 +29,6 @@ import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Receiver;
 import javax.sound.midi.Transmitter;
-import java.io.IOException;
 
 /**
  * Represents a physical MIDI Launchpad device.
@@ -38,16 +37,29 @@ import java.io.IOException;
  */
 public class MidiLaunchpad implements Launchpad {
 
-    /** The Launchpad's input channel (Device -> LP4J). */
+    /**
+     * The Launchpad's input channel (Device -> LP4J).
+     */
     private final Receiver receiver;
-    /** The Launchpad's output channel (LP4J -> Device). */
-    private final Transmitter transmitter;
-    /** The MIDI configuration holder. */
-    private MidiDeviceConfiguration configuration;
 
-    /** Indicates that the output channel has been successfully opened. */
+    /**
+     * The Launchpad's output channel (LP4J -> Device).
+     */
+    private final Transmitter transmitter;
+
+    /**
+     * The MIDI configuration holder.
+     */
+    private final MidiDeviceConfiguration configuration;
+
+    /**
+     * Indicates that the output channel has been successfully opened.
+     */
     private boolean openedOutputDevice = false;
-    /** Indicates that the input channel has been successfully opened. */
+
+    /**
+     * Indicates that the input channel has been successfully opened.
+     */
     private boolean openedInputDevice = false;
 
     /**
@@ -82,11 +94,12 @@ public class MidiLaunchpad implements Launchpad {
             this.transmitter = inputDevice.getTransmitter();
         } else {
             this.transmitter = null;
-
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LaunchpadClient getClient() {
         if (this.receiver == null) {
@@ -95,7 +108,9 @@ public class MidiLaunchpad implements Launchpad {
         return new MidiLaunchpadClient(new DefaultMidiProtocolClient(this.receiver));
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setListener(LaunchpadListener listener) {
         if (transmitter == null) {
@@ -106,12 +121,11 @@ public class MidiLaunchpad implements Launchpad {
         transmitter.setReceiver(midiReceiver);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void close() throws IOException {
-        if (configuration == null) {
-            return;
-        }
+    public void close() {
         if (openedOutputDevice) {
             MidiDevice outputDevice = configuration.getOutputDevice();
             if (outputDevice != null && outputDevice.isOpen()) {
