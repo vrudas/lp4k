@@ -1,4 +1,5 @@
 /*
+ * Copyright 2020 Vasyl Rudas
  * Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -39,15 +40,29 @@ import java.io.InputStream;
  */
 public class EmulatorLaunchpad implements Launchpad {
 
-    /** Directory to serve static files from. */
+    /**
+     * Directory to serve static files from.
+     */
     public static final String WEB_RESOURCES_PREFIX = "/web";
-    /** URL of the Vertx eventbus bridge */
+
+    /**
+     * URL of the Vertx eventbus bridge
+     */
     public static final String EVENTBUS_ADDRESS = "/eventbus";
-    /** Eventbus ID of the emulator, on the server side */
+
+    /**
+     * Eventbus ID of the emulator, on the server side
+     */
     public static final String EVENTBUS_SERVER_HANDLER_ID = "lp4j:server";
-    /** Handler for Vertx eventbus messages. */
+
+    /**
+     * Handler for Vertx eventbus messages.
+     */
     private final EventBusHandler eventBusHandler = new EventBusHandler();
-    /** Vertx engine instance. */
+
+    /**
+     * Vertx engine instance.
+     */
     private final Vertx vertx;
 
     /**
@@ -73,19 +88,25 @@ public class EmulatorLaunchpad implements Launchpad {
         httpServer.listen(httpPort);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LaunchpadClient getClient() {
         return new EmulatorLaunchpadClient(vertx);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setListener(LaunchpadListener listener) {
         this.eventBusHandler.setListener(listener);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void close() throws IOException {
         vertx.stop();
@@ -186,16 +207,31 @@ public class EmulatorLaunchpad implements Launchpad {
      */
     private static class EventBusHandler implements Handler<Message> {
 
-        private static enum InputEventType {
-            /** Pad pressed */
+        private enum InputEventType {
+
+            /**
+             * Pad pressed
+             */
             PP,
-            /** Pad released */
+
+            /**
+             * Pad released
+             */
             PR,
-            /** Button pressed */
+
+            /**
+             * Button pressed
+             */
             BP,
-            /** Button released */
+
+            /**
+             * Button released
+             */
             BR,
-            /** Text scrolled */
+
+            /**
+             * Text scrolled
+             */
             TS
         }
 

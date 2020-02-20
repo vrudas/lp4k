@@ -1,4 +1,5 @@
 /*
+ * Copyright 2020 Vasyl Rudas
  * Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,26 +28,44 @@ import org.vertx.java.core.json.JsonObject;
  */
 public class EmulatorLaunchpadClient implements LaunchpadClient {
 
-    /** Eventbus ID of the emulator, on the browser side */
+    /**
+     * Eventbus ID of the emulator, on the browser side
+     */
     private static final String EVENTBUS_CLIENT_HANDLER_ID = "lp4j:client";
 
-    /** Types of events sent to the emulator, on the browser side */
-    private static enum OutputEventType {
-        /** Reset */
+    /**
+     * Types of events sent to the emulator, on the browser side
+     */
+    private enum OutputEventType {
+        /**
+         * Reset
+         */
         RST,
-        /** Padlight */
+        /**
+         * Padlight
+         */
         PADLGT,
-        /** Button light */
+        /**
+         * Button light
+         */
         BTNLGT,
-        /** Test */
+        /**
+         * Test
+         */
         TST,
-        /** Brightness */
+        /**
+         * Brightness
+         */
         BRGHT,
-        /** SetBuffers */
+        /**
+         * SetBuffers
+         */
         BUF
     }
 
-    /** The Vertx engine that powers the emulator on the server side */
+    /**
+     * The Vertx engine that powers the emulator on the server side
+     */
     private final Vertx vertx;
 
     /**
@@ -84,7 +103,7 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
             brightness = 15;
         }
         JsonObject params = new JsonObject()
-                .putNumber("i", brightness);
+            .putNumber("i", brightness);
         publishEvent(OutputEventType.TST, params);
     }
 
@@ -106,8 +125,8 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
     /**
      * {@inheritDoc}
      *
-     * @param pad The pad to light up. Must not be null.
-     * @param color The color to use. Use {@link net.thecodersbreakfast.lp4j.api.Color#BLACK} to switch the light off. Must not be null.
+     * @param pad       The pad to light up. Must not be null.
+     * @param color     The color to use. Use {@link net.thecodersbreakfast.lp4j.api.Color#BLACK} to switch the light off. Must not be null.
      * @param operation What to do on the backbuffer. Must not be null.
      */
     @Override
@@ -122,18 +141,18 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
             throw new IllegalArgumentException("BackBuffer operation must not be null.");
         }
         JsonObject params = new JsonObject()
-                .putNumber("x", pad.getX())
-                .putNumber("y", pad.getY())
-                .putObject("c", new JsonObject().putNumber("r", color.getRedIntensity()).putNumber("g", color.getGreenIntensity()))
-                .putString("o", operation.name());
+            .putNumber("x", pad.getX())
+            .putNumber("y", pad.getY())
+            .putObject("c", new JsonObject().putNumber("r", color.getRedIntensity()).putNumber("g", color.getGreenIntensity()))
+            .putString("o", operation.name());
         publishEvent(OutputEventType.PADLGT, params);
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param button The button to light up. Must not be null.
-     * @param color The color to use. Use {@link net.thecodersbreakfast.lp4j.api.Color#BLACK} to switch the light off. Must not be null.
+     * @param button    The button to light up. Must not be null.
+     * @param color     The color to use. Use {@link net.thecodersbreakfast.lp4j.api.Color#BLACK} to switch the light off. Must not be null.
      * @param operation What to do on the backbuffer. Must not be null.
      */
     @Override
@@ -148,10 +167,10 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
             throw new IllegalArgumentException("BackBuffer operation must not be null.");
         }
         JsonObject params = new JsonObject()
-                .putBoolean("t", button.isTopButton())
-                .putNumber("i", button.getCoordinate())
-                .putObject("c", new JsonObject().putNumber("r", color.getRedIntensity()).putNumber("g", color.getGreenIntensity()))
-                .putString("o", operation.name());
+            .putBoolean("t", button.isTopButton())
+            .putNumber("i", button.getCoordinate())
+            .putObject("c", new JsonObject().putNumber("r", color.getRedIntensity()).putNumber("g", color.getGreenIntensity()))
+            .putString("o", operation.name());
         publishEvent(OutputEventType.BTNLGT, params);
     }
 
@@ -166,7 +185,7 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
             throw new IllegalArgumentException("Brightness must not be null");
         }
         JsonObject params = new JsonObject()
-                .putNumber("b", brightness.getBrightnessLevel());
+            .putNumber("b", brightness.getBrightnessLevel());
         publishEvent(OutputEventType.BRGHT, params);
     }
 
@@ -174,7 +193,7 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
      * {@inheritDoc}
      *
      * @param visibleBuffer The buffer to display. Must not be null.
-     * @param writeBuffer The buffer to which the commands are applied. Must not be null.
+     * @param writeBuffer   The buffer to which the commands are applied. Must not be null.
      */
     @Override
     public void setBuffers(Buffer visibleBuffer, Buffer writeBuffer, boolean copyVisibleBufferToWriteBuffer, boolean autoSwap) {
@@ -185,10 +204,10 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
             throw new IllegalArgumentException("Write buffer must not be null.");
         }
         JsonObject params = new JsonObject()
-                .putString("v", visibleBuffer.name())
-                .putString("w", writeBuffer.name())
-                .putBoolean("c", copyVisibleBufferToWriteBuffer)
-                .putBoolean("a", autoSwap);
+            .putString("v", visibleBuffer.name())
+            .putString("w", writeBuffer.name())
+            .putBoolean("c", copyVisibleBufferToWriteBuffer)
+            .putBoolean("a", autoSwap);
         publishEvent(OutputEventType.BUF, params);
     }
 
@@ -217,7 +236,7 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
      * Sends the given event to the emulator, with the given additional parameters
      *
      * @param outputEventType The event to send
-     * @param params The additional parameters
+     * @param params          The additional parameters
      */
     private void publishEvent(OutputEventType outputEventType, JsonObject params) {
         JsonObject payload = new JsonObject();
