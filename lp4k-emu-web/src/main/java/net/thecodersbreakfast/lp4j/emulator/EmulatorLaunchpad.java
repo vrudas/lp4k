@@ -29,11 +29,15 @@ import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.sockjs.BridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 import net.thecodersbreakfast.lp4j.api.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A web-based (HTML/SVG/Sebsockets) Launchpad emulator.
  */
 public class EmulatorLaunchpad implements Launchpad {
+
+    private static final Logger logger = LoggerFactory.getLogger(EmulatorLaunchpad.class);
 
     /**
      * Web path for accessing static files.
@@ -91,11 +95,11 @@ public class EmulatorLaunchpad implements Launchpad {
             // It can also be used for fine grained acgcess control.
 
             if (event.type() == BridgeEventType.SOCKET_CREATED) {
-                System.out.println("A socket was created");
+                logger.debug("A socket was created");
             }
 
             if (event.type() == BridgeEventType.PUBLISH || event.type() == BridgeEventType.SEND) {
-                System.out.println(event.getRawMessage());
+                logger.debug("Event raw message: {}", event.getRawMessage());
             }
 
             event.complete(true);
@@ -106,7 +110,7 @@ public class EmulatorLaunchpad implements Launchpad {
 
         vertx.eventBus().consumer(EVENTBUS_SERVER_HANDLER_ID, eventBusHandler::handle);
 
-        System.out.println("Launchpad emulator is ready on http://localhost:" + httpPort + "/");
+        logger.info("Launchpad emulator is ready on http://localhost:{}/", httpPort);
         httpServer.requestHandler(router).listen(httpPort);
     }
 
