@@ -30,8 +30,6 @@ import io.vertx.ext.web.handler.sockjs.BridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 import net.thecodersbreakfast.lp4j.api.*;
 
-import java.io.IOException;
-
 /**
  * A web-based (HTML/SVG/Sebsockets) Launchpad emulator.
  */
@@ -132,14 +130,14 @@ public class EmulatorLaunchpad implements Launchpad {
      * {@inheritDoc}
      */
     @Override
-    public void close() throws IOException {
+    public void close() {
         vertx.close();
     }
 
     /**
      * Handler for Vertx eventbus messages.
      */
-    private static class EventBusHandler implements Handler<Message> {
+    private static class EventBusHandler implements Handler<Message<?>> {
 
         private enum InputEventType {
 
