@@ -29,34 +29,6 @@ import net.thecodersbreakfast.lp4j.api.Pad;
  */
 public class EventBusHandler implements Handler<Message<JsonObject>> {
 
-    private enum InputEventType {
-
-        /**
-         * Pad pressed
-         */
-        PP,
-
-        /**
-         * Pad released
-         */
-        PR,
-
-        /**
-         * Button pressed
-         */
-        BP,
-
-        /**
-         * Button released
-         */
-        BR,
-
-        /**
-         * Text scrolled
-         */
-        TS
-    }
-
     private LaunchpadListener listener;
 
     @Override
