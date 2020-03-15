@@ -41,7 +41,7 @@ public class EmulatorLaunchpad implements Launchpad {
     /**
      * Web path for accessing static files.
      */
-    public static final String WEB_RESOURCES_PREFIX = "/web/*";
+    public static final String WEB_RESOURCES_PREFIX = "/*";
 
     /**
      * Resources directory to serve static files from.
