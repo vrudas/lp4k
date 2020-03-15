@@ -17,9 +17,9 @@
 
 package net.thecodersbreakfast.lp4j.emulator;
 
+import io.vertx.core.Vertx;
+import io.vertx.core.json.JsonObject;
 import net.thecodersbreakfast.lp4j.api.*;
-import org.vertx.java.core.Vertx;
-import org.vertx.java.core.json.JsonObject;
 
 /**
  * A client to communicate with the Launchpad emulator
@@ -103,7 +103,7 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
             brightness = 15;
         }
         JsonObject params = new JsonObject()
-            .putNumber("i", brightness);
+            .put("i", brightness);
         publishEvent(OutputEventType.TST, params);
     }
 
@@ -141,10 +141,10 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
             throw new IllegalArgumentException("BackBuffer operation must not be null.");
         }
         JsonObject params = new JsonObject()
-            .putNumber("x", pad.getX())
-            .putNumber("y", pad.getY())
-            .putObject("c", new JsonObject().putNumber("r", color.getRedIntensity()).putNumber("g", color.getGreenIntensity()))
-            .putString("o", operation.name());
+            .put("x", pad.getX())
+            .put("y", pad.getY())
+            .put("c", new JsonObject().put("r", color.getRedIntensity()).put("g", color.getGreenIntensity()))
+            .put("o", operation.name());
         publishEvent(OutputEventType.PADLGT, params);
     }
 
@@ -167,10 +167,10 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
             throw new IllegalArgumentException("BackBuffer operation must not be null.");
         }
         JsonObject params = new JsonObject()
-            .putBoolean("t", button.isTopButton())
-            .putNumber("i", button.getCoordinate())
-            .putObject("c", new JsonObject().putNumber("r", color.getRedIntensity()).putNumber("g", color.getGreenIntensity()))
-            .putString("o", operation.name());
+            .put("t", button.isTopButton())
+            .put("i", button.getCoordinate())
+            .put("c", new JsonObject().put("r", color.getRedIntensity()).put("g", color.getGreenIntensity()))
+            .put("o", operation.name());
         publishEvent(OutputEventType.BTNLGT, params);
     }
 
@@ -185,7 +185,7 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
             throw new IllegalArgumentException("Brightness must not be null");
         }
         JsonObject params = new JsonObject()
-            .putNumber("b", brightness.getBrightnessLevel());
+            .put("b", brightness.getBrightnessLevel());
         publishEvent(OutputEventType.BRGHT, params);
     }
 
@@ -204,10 +204,10 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
             throw new IllegalArgumentException("Write buffer must not be null.");
         }
         JsonObject params = new JsonObject()
-            .putString("v", visibleBuffer.name())
-            .putString("w", writeBuffer.name())
-            .putBoolean("c", copyVisibleBufferToWriteBuffer)
-            .putBoolean("a", autoSwap);
+            .put("v", visibleBuffer.name())
+            .put("w", writeBuffer.name())
+            .put("c", copyVisibleBufferToWriteBuffer)
+            .put("a", autoSwap);
         publishEvent(OutputEventType.BUF, params);
     }
 
@@ -240,7 +240,7 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
      */
     private void publishEvent(OutputEventType outputEventType, JsonObject params) {
         JsonObject payload = new JsonObject();
-        payload.putString("evt", outputEventType.name());
+        payload.put("evt", outputEventType.name());
         if (params != null) {
             payload.mergeIn(params);
         }

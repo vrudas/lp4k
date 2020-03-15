@@ -22,5 +22,5 @@ plugins {
 dependencies {
     implementation(project(":lp4k-api"))
 
-    implementation("io.vertx:vertx-platform:2.0.2-final")
+    implementation("io.vertx:vertx-web:3.8.5")
 }

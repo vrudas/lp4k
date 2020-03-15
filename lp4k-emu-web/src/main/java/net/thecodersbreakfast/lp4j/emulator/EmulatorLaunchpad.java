@@ -17,38 +17,40 @@
 
 package net.thecodersbreakfast.lp4j.emulator;
 
+import io.vertx.core.Handler;
+import io.vertx.core.Vertx;
+import io.vertx.core.eventbus.Message;
+import io.vertx.core.http.HttpServer;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.bridge.BridgeEventType;
+import io.vertx.ext.bridge.PermittedOptions;
+import io.vertx.ext.web.Router;
+import io.vertx.ext.web.handler.StaticHandler;
+import io.vertx.ext.web.handler.sockjs.BridgeOptions;
+import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 import net.thecodersbreakfast.lp4j.api.*;
-import org.vertx.java.core.Handler;
-import org.vertx.java.core.Vertx;
-import org.vertx.java.core.VertxFactory;
-import org.vertx.java.core.buffer.Buffer;
-import org.vertx.java.core.eventbus.Message;
-import org.vertx.java.core.http.HttpServer;
-import org.vertx.java.core.http.HttpServerRequest;
-import org.vertx.java.core.http.HttpServerResponse;
-import org.vertx.java.core.json.JsonArray;
-import org.vertx.java.core.json.JsonObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * A web-based (HTML/SVG/Sebsockets) Launchpad emulator.
- *
- * @author Olivier Croisier (olivier.croisier@gmail.com)
  */
 public class EmulatorLaunchpad implements Launchpad {
 
     /**
-     * Directory to serve static files from.
+     * Web path for accessing static files.
      */
-    public static final String WEB_RESOURCES_PREFIX = "/web";
+    public static final String WEB_RESOURCES_PREFIX = "/web/*";
+
+    /**
+     * Resources directory to serve static files from.
+     */
+    public static final String WEB_RESOURCES_DIR = "web";
 
     /**
      * URL of the Vertx eventbus bridge
      */
-    public static final String EVENTBUS_ADDRESS = "/eventbus";
+    public static final String EVENTBUS_ADDRESS = "/eventbus/*";
 
     /**
      * Eventbus ID of the emulator, on the server side
@@ -71,21 +73,43 @@ public class EmulatorLaunchpad implements Launchpad {
      * @param httpPort The HTTP port on which the emulator should run.
      */
     public EmulatorLaunchpad(int httpPort) {
+        vertx = Vertx.vertx();
 
-        vertx = VertxFactory.newVertx();
-
-        // Static files
+        Router router = Router.router(vertx);
         HttpServer httpServer = vertx.createHttpServer();
-        httpServer.requestHandler(new WebResourceHandler());
 
-        // Eventbus bridge
-        JsonObject bridgeConfig = new JsonObject().putString("prefix", EVENTBUS_ADDRESS);
-        JsonArray credentialsPermitAll = new JsonArray().add(new JsonObject());
-        vertx.createSockJSServer(httpServer).bridge(bridgeConfig, credentialsPermitAll, credentialsPermitAll);
-        vertx.eventBus().registerLocalHandler(EVENTBUS_SERVER_HANDLER_ID, eventBusHandler);
+        router.route(WEB_RESOURCES_PREFIX).handler(StaticHandler.create(WEB_RESOURCES_DIR));
+
+
+        SockJSHandler sockJSHandler = SockJSHandler.create(vertx);
+
+        BridgeOptions options = new BridgeOptions()
+            .addOutboundPermitted(new PermittedOptions())
+            .addInboundPermitted(new PermittedOptions());
+
+        sockJSHandler.bridge(options, event -> {
+            // You can also optionally provide a handler like this which will be passed any events that occur on the bridge
+            // You can use this for monitoring or logging, or to change the raw messages in-flight.
+            // It can also be used for fine grained acgcess control.
+
+            if (event.type() == BridgeEventType.SOCKET_CREATED) {
+                System.out.println("A socket was created");
+            }
+
+            if (event.type() == BridgeEventType.PUBLISH || event.type() == BridgeEventType.SEND) {
+                System.out.println(event.getRawMessage());
+            }
+
+            event.complete(true);
+        });
+
+        // mount the bridge on the router
+        router.route(EVENTBUS_ADDRESS).handler(sockJSHandler);
+
+        vertx.eventBus().consumer(EVENTBUS_SERVER_HANDLER_ID, eventBusHandler::handle);
 
         System.out.println("Launchpad emulator is ready on http://localhost:" + httpPort + "/");
-        httpServer.listen(httpPort);
+        httpServer.requestHandler(router).listen(httpPort);
     }
 
     /**
@@ -109,97 +133,7 @@ public class EmulatorLaunchpad implements Launchpad {
      */
     @Override
     public void close() throws IOException {
-        vertx.stop();
-    }
-
-    /**
-     * Handler for standart HTTP requests, used to serve static files.
-     */
-    private static class WebResourceHandler implements Handler<HttpServerRequest> {
-        @Override
-        public void handle(HttpServerRequest req) {
-            String resourcePath = req.path();
-            HttpServerResponse response = req.response();
-
-            if (shouldRedirectToIndexHtml(resourcePath)) {
-                redirectToIndexHtml(response);
-                return;
-            }
-
-            if (!isLegalResource(resourcePath)) {
-                sendResponseForbidden(response);
-                return;
-            }
-
-            if (!writeResourceToResponse(response, resourcePath)) {
-                sendResponseNotFound(response);
-            }
-
-        }
-
-        private boolean shouldRedirectToIndexHtml(String resourcePath) {
-            return "/".equals(resourcePath);
-        }
-
-        private void redirectToIndexHtml(HttpServerResponse response) {
-            response.headers().add("Location", WEB_RESOURCES_PREFIX + "/index.html");
-            response.setStatusCode(301).end();
-        }
-
-        private boolean isLegalResource(String resourcePath) {
-            return resourcePath.startsWith(WEB_RESOURCES_PREFIX);
-        }
-
-        private void sendResponseForbidden(HttpServerResponse response) {
-            response.setStatusCode(403).end();
-        }
-
-        private void setResponseContentType(HttpServerResponse response, String resourcePath) {
-            String contentType = findContentType(resourcePath);
-            response.headers().add("Content-Type", contentType);
-        }
-
-        private String findContentType(String resourcePath) {
-            if (resourcePath.endsWith(".js")) {
-                return "application/javascript";
-            } else {
-                return "text/html";
-            }
-        }
-
-        private boolean writeResourceToResponse(HttpServerResponse response, String resourcePath) {
-            setResponseContentType(response, resourcePath);
-            byte[] bytes = readResource(resourcePath);
-            if (bytes == null) {
-                return false;
-            }
-            Buffer buffer = new Buffer(bytes);
-            response.end(buffer);
-            return true;
-        }
-
-        private static byte[] readResource(String path) {
-            try {
-                InputStream is = EmulatorLaunchpad.class.getResourceAsStream(path);
-                if (is == null) {
-                    return null;
-                }
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                int reads = is.read();
-                while (reads != -1) {
-                    baos.write(reads);
-                    reads = is.read();
-                }
-                return baos.toByteArray();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                return null;
-            }
-        }
-
-        private void sendResponseNotFound(HttpServerResponse response) {
-            response.setStatusCode(404).end();
-        }
+        vertx.close();
     }
 
     /**

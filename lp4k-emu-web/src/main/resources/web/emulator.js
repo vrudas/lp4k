@@ -90,10 +90,10 @@ $(document).ready(function () {
     configureLaunchpad();
     initDisplay(document.getElementById("launchpad"));
 
-    eventbus = new vertx.EventBus('/eventbus');
+    eventbus = new EventBus('/eventbus');
     eventbus.onopen = function () {
-        eventbus.registerHandler(CLIENT_EVENTBUS_ID, function (event) {
-            handleClientCommand(event);
+        eventbus.registerHandler(CLIENT_EVENTBUS_ID,{}, function(error, message) {
+            handleClientCommand(message.body);
             updateDisplay(launchpad);
         });
     }
