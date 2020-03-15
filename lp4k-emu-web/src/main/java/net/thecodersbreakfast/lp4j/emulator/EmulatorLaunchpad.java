@@ -28,6 +28,7 @@ import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 import net.thecodersbreakfast.lp4j.api.Launchpad;
 import net.thecodersbreakfast.lp4j.api.LaunchpadClient;
 import net.thecodersbreakfast.lp4j.api.LaunchpadListener;
+import net.thecodersbreakfast.lp4j.emulator.input.EventBusHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
