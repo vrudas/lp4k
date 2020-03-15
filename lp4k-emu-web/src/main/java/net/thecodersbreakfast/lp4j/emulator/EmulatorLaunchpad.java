@@ -107,7 +107,7 @@ public class EmulatorLaunchpad implements Launchpad {
         // mount the bridge on the router
         router.route(EVENTBUS_ADDRESS).handler(sockJSHandler);
 
-        vertx.eventBus().consumer(EVENTBUS_SERVER_HANDLER_ID, eventBusHandler::handle);
+        vertx.eventBus().consumer(EVENTBUS_SERVER_HANDLER_ID, eventBusHandler);
 
         logger.info("Launchpad emulator is ready on http://localhost:{}/", httpPort);
         httpServer.requestHandler(router).listen(httpPort);

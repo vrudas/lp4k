@@ -27,7 +27,7 @@ import net.thecodersbreakfast.lp4j.api.Pad;
 /**
  * Handler for Vertx eventbus messages.
  */
-class EventBusHandler implements Handler<Message<?>> {
+class EventBusHandler implements Handler<Message<JsonObject>> {
 
     private enum InputEventType {
 
@@ -60,13 +60,13 @@ class EventBusHandler implements Handler<Message<?>> {
     private LaunchpadListener listener;
 
     @Override
-    public void handle(Message message) {
+    public void handle(Message<JsonObject> message) {
         if (listener == null) {
             return;
         }
 
         long timestamp = System.currentTimeMillis();
-        JsonObject body = (JsonObject) message.body();
+        JsonObject body = message.body();
         InputEventType inputEventType = InputEventType.valueOf(body.getString("evt"));
         switch (inputEventType) {
             case PP: {
