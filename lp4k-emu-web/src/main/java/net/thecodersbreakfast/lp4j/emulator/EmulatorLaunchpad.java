@@ -17,18 +17,17 @@
 
 package net.thecodersbreakfast.lp4j.emulator;
 
-import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
-import io.vertx.core.eventbus.Message;
 import io.vertx.core.http.HttpServer;
-import io.vertx.core.json.JsonObject;
 import io.vertx.ext.bridge.BridgeEventType;
 import io.vertx.ext.bridge.PermittedOptions;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.sockjs.BridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
-import net.thecodersbreakfast.lp4j.api.*;
+import net.thecodersbreakfast.lp4j.api.Launchpad;
+import net.thecodersbreakfast.lp4j.api.LaunchpadClient;
+import net.thecodersbreakfast.lp4j.api.LaunchpadListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -138,92 +137,4 @@ public class EmulatorLaunchpad implements Launchpad {
         vertx.close();
     }
 
-    /**
-     * Handler for Vertx eventbus messages.
-     */
-    private static class EventBusHandler implements Handler<Message<?>> {
-
-        private enum InputEventType {
-
-            /**
-             * Pad pressed
-             */
-            PP,
-
-            /**
-             * Pad released
-             */
-            PR,
-
-            /**
-             * Button pressed
-             */
-            BP,
-
-            /**
-             * Button released
-             */
-            BR,
-
-            /**
-             * Text scrolled
-             */
-            TS
-        }
-
-        private LaunchpadListener listener;
-
-        @Override
-        public void handle(Message message) {
-            if (listener == null) {
-                return;
-            }
-
-            long timestamp = System.currentTimeMillis();
-            JsonObject body = (JsonObject) message.body();
-            InputEventType inputEventType = InputEventType.valueOf(body.getString("evt"));
-            switch (inputEventType) {
-                case PP: {
-                    Integer x = body.getInteger("x");
-                    Integer y = body.getInteger("y");
-                    listener.onPadPressed(Pad.at(x, y), timestamp);
-                    break;
-                }
-                case PR: {
-                    Integer x = body.getInteger("x");
-                    Integer y = body.getInteger("y");
-                    listener.onPadReleased(Pad.at(x, y), timestamp);
-                    break;
-                }
-                case BP: {
-                    int x = body.getInteger("x");
-                    int y = body.getInteger("y");
-                    int c = x == -1 ? y : x;
-                    Button button = (x != -1) ? Button.atTop(c) : Button.atRight(c);
-                    listener.onButtonPressed(button, timestamp);
-                    break;
-                }
-                case BR: {
-                    int x = body.getInteger("x");
-                    int y = body.getInteger("y");
-                    int c = x == -1 ? y : x;
-                    Button button = (x != -1) ? Button.atTop(c) : Button.atRight(c);
-                    listener.onButtonReleased(button, timestamp);
-                    break;
-                }
-                case TS: {
-                    listener.onTextScrolled(timestamp);
-                    break;
-                }
-                default: {
-                    throw new IllegalArgumentException("Unknown input event type " + inputEventType.name());
-                }
-            }
-
-        }
-
-        public void setListener(LaunchpadListener listener) {
-            this.listener = listener;
-        }
-    }
 }
