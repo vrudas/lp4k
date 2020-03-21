@@ -24,6 +24,8 @@ import net.thecodersbreakfast.lp4j.api.Button;
 import net.thecodersbreakfast.lp4j.api.LaunchpadListener;
 import net.thecodersbreakfast.lp4j.api.Pad;
 
+import java.util.function.ObjLongConsumer;
+
 /**
  * Handler for Vertx eventbus messages.
  */
@@ -54,38 +56,28 @@ public class EventBusHandler implements Handler<Message<JsonObject>> {
         long timestamp = System.currentTimeMillis();
         JsonObject body = message.body();
 
-        InputEventType inputEventType = convertToInputEventType(body.getString(EVENT_TYPE_KEY));
+        String eventTypeName = body.getString(EVENT_TYPE_KEY);
+        InputEventType inputEventType = convertToInputEventType(eventTypeName);
 
         switch (inputEventType) {
-            case PP: {
-                Pad pad = extractPad(body);
-                listener.onPadPressed(pad, timestamp);
+            case PP:
+                processPadEvent(body, timestamp, listener::onPadPressed);
                 break;
-            }
-            case PR: {
-                Pad pad = extractPad(body);
-                listener.onPadReleased(pad, timestamp);
+            case PR:
+                processPadEvent(body, timestamp, listener::onPadReleased);
                 break;
-            }
-            case BP: {
-                Button button = extractButton(body);
-                listener.onButtonPressed(button, timestamp);
+            case BP:
+                processButtonEvent(body, timestamp, listener::onButtonPressed);
                 break;
-            }
-            case BR: {
-                Button button = extractButton(body);
-                listener.onButtonReleased(button, timestamp);
+            case BR:
+                processButtonEvent(body, timestamp, listener::onButtonReleased);
                 break;
-            }
-            case TS: {
+            case TS:
                 listener.onTextScrolled(timestamp);
                 break;
-            }
-            default: {
+            default:
                 throw new IllegalArgumentException("Unknown input event type " + inputEventType.name());
-            }
         }
-
     }
 
     private InputEventType convertToInputEventType(String eventTypeName) {
@@ -133,4 +125,21 @@ public class EventBusHandler implements Handler<Message<JsonObject>> {
         }
     }
 
+    private void processPadEvent(
+        JsonObject body,
+        long timestamp,
+        ObjLongConsumer<Pad> padEventConsumer
+    ) {
+        Pad pad = extractPad(body);
+        padEventConsumer.accept(pad, timestamp);
+    }
+
+    private void processButtonEvent(
+        JsonObject body,
+        long timestamp,
+        ObjLongConsumer<Button> buttonEventConsumer
+    ) {
+        Button button = extractButton(body);
+        buttonEventConsumer.accept(button, timestamp);
+    }
 }
