@@ -20,6 +20,7 @@ package net.thecodersbreakfast.lp4j.emulator;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import net.thecodersbreakfast.lp4j.api.*;
+import net.thecodersbreakfast.lp4j.emulator.output.OutputEventType;
 
 /**
  * A client to communicate with the Launchpad emulator
@@ -32,36 +33,6 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
      * Eventbus ID of the emulator, on the browser side
      */
     private static final String EVENTBUS_CLIENT_HANDLER_ID = "lp4j:client";
-
-    /**
-     * Types of events sent to the emulator, on the browser side
-     */
-    private enum OutputEventType {
-        /**
-         * Reset
-         */
-        RST,
-        /**
-         * Padlight
-         */
-        PADLGT,
-        /**
-         * Button light
-         */
-        BTNLGT,
-        /**
-         * Test
-         */
-        TST,
-        /**
-         * Brightness
-         */
-        BRGHT,
-        /**
-         * SetBuffers
-         */
-        BUF
-    }
 
     /**
      * The Vertx engine that powers the emulator on the server side
