@@ -15,19 +15,26 @@
  *
  */
 
-plugins {
-    id "java"
-}
+package net.thecodersbreakfast.lp4j.emulator.input;
 
-dependencies {
-    implementation(project(":lp4k-api"))
+class Coordinate {
+    private final String keyName;
+    private final Integer coordinateValue;
 
-    implementation("io.vertx:vertx-web:3.8.5")
+    private Coordinate(String keyName, Integer coordinateValue) {
+        this.keyName = keyName;
+        this.coordinateValue = coordinateValue;
+    }
 
-    implementation("org.slf4j:slf4j-api:${slf4jVersion}")
-    implementation("org.slf4j:slf4j-simple:${slf4jVersion}")
+    static Coordinate of(String keyName, Integer coordinateValue) {
+        return new Coordinate(keyName, coordinateValue);
+    }
 
-    testImplementation("org.junit.jupiter:junit-jupiter:${junitVersion}")
-    testImplementation("org.mockito:mockito-core:${mockitoVersion}")
-    testImplementation("org.mockito:mockito-junit-jupiter:${mockitoVersion}")
+    public String getKeyName() {
+        return keyName;
+    }
+
+    public Integer getCoordinateValue() {
+        return coordinateValue;
+    }
 }

@@ -29,7 +29,21 @@ import net.thecodersbreakfast.lp4j.api.Pad;
  */
 public class EventBusHandler implements Handler<Message<JsonObject>> {
 
+    static final String EVENT_TYPE_KEY = "evt";
+
+    static final String PAD_X_KEY = "x";
+    static final String PAD_Y_KEY = "y";
+
+    static final String BUTTON_X_KEY = "x";
+    static final String BUTTON_Y_KEY = "y";
+
+    static final int RIGHT_BUTTON_COORDINATE = -1;
+
     private LaunchpadListener listener;
+
+    public void setListener(LaunchpadListener listener) {
+        this.listener = listener;
+    }
 
     @Override
     public void handle(Message<JsonObject> message) {
@@ -39,33 +53,27 @@ public class EventBusHandler implements Handler<Message<JsonObject>> {
 
         long timestamp = System.currentTimeMillis();
         JsonObject body = message.body();
-        InputEventType inputEventType = InputEventType.valueOf(body.getString("evt"));
+
+        InputEventType inputEventType = convertToInputEventType(body.getString(EVENT_TYPE_KEY));
+
         switch (inputEventType) {
             case PP: {
-                Integer x = body.getInteger("x");
-                Integer y = body.getInteger("y");
-                listener.onPadPressed(Pad.at(x, y), timestamp);
+                Pad pad = extractPad(body);
+                listener.onPadPressed(pad, timestamp);
                 break;
             }
             case PR: {
-                Integer x = body.getInteger("x");
-                Integer y = body.getInteger("y");
-                listener.onPadReleased(Pad.at(x, y), timestamp);
+                Pad pad = extractPad(body);
+                listener.onPadReleased(pad, timestamp);
                 break;
             }
             case BP: {
-                int x = body.getInteger("x");
-                int y = body.getInteger("y");
-                int c = x == -1 ? y : x;
-                Button button = (x != -1) ? Button.atTop(c) : Button.atRight(c);
+                Button button = extractButton(body);
                 listener.onButtonPressed(button, timestamp);
                 break;
             }
             case BR: {
-                int x = body.getInteger("x");
-                int y = body.getInteger("y");
-                int c = x == -1 ? y : x;
-                Button button = (x != -1) ? Button.atTop(c) : Button.atRight(c);
+                Button button = extractButton(body);
                 listener.onButtonReleased(button, timestamp);
                 break;
             }
@@ -80,7 +88,49 @@ public class EventBusHandler implements Handler<Message<JsonObject>> {
 
     }
 
-    public void setListener(LaunchpadListener listener) {
-        this.listener = listener;
+    private InputEventType convertToInputEventType(String eventTypeName) {
+        try {
+            return InputEventType.valueOf(eventTypeName);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Cant convert '" + eventTypeName + "' to enum value");
+        }
     }
+
+    private Pad extractPad(JsonObject body) {
+        Integer x = extractCoordinate(body, PAD_X_KEY);
+        Integer y = extractCoordinate(body, PAD_Y_KEY);
+        return Pad.at(x, y);
+    }
+
+    private Button extractButton(JsonObject body) {
+        int x = extractCoordinate(body, "x");
+        int y = extractCoordinate(body, "y");
+
+        int buttonCoordinate = calculateButtonCoordinate(x, y);
+
+        if (x == RIGHT_BUTTON_COORDINATE) {
+            return Button.atRight(buttonCoordinate);
+        } else {
+            return Button.atTop(buttonCoordinate);
+        }
+    }
+
+    private Integer extractCoordinate(JsonObject body, String coordinateKey) {
+        Integer coordinate = body.getInteger(coordinateKey);
+
+        if (coordinate == null) {
+            throw new IllegalArgumentException("Coordinate '" + coordinateKey + "' cant be null");
+        }
+
+        return coordinate;
+    }
+
+    private int calculateButtonCoordinate(int x, int y) {
+        if (x == RIGHT_BUTTON_COORDINATE) {
+            return y;
+        } else {
+            return x;
+        }
+    }
+
 }
