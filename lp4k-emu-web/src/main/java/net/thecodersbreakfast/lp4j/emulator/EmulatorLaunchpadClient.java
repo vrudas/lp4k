@@ -60,9 +60,7 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
      */
     @Override
     public void testLights(LightIntensity intensity) {
-        if (intensity == null) {
-            throw new IllegalArgumentException("Light intensity must not be null.");
-        }
+        requireNonNullIntensity(intensity);
 
         int brightness = prepareBrightnessValue(intensity);
 
@@ -91,13 +89,12 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
      * @throws UnsupportedOperationException because not implemented in emulator
      */
     @Override
-    public void setLights(Color[] colors, BackBufferOperation operation) {
-        if (colors == null) {
-            throw new IllegalArgumentException("Colors must not be null");
-        }
-        if (operation == null) {
-            throw new IllegalArgumentException("BackBuffer operation must not be null.");
-        }
+    public void setLights(
+        Color[] colors,
+        BackBufferOperation operation
+    ) {
+        requireNonNullColors(colors);
+        requireNonNullBackBufferOperation(operation);
 
         throw new UnsupportedOperationException("Not implemented in emulator");
     }
@@ -110,21 +107,26 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
      * @param operation What to do on the backbuffer. Must not be null.
      */
     @Override
-    public void setPadLight(Pad pad, Color color, BackBufferOperation operation) {
-        if (pad == null) {
-            throw new IllegalArgumentException("Pad must not be null");
-        }
-        if (color == null) {
-            throw new IllegalArgumentException("Color must not be null.");
-        }
-        if (operation == null) {
-            throw new IllegalArgumentException("BackBuffer operation must not be null.");
-        }
+    public void setPadLight(
+        Pad pad,
+        Color color,
+        BackBufferOperation operation
+    ) {
+        requireNonNullPad(pad);
+        requireNonNullColor(color);
+        requireNonNullBackBufferOperation(operation);
+
         JsonObject params = new JsonObject()
             .put("x", pad.getX())
             .put("y", pad.getY())
-            .put("c", new JsonObject().put("r", color.getRedIntensity()).put("g", color.getGreenIntensity()))
+            .put(
+                "c",
+                new JsonObject()
+                    .put("r", color.getRedIntensity())
+                    .put("g", color.getGreenIntensity())
+            )
             .put("o", operation.name());
+
         publishEvent(OutputEventType.PADLGT, params);
     }
 
@@ -136,21 +138,26 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
      * @param operation What to do on the backbuffer. Must not be null.
      */
     @Override
-    public void setButtonLight(Button button, Color color, BackBufferOperation operation) {
-        if (button == null) {
-            throw new IllegalArgumentException("Button must not be null.");
-        }
-        if (color == null) {
-            throw new IllegalArgumentException("Color must not be null.");
-        }
-        if (operation == null) {
-            throw new IllegalArgumentException("BackBuffer operation must not be null.");
-        }
+    public void setButtonLight(
+        Button button,
+        Color color,
+        BackBufferOperation operation
+    ) {
+        requireNonNullButton(button);
+        requireNonNullColor(color);
+        requireNonNullBackBufferOperation(operation);
+
         JsonObject params = new JsonObject()
             .put("t", button.isTopButton())
             .put("i", button.getCoordinate())
-            .put("c", new JsonObject().put("r", color.getRedIntensity()).put("g", color.getGreenIntensity()))
+            .put(
+                "c",
+                new JsonObject()
+                    .put("r", color.getRedIntensity())
+                    .put("g", color.getGreenIntensity())
+            )
             .put("o", operation.name());
+
         publishEvent(OutputEventType.BTNLGT, params);
     }
 
@@ -161,11 +168,11 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
      */
     @Override
     public void setBrightness(Brightness brightness) {
-        if (brightness == null) {
-            throw new IllegalArgumentException("Brightness must not be null");
-        }
+        requireNonNullBrightness(brightness);
+
         JsonObject params = new JsonObject()
             .put("b", brightness.getBrightnessLevel());
+
         publishEvent(OutputEventType.BRGHT, params);
     }
 
@@ -176,18 +183,21 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
      * @param writeBuffer   The buffer to which the commands are applied. Must not be null.
      */
     @Override
-    public void setBuffers(Buffer visibleBuffer, Buffer writeBuffer, boolean copyVisibleBufferToWriteBuffer, boolean autoSwap) {
-        if (visibleBuffer == null) {
-            throw new IllegalArgumentException("Visible buffer must not be null.");
-        }
-        if (writeBuffer == null) {
-            throw new IllegalArgumentException("Write buffer must not be null.");
-        }
+    public void setBuffers(
+        Buffer visibleBuffer,
+        Buffer writeBuffer,
+        boolean copyVisibleBufferToWriteBuffer,
+        boolean autoSwap
+    ) {
+        requireNonNullBuffer(visibleBuffer, "Visible buffer must not be null.");
+        requireNonNullBuffer(writeBuffer, "Write buffer must not be null.");
+
         JsonObject params = new JsonObject()
             .put("v", visibleBuffer.name())
             .put("w", writeBuffer.name())
             .put("c", copyVisibleBufferToWriteBuffer)
             .put("a", autoSwap);
+
         publishEvent(OutputEventType.BUF, params);
     }
 
@@ -197,7 +207,13 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
      * @throws UnsupportedOperationException because not implemented in emulator
      */
     @Override
-    public void scrollText(String text, Color color, ScrollSpeed speed, boolean loop, BackBufferOperation operation) {
+    public void scrollText(
+        String text,
+        Color color,
+        ScrollSpeed speed,
+        boolean loop,
+        BackBufferOperation operation
+    ) {
         throw new UnsupportedOperationException("Not implemented in emulator");
     }
 
@@ -216,13 +232,66 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
      * @param outputEventType The event to send
      * @param params          The additional parameters
      */
-    private void publishEvent(OutputEventType outputEventType, JsonObject params) {
+    private void publishEvent(
+        OutputEventType outputEventType,
+        JsonObject params
+    ) {
         JsonObject payload = new JsonObject();
         payload.put("evt", outputEventType.name());
+
         if (params != null) {
             payload.mergeIn(params);
         }
+
         vertx.eventBus().publish(EVENTBUS_CLIENT_HANDLER_ID, payload);
+    }
+
+    private void requireNonNullIntensity(LightIntensity intensity) {
+        if (intensity == null) {
+            throw new IllegalArgumentException("Light intensity must not be null.");
+        }
+    }
+
+    private void requireNonNullColors(Color[] colors) {
+        if (colors == null) {
+            throw new IllegalArgumentException("Colors must not be null");
+        }
+    }
+
+    private void requireNonNullColor(Color color) {
+        if (color == null) {
+            throw new IllegalArgumentException("Color must not be null.");
+        }
+    }
+
+    private void requireNonNullBackBufferOperation(BackBufferOperation operation) {
+        if (operation == null) {
+            throw new IllegalArgumentException("BackBuffer operation must not be null.");
+        }
+    }
+
+    private void requireNonNullPad(Pad pad) {
+        if (pad == null) {
+            throw new IllegalArgumentException("Pad must not be null");
+        }
+    }
+
+    private void requireNonNullButton(Button button) {
+        if (button == null) {
+            throw new IllegalArgumentException("Button must not be null.");
+        }
+    }
+
+    private void requireNonNullBrightness(Brightness brightness) {
+        if (brightness == null) {
+            throw new IllegalArgumentException("Brightness must not be null");
+        }
+    }
+
+    private void requireNonNullBuffer(Buffer visibleBuffer, String errorMessage) {
+        if (visibleBuffer == null) {
+            throw new IllegalArgumentException(errorMessage);
+        }
     }
 
 }
