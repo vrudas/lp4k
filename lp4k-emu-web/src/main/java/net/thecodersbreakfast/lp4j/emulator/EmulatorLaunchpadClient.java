@@ -63,19 +63,26 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
         if (intensity == null) {
             throw new IllegalArgumentException("Light intensity must not be null.");
         }
-        int brightness = 0;
-        if (intensity == LightIntensity.LOW) {
-            brightness = 5;
-        }
-        if (intensity == LightIntensity.MEDIUM) {
-            brightness = 10;
-        }
-        if (intensity == LightIntensity.HIGH) {
-            brightness = 15;
-        }
+
+        int brightness = prepareBrightnessValue(intensity);
+
         JsonObject params = new JsonObject()
             .put("i", brightness);
+
         publishEvent(OutputEventType.TST, params);
+    }
+
+    private int prepareBrightnessValue(LightIntensity intensity) {
+        switch (intensity) {
+            case LOW:
+                return 5;
+            case MEDIUM:
+                return 10;
+            case HIGH:
+                return 15;
+            default:
+                return 0;
+        }
     }
 
     /**
