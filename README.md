@@ -5,6 +5,7 @@ LP4K - A Launchpad API for Java
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=vrudas_lp4k&metric=alert_status)](https://sonarcloud.io/dashboard?id=vrudas_lp4k)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=vrudas_lp4k&metric=ncloc)](https://sonarcloud.io/dashboard?id=vrudas_lp4k)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=vrudas_lp4k&metric=coverage)](https://sonarcloud.io/dashboard?id=vrudas_lp4k)
+[![codecov](https://codecov.io/gh/vrudas/lp4k/branch/master/graph/badge.svg)](https://codecov.io/gh/vrudas/lp4k)
 
 Launchpad is a midi device built by Novation, used to drive computer-assisted music creation applications such as Ableton Live.
 
