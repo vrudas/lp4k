@@ -3,7 +3,7 @@ name: codecov
 on: [push]
 
 jobs:
-  build:
+  codecov:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,5 +14,7 @@ jobs:
         with:
           java-version: 11
 
-      - name: Build with Gradle
-        run: ./gradlew allJacocoTestReport bash <(curl -s https://codecov.io/bash)
+      - name: Run test coverage analysis for Codecov
+        run:
+          - ./gradlew allJacocoTestReport
+          - bash <(curl -s https://codecov.io/bash)
