@@ -89,22 +89,6 @@ class EmulatorLaunchpadClientTest {
     }
 
     @Test
-    void set_lights_event_not_published_because_of_null_colors_argument() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> emulatorLaunchpadClient.setLights(null, null)
-        );
-    }
-
-    @Test
-    void set_lights_event_not_published_because_of_null_back_buffer_operation_argument() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> emulatorLaunchpadClient.setLights(new Color[0], null)
-        );
-    }
-
-    @Test
     void set_lights_event_not_published_because_not_implemented() {
         assertThrows(
             UnsupportedOperationException.class,

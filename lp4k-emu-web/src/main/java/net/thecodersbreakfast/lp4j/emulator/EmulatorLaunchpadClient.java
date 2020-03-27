@@ -93,9 +93,6 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
         Color[] colors,
         BackBufferOperation operation
     ) {
-        requireNonNullColors(colors);
-        requireNonNullBackBufferOperation(operation);
-
         throw new UnsupportedOperationException("Not implemented in emulator");
     }
 
@@ -249,12 +246,6 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
     private void requireNonNullIntensity(LightIntensity intensity) {
         if (intensity == null) {
             throw new IllegalArgumentException("Light intensity must not be null.");
-        }
-    }
-
-    private void requireNonNullColors(Color[] colors) {
-        if (colors == null) {
-            throw new IllegalArgumentException("Colors must not be null");
         }
     }
 
