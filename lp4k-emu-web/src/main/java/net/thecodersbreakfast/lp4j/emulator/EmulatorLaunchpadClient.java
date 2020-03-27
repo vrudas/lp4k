@@ -81,7 +81,7 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
     /**
      * {@inheritDoc}
      *
-     * <p>NOT IMPLEMENTED YET ON THE EMULATOR
+     * @throws UnsupportedOperationException because not implemented in emulator
      */
     @Override
     public void setLights(Color[] colors, BackBufferOperation operation) {
@@ -91,6 +91,8 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
         if (operation == null) {
             throw new IllegalArgumentException("BackBuffer operation must not be null.");
         }
+
+        throw new UnsupportedOperationException("Not implemented in emulator");
     }
 
     /**
@@ -185,13 +187,11 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
     /**
      * {@inheritDoc}
      *
-     * <p>NOT IMPLEMENTED YET ON THE EMULATOR
+     * @throws UnsupportedOperationException because not implemented in emulator
      */
     @Override
     public void scrollText(String text, Color color, ScrollSpeed speed, boolean loop, BackBufferOperation operation) {
-        if (color == null) {
-            throw new IllegalArgumentException("Color must not be null.");
-        }
+        throw new UnsupportedOperationException("Not implemented in emulator");
     }
 
     /**
