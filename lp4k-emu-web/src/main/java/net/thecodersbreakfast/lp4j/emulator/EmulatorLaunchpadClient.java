@@ -100,7 +100,8 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
      * {@inheritDoc}
      *
      * @param pad       The pad to light up. Must not be null.
-     * @param color     The color to use. Use {@link net.thecodersbreakfast.lp4j.api.Color#BLACK} to switch the light off. Must not be null.
+     * @param color     The color to use. Use {@link net.thecodersbreakfast.lp4j.api.Color#BLACK}
+     *                  to switch the light off. Must not be null.
      * @param operation What to do on the backbuffer. Must not be null.
      */
     @Override
@@ -131,7 +132,8 @@ public class EmulatorLaunchpadClient implements LaunchpadClient {
      * {@inheritDoc}
      *
      * @param button    The button to light up. Must not be null.
-     * @param color     The color to use. Use {@link net.thecodersbreakfast.lp4j.api.Color#BLACK} to switch the light off. Must not be null.
+     * @param color     The color to use. Use {@link net.thecodersbreakfast.lp4j.api.Color#BLACK}
+     *                  to switch the light off. Must not be null.
      * @param operation What to do on the backbuffer. Must not be null.
      */
     @Override
