@@ -15,6 +15,6 @@ jobs:
           java-version: 11
 
       - name: Run test coverage analysis for Codecov
-        run:
-          - ./gradlew allJacocoTestReport
-          - bash <(curl -s https://codecov.io/bash)
+        run: |
+          ./gradlew allJacocoTestReport
+          bash <(curl -s https://codecov.io/bash)
