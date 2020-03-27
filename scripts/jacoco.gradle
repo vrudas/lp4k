@@ -15,7 +15,7 @@
  *
  */
 
-rootProject.ext.allJacocoTestReportFile = rootProject.file("$buildDir/reports/jacoco/allJacocoTestReport.xml")
+rootProject.ext.codeCoverageReportFile = rootProject.file("$buildDir/reports/jacoco/report.xml")
 
 allprojects {
     apply plugin: 'java'
@@ -35,7 +35,7 @@ allprojects {
 }
 
 rootProject.tasks.create(
-    name: "allJacocoTestReport",
+    name: "codeCoverageReport",
     type: JacocoReport.class,
     group: "verification"
 ) {
@@ -43,12 +43,11 @@ rootProject.tasks.create(
 
     reports {
         xml.enabled true
-        xml.setDestination(rootProject.allJacocoTestReportFile as File)
+        xml.setDestination(rootProject.codeCoverageReportFile as File)
     }
 
     executionData(
-        rootProject.fileTree(rootDir.getAbsolutePath())
-            .include("**/build/jacoco/*.exec")
+        fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
     )
 
     sourceSets(
