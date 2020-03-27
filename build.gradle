@@ -37,7 +37,7 @@ sonarqube {
         property "sonar.projectKey", "vrudas_lp4k"
         property "sonar.organization", "vrudas"
         property "sonar.host.url", "https://sonarcloud.io"
-        property "sonar.coverage.jacoco.xmlReportPaths", rootProject.allJacocoTestReportFile
+        property "sonar.coverage.jacoco.xmlReportPaths", rootProject.codeCoverageReportFile
     }
 }
 
