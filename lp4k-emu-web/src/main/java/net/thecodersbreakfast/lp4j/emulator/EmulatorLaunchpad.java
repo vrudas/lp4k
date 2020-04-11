@@ -17,9 +17,9 @@
 
 package net.thecodersbreakfast.lp4j.emulator;
 
+import io.lp4k.emulator.input.EventBusMessageDebugger;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
-import io.vertx.ext.bridge.BridgeEventType;
 import io.vertx.ext.bridge.PermittedOptions;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.StaticHandler;
@@ -102,21 +102,7 @@ public class EmulatorLaunchpad implements Launchpad {
             .addOutboundPermitted(new PermittedOptions())
             .addInboundPermitted(new PermittedOptions());
 
-        sockJSHandler.bridge(options, event -> {
-            // You can also optionally provide a handler like this which will be passed any events that occur on the bridge
-            // You can use this for monitoring or logging, or to change the raw messages in-flight.
-            // It can also be used for fine grained acgcess control.
-
-            if (event.type() == BridgeEventType.SOCKET_CREATED) {
-                logger.debug("A socket was created");
-            }
-
-            if (event.type() == BridgeEventType.PUBLISH || event.type() == BridgeEventType.SEND) {
-                logger.debug("Event raw message: {}", event.getRawMessage());
-            }
-
-            event.complete(true);
-        });
+        sockJSHandler.bridge(options, new EventBusMessageDebugger());
 
         // mount the bridge on the router
         router.route(EVENTBUS_ADDRESS).handler(sockJSHandler);
