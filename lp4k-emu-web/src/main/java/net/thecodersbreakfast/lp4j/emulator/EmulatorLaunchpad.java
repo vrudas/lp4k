@@ -62,7 +62,7 @@ public class EmulatorLaunchpad implements Launchpad {
     /**
      * Handler for Vertx eventbus messages.
      */
-    private final EventBusHandler eventBusHandler = new EventBusHandler();
+    private final EventBusHandler eventBusHandler;
 
     /**
      * Vertx engine instance.
@@ -75,8 +75,21 @@ public class EmulatorLaunchpad implements Launchpad {
      * @param httpPort The HTTP port on which the emulator should run.
      */
     public EmulatorLaunchpad(int httpPort) {
-        vertx = Vertx.vertx();
+        this(httpPort, Vertx.vertx());
+    }
 
+    EmulatorLaunchpad(int httpPort, Vertx vertx) {
+        this(httpPort, vertx, new EventBusHandler());
+    }
+
+    EmulatorLaunchpad(int httpPort, Vertx vertx, EventBusHandler eventBusHandler) {
+        this.vertx = vertx;
+        this.eventBusHandler = eventBusHandler;
+
+        configureVertx(httpPort);
+    }
+
+    private void configureVertx(int httpPort) {
         Router router = Router.router(vertx);
         HttpServer httpServer = vertx.createHttpServer();
 
@@ -111,6 +124,7 @@ public class EmulatorLaunchpad implements Launchpad {
         vertx.eventBus().consumer(EVENTBUS_SERVER_HANDLER_ID, eventBusHandler);
 
         logger.info("Launchpad emulator is ready on http://localhost:{}/", httpPort);
+
         httpServer.requestHandler(router).listen(httpPort);
     }
 

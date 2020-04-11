@@ -30,4 +30,5 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:${junitVersion}")
     testImplementation("org.mockito:mockito-core:${mockitoVersion}")
     testImplementation("org.mockito:mockito-junit-jupiter:${mockitoVersion}")
+    testImplementation("io.vertx:vertx-junit5:3.8.5")
 }
