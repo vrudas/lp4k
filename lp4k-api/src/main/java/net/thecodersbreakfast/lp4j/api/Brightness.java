@@ -86,7 +86,10 @@ public final class Brightness {
      * @return a brighter Brightness instance, or the same instance if it was already the brightest.
      */
     public Brightness more() {
-        return brightnessLevel < MAX_VALUE ? of(brightnessLevel + 1) : this;
+        if (brightnessLevel < MAX_VALUE) {
+            return of(brightnessLevel + 1);
+        }
+        return this;
     }
 
     /**
@@ -95,7 +98,10 @@ public final class Brightness {
      * @return a less bright Brightness instance, or the same instance if it was already the least bright.
      */
     public Brightness less() {
-        return brightnessLevel > MIN_VALUE ? of(brightnessLevel - 1) : this;
+        if (brightnessLevel > MIN_VALUE) {
+            return of(brightnessLevel - 1);
+        }
+        return this;
     }
 
     @Override

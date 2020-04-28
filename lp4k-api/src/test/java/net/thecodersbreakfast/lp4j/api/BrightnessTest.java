@@ -81,4 +81,20 @@ public class BrightnessTest {
             Brightness.of(Brightness.MIN_VALUE).hashCode()
         );
     }
+
+    @Test
+    void more_return_same_max_brightness_value_for_already_max_value() {
+        assertEquals(
+            Brightness.BRIGHTNESS_MAX,
+            Brightness.BRIGHTNESS_MAX.more()
+        );
+    }
+
+    @Test
+    void less_return_same_min_brightness_value_for_already_min_value() {
+        assertEquals(
+            Brightness.BRIGHTNESS_MIN,
+            Brightness.BRIGHTNESS_MIN.less()
+        );
+    }
 }
