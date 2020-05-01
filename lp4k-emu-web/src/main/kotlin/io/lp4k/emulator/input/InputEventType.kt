@@ -15,35 +15,32 @@
  *
  */
 
-package net.thecodersbreakfast.lp4j.emulator.output;
+package io.lp4k.emulator.input
 
-/**
- * Types of events sent to the emulator, on the browser side
- */
-public enum OutputEventType {
+enum class InputEventType {
     /**
-     * Reset
+     * Pad pressed
      */
-    RST,
+    PP,
+
     /**
-     * Padlight
+     * Pad released
      */
-    PADLGT,
+    PR,
+
     /**
-     * Button light
+     * Button pressed
      */
-    BTNLGT,
+    BP,
+
     /**
-     * Test
+     * Button released
      */
-    TST,
+    BR,
+
     /**
-     * Brightness
+     * Text scrolled
      */
-    BRGHT,
-    /**
-     * SetBuffers
-     */
-    BUF
+    TS
+
 }
-

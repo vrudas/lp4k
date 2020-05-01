@@ -21,7 +21,7 @@ import io.lp4k.emulator.MockEventBus;
 import io.lp4k.emulator.MockVertx;
 import io.vertx.core.json.JsonObject;
 import net.thecodersbreakfast.lp4j.api.*;
-import net.thecodersbreakfast.lp4j.emulator.output.OutputEventType;
+import io.lp4k.emulator.output.OutputEventType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

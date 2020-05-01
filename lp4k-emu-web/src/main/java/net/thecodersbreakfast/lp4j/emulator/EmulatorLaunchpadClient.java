@@ -20,7 +20,7 @@ package net.thecodersbreakfast.lp4j.emulator;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import net.thecodersbreakfast.lp4j.api.*;
-import net.thecodersbreakfast.lp4j.emulator.output.OutputEventType;
+import io.lp4k.emulator.output.OutputEventType;
 
 /**
  * A client to communicate with the Launchpad emulator

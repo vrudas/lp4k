@@ -17,6 +17,7 @@
 
 package net.thecodersbreakfast.lp4j.emulator.input;
 
+import io.lp4k.emulator.input.InputEventType;
 import io.vertx.core.Handler;
 import io.vertx.core.eventbus.Message;
 import io.vertx.core.json.JsonObject;

@@ -17,6 +17,7 @@
 
 package net.thecodersbreakfast.lp4j.emulator.input;
 
+import io.lp4k.emulator.input.InputEventType;
 import io.lp4k.emulator.input.MockMessage;
 import net.thecodersbreakfast.lp4j.api.Button;
 import net.thecodersbreakfast.lp4j.api.LaunchpadListener;
