@@ -14,33 +14,32 @@
  *    limitations under the License.
  *
  */
+package io.lp4k.emulator.input
 
-package io.lp4k.emulator.input;
+import io.vertx.core.Handler
+import io.vertx.ext.bridge.BridgeEventType
+import io.vertx.ext.web.handler.sockjs.BridgeEvent
+import org.slf4j.LoggerFactory
 
-import io.vertx.core.Handler;
-import io.vertx.ext.bridge.BridgeEventType;
-import io.vertx.ext.web.handler.sockjs.BridgeEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+internal class EventBusMessageDebugger : Handler<BridgeEvent> {
 
-public class EventBusMessageDebugger implements Handler<BridgeEvent> {
-
-    private static final Logger logger = LoggerFactory.getLogger(EventBusMessageDebugger.class);
-
-    @Override
-    public void handle(BridgeEvent event) {
+    override fun handle(event: BridgeEvent) {
         // You can also optionally provide a handler like this which will be passed any events that occur on the bridge
         // You can use this for monitoring or logging, or to change the raw messages in-flight.
         // It can also be used for fine grained acgcess control.
 
         if (event.type() == BridgeEventType.SOCKET_CREATED) {
-            logger.debug("A socket was created");
+            logger.debug("A socket was created")
         }
 
         if (event.type() == BridgeEventType.PUBLISH || event.type() == BridgeEventType.SEND) {
-            logger.debug("Event raw message: {}", event.getRawMessage());
+            logger.debug("Event raw message: ${event.rawMessage}")
         }
 
-        event.complete(true);
+        event.complete(true)
+    }
+
+    companion object {
+        private val logger = LoggerFactory.getLogger(EventBusMessageDebugger::class.java)
     }
 }
