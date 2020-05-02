@@ -14,27 +14,6 @@
  *    limitations under the License.
  *
  */
+package io.lp4k.emulator.input
 
-package io.lp4k.emulator.input;
-
-class Coordinate {
-    private final String keyName;
-    private final Integer coordinateValue;
-
-    private Coordinate(String keyName, Integer coordinateValue) {
-        this.keyName = keyName;
-        this.coordinateValue = coordinateValue;
-    }
-
-    static Coordinate of(String keyName, Integer coordinateValue) {
-        return new Coordinate(keyName, coordinateValue);
-    }
-
-    public String getKeyName() {
-        return keyName;
-    }
-
-    public Integer getCoordinateValue() {
-        return coordinateValue;
-    }
-}
+internal class Coordinate (val keyName: String, val coordinateValue: Int?)
