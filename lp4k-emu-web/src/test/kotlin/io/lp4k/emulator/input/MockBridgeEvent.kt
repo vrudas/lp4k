@@ -14,13 +14,8 @@
  *    limitations under the License.
  *
  */
+package io.lp4k.emulator.input
 
-package io.lp4k.emulator;
+import io.vertx.ext.web.handler.sockjs.BridgeEvent
 
-import io.vertx.core.eventbus.EventBus;
-
-public interface MockEventBus extends EventBus {
-
-    @Override
-    EventBus publish(String address, Object message);
-}
+interface MockBridgeEvent : BridgeEvent 

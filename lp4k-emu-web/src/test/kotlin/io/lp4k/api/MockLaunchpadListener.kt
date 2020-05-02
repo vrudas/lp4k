@@ -14,53 +14,37 @@
  *    limitations under the License.
  *
  */
+package io.lp4k.api
 
-package io.lp4k.api;
+import net.thecodersbreakfast.lp4j.api.Button
+import net.thecodersbreakfast.lp4j.api.LaunchpadListener
+import net.thecodersbreakfast.lp4j.api.Pad
 
-import net.thecodersbreakfast.lp4j.api.Button;
-import net.thecodersbreakfast.lp4j.api.LaunchpadListener;
-import net.thecodersbreakfast.lp4j.api.Pad;
-
-public interface MockLaunchpadListener extends LaunchpadListener {
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    default void onPadPressed(Pad pad, long timestamp) {
-
-    }
+interface MockLaunchpadListener : LaunchpadListener {
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    default void onPadReleased(Pad pad, long timestamp) {
-
-    }
+    override fun onPadPressed(pad: Pad, timestamp: Long) = Unit
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    default void onButtonPressed(Button button, long timestamp) {
-
-    }
+    override fun onPadReleased(pad: Pad, timestamp: Long) = Unit
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    default void onButtonReleased(Button button, long timestamp) {
-
-    }
+    override fun onButtonPressed(button: Button, timestamp: Long) = Unit
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    default void onTextScrolled(long timestamp) {
+    override fun onButtonReleased(button: Button, timestamp: Long) = Unit
 
-    }
+    /**
+     * {@inheritDoc}
+     */
+    override fun onTextScrolled(timestamp: Long) = Unit
 
 }

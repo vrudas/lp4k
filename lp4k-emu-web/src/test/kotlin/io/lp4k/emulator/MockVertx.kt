@@ -14,15 +14,13 @@
  *    limitations under the License.
  *
  */
+package io.lp4k.emulator
 
-package io.lp4k.emulator;
+import io.vertx.core.Vertx
+import io.vertx.core.eventbus.EventBus
 
-import io.vertx.core.Vertx;
-import io.vertx.core.eventbus.EventBus;
+interface MockVertx : Vertx {
 
-public interface MockVertx extends Vertx {
-
-    @Override
-    EventBus eventBus();
+    override fun eventBus(): EventBus
 
 }
