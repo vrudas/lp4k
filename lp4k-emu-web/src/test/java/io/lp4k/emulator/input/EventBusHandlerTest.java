@@ -15,10 +15,8 @@
  *
  */
 
-package net.thecodersbreakfast.lp4j.emulator.input;
+package io.lp4k.emulator.input;
 
-import io.lp4k.emulator.input.InputEventType;
-import io.lp4k.emulator.input.MockMessage;
 import net.thecodersbreakfast.lp4j.api.Button;
 import net.thecodersbreakfast.lp4j.api.LaunchpadListener;
 import net.thecodersbreakfast.lp4j.api.Pad;
@@ -29,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.Collections.singletonMap;
-import static net.thecodersbreakfast.lp4j.emulator.input.EventBusHandler.*;
+import static io.lp4k.emulator.input.EventBusHandler.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;

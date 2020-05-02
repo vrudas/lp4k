@@ -15,7 +15,7 @@
  *
  */
 
-package net.thecodersbreakfast.lp4j.emulator;
+package io.lp4k.emulator;
 
 import io.lp4k.api.MockLaunchpadListener;
 import io.vertx.core.Vertx;
@@ -24,7 +24,7 @@ import io.vertx.core.http.HttpServer;
 import io.vertx.ext.web.Router;
 import io.vertx.junit5.VertxExtension;
 import io.vertx.junit5.VertxTestContext;
-import net.thecodersbreakfast.lp4j.emulator.input.EventBusHandler;
+import io.lp4k.emulator.input.EventBusHandler;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
