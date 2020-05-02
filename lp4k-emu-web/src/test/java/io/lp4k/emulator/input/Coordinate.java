@@ -15,7 +15,7 @@
  *
  */
 
-package net.thecodersbreakfast.lp4j.emulator.input;
+package io.lp4k.emulator.input;
 
 class Coordinate {
     private final String keyName;

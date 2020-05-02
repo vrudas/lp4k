@@ -15,10 +15,8 @@
  *
  */
 
-package net.thecodersbreakfast.lp4j.emulator;
+package io.lp4k.emulator;
 
-import io.lp4k.emulator.MockEventBus;
-import io.lp4k.emulator.MockVertx;
 import io.vertx.core.json.JsonObject;
 import net.thecodersbreakfast.lp4j.api.*;
 import io.lp4k.emulator.output.OutputEventType;
