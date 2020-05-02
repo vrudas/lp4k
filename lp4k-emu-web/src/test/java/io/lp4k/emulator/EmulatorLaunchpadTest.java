@@ -25,6 +25,9 @@ import io.vertx.ext.web.Router;
 import io.vertx.junit5.VertxExtension;
 import io.vertx.junit5.VertxTestContext;
 import io.lp4k.emulator.input.EventBusHandler;
+import net.thecodersbreakfast.lp4j.api.Button;
+import net.thecodersbreakfast.lp4j.api.Pad;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -186,6 +189,30 @@ class EmulatorLaunchpadTest {
         );
 
         MockLaunchpadListener launchpadListener = new MockLaunchpadListener() {
+            @Override
+            public void onTextScrolled(long timestamp) {
+
+            }
+
+            @Override
+            public void onButtonReleased(@NotNull Button button, long timestamp) {
+
+            }
+
+            @Override
+            public void onButtonPressed(@NotNull Button button, long timestamp) {
+
+            }
+
+            @Override
+            public void onPadReleased(@NotNull Pad pad, long timestamp) {
+
+            }
+
+            @Override
+            public void onPadPressed(@NotNull Pad pad, long timestamp) {
+
+            }
         };
 
         emulatorLaunchpad.setListener(launchpadListener);
