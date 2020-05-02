@@ -27,8 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.Collections.singletonMap;
-import static io.lp4k.emulator.input.EventBusHandler.*;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
@@ -36,6 +34,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 class EventBusHandlerTest {
+    private static final String EVENT_TYPE_KEY = "evt";
+
+    private static final String PAD_X_KEY = "x";
+    private static final String PAD_Y_KEY = "y";
+
+    private static final String BUTTON_X_KEY = "x";
+    private static final String BUTTON_Y_KEY = "y";
+
+    private static final int RIGHT_BUTTON_COORDINATE = -1;
 
     private static MockMessage padPressMessage(Integer x, Integer y) {
         return message(
@@ -111,16 +118,9 @@ class EventBusHandlerTest {
     }
 
     @Test
-    void nothing_happened_in_case_when_launchpad_listener_is_not_set() {
-        handler.setListener(null);
-
-        assertDoesNotThrow(() -> handler.handle(new MockMessage()));
-    }
-
-    @Test
     void exception_is_thrown_for_null_input_event_type() {
         assertThrows(
-            IllegalArgumentException.class,
+            IllegalStateException.class,
             () -> handler.handle(message(null))
         );
     }
