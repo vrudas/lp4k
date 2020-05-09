@@ -23,6 +23,7 @@ allprojects {
         targetClasses.set(['net.thecodersbreakfast.lp4j.*', 'io.lp4k.*'])  //by default "${project.group}.*"
         threads.set(4)
         outputFormats.set(['XML', 'HTML'])
+        timestampedReports.set(false)
 
         if (project.name in [rootProject.name]) {
             failWhenNoMutations.set(false)
