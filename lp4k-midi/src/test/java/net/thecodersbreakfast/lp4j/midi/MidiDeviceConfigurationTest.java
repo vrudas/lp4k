@@ -90,8 +90,11 @@ public class MidiDeviceConfigurationTest {
     }
 
     @Test
-    void auto_detection_not_found_launchpad_midi_output_device() throws MidiUnavailableException {
-        assertNull(MidiDeviceConfiguration.autodetectOutputDevice());
+    void auto_detection_not_found_launchpad_midi_output_device() {
+        assertThrows(
+            DeviceNotFoundException.class,
+            MidiDeviceConfiguration::autodetectOutputDevice
+        );
     }
 
     @Test
