@@ -105,11 +105,9 @@ public class PadTest {
 
     @Test
     void hashcode_is_equal_for_pads_with_same_coordinates() {
-        Pad pad = Pad.at(Pad.X_MIN, Pad.Y_MIN);
-
         Set<Pad> pads = new HashSet<>();
-        pads.add(pad);
-        pads.add(pad);
+        pads.add(Pad.at(Pad.X_MAX, Pad.Y_MAX));
+        pads.add(Pad.at(7, 7));
 
         assertEquals(1, pads.size());
     }

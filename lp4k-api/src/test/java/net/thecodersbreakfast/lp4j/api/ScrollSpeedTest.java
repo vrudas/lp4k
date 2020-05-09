@@ -45,7 +45,7 @@ public class ScrollSpeedTest {
     @Test
     @SuppressWarnings("java:S3415")
     void check_equals() {
-        assertEquals(ScrollSpeed.SPEED_MAX, ScrollSpeed.SPEED_MAX);
+        assertEquals(ScrollSpeed.SPEED_MAX, ScrollSpeed.of(7));
     }
 
     @Test
@@ -69,8 +69,8 @@ public class ScrollSpeedTest {
     @Test
     void hashcode_are_equal() {
         assertEquals(
-            ScrollSpeed.SPEED_MIN.hashCode(),
-            ScrollSpeed.of(ScrollSpeed.MIN_VALUE).hashCode()
+            ScrollSpeed.MAX_VALUE,
+            ScrollSpeed.of(7).hashCode()
         );
     }
 
