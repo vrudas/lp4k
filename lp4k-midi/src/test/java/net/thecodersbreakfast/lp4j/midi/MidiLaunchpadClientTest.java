@@ -38,6 +38,9 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class MidiLaunchpadClientTest {
 
+    private static final int LAUNCHPAD_S_RAW_TOP_BUTTON_MIDI_CODE = 104;
+    public static final int LAUNCHPAD_S_RAW_RIGHT_BUTTON_MIDI_CODE = 8;
+
     private LaunchpadClient launchpadClient;
 
     @Mock
@@ -74,9 +77,9 @@ public class MidiLaunchpadClientTest {
     @Test
     public void brightness_set_successful() throws InvalidMidiDataException {
         int expectedNumerator = 1;
-        int expectedDenominator = 18 - Brightness.BRIGHTNESS_MIN.getBrightnessLevel();
+        int expectedDenominator = 18 - Brightness.BRIGHTNESS_MAX.getBrightnessLevel();
 
-        launchpadClient.setBrightness(Brightness.BRIGHTNESS_MIN);
+        launchpadClient.setBrightness(Brightness.BRIGHTNESS_MAX);
 
         verify(midiProtocolClient).brightness(expectedNumerator, expectedDenominator);
     }
@@ -203,32 +206,42 @@ public class MidiLaunchpadClientTest {
 
     @Test
     public void setButtonLight_topButton_NONE() throws InvalidMidiDataException {
-        launchpadClient.setButtonLight(Button.UP, Color.BLACK, BackBufferOperation.NONE);
-        verify(midiProtocolClient).buttonOn(104, 0);
+        launchpadClient.setButtonLight(Button.DOWN, Color.BLACK, BackBufferOperation.NONE);
+        verify(midiProtocolClient)
+            .buttonOn(
+                LAUNCHPAD_S_RAW_TOP_BUTTON_MIDI_CODE + Button.DOWN.getCoordinate(),
+                0
+            );
     }
 
     @Test
     public void setButtonLight_topButton_CLEAR() throws InvalidMidiDataException {
         launchpadClient.setButtonLight(Button.UP, Color.BLACK, BackBufferOperation.CLEAR);
-        verify(midiProtocolClient).buttonOn(104, 8);
+        verify(midiProtocolClient).buttonOn(LAUNCHPAD_S_RAW_TOP_BUTTON_MIDI_CODE, 8);
     }
 
     @Test
     public void setButtonLight_topButton_COPY() throws InvalidMidiDataException {
         launchpadClient.setButtonLight(Button.UP, Color.BLACK, BackBufferOperation.COPY);
-        verify(midiProtocolClient).buttonOn(104, 12);
+        verify(midiProtocolClient).buttonOn(LAUNCHPAD_S_RAW_TOP_BUTTON_MIDI_CODE, 12);
+    }
+
+    @Test
+    public void setButtonLight_OORANGE_for_topButton_COPY() throws InvalidMidiDataException {
+        launchpadClient.setButtonLight(Button.UP, Color.ORANGE, BackBufferOperation.COPY);
+        verify(midiProtocolClient).buttonOn(LAUNCHPAD_S_RAW_TOP_BUTTON_MIDI_CODE, 47);
     }
 
     @Test
     public void setButtonLight_rightButton() throws InvalidMidiDataException {
-        launchpadClient.setButtonLight(Button.VOL, Color.BLACK, BackBufferOperation.COPY);
-        verify(midiProtocolClient).noteOn(8, 12);
+        launchpadClient.setButtonLight(Button.PAN, Color.BLACK, BackBufferOperation.COPY);
+        verify(midiProtocolClient).noteOn(24, 12);
     }
 
     @Test
     public void setButtonLight_rightButton_COPY() throws InvalidMidiDataException {
         launchpadClient.setButtonLight(Button.VOL, Color.BLACK, BackBufferOperation.COPY);
-        verify(midiProtocolClient).noteOn(8, 12);
+        verify(midiProtocolClient).noteOn(LAUNCHPAD_S_RAW_RIGHT_BUTTON_MIDI_CODE, 12);
     }
 
     @Test
@@ -242,7 +255,7 @@ public class MidiLaunchpadClientTest {
     @Test
     public void setButtonLight_topButton_XY_COPY() throws InvalidMidiDataException {
         launchpadClient.setButtonLight(Button.atTop(0), Color.BLACK, BackBufferOperation.COPY); // UP
-        verify(midiProtocolClient).buttonOn(104, 12);
+        verify(midiProtocolClient).buttonOn(LAUNCHPAD_S_RAW_TOP_BUTTON_MIDI_CODE, 12);
     }
 
     @Test
