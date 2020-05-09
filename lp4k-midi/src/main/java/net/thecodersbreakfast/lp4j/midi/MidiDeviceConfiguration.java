@@ -74,8 +74,8 @@ public class MidiDeviceConfiguration {
             throw new IllegalArgumentException("Not valid deviceSignature = '" + deviceSignature + "'");
         }
 
-        MidiDevice inputDevice = autodetectInputDevice();
-        MidiDevice outputDevice = autodetectOutputDevice();
+        MidiDevice inputDevice = autodetectInputDevice(deviceSignature);
+        MidiDevice outputDevice = autodetectOutputDevice(deviceSignature);
         return new MidiDeviceConfiguration(inputDevice, outputDevice);
     }
 

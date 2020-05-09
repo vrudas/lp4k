@@ -19,7 +19,6 @@
 package net.thecodersbreakfast.lp4j.midi;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -98,15 +97,20 @@ public class MidiDeviceConfigurationTest {
     }
 
     @Test
-    @Disabled
-    void auto_detection_not_found_launchpad_midi_input_and_output_device() throws MidiUnavailableException {
-        MidiDeviceConfiguration deviceConfiguration = MidiDeviceConfiguration.autodetect();
+    void auto_detection_failed_because_not_found_device() {
+        assertThrows(
+            DeviceNotFoundException.class,
+            MidiDeviceConfiguration::autodetect
+        );
+    }
 
-        MidiDevice inputDevice = deviceConfiguration.getInputDevice();
-        MidiDevice outputDevice = deviceConfiguration.getOutputDevice();
+    @Test
+    void auto_detection_found_devices() {
+        MidiDeviceConfiguration midiDeviceConfiguration = assertDoesNotThrow(
+            () -> MidiDeviceConfiguration.autodetect(JDK_MIDI_DEVICE_DESCRIPTION)
+        );
 
-        assertNull(inputDevice);
-        assertNull(outputDevice);
+        assertNotNull(midiDeviceConfiguration);
     }
 
     @Test
