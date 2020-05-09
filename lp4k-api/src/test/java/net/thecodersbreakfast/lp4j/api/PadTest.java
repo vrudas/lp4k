@@ -36,6 +36,14 @@ public class PadTest {
     }
 
     @Test
+    public void check_pad_coordinates_for_different_input_values() {
+        Pad pad = Pad.at(1, 2);
+        assertNotNull(pad);
+        assertEquals(1, pad.getX());
+        assertEquals(2, pad.getY());
+    }
+
+    @Test
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public void at_xTooLow() {
         assertThrows(IllegalArgumentException.class, () -> Pad.at(Pad.X_MIN - 1, Pad.Y_MIN));
@@ -97,11 +105,9 @@ public class PadTest {
 
     @Test
     void hashcode_is_equal_for_pads_with_same_coordinates() {
-        Pad pad = Pad.at(Pad.X_MIN, Pad.Y_MIN);
-
         Set<Pad> pads = new HashSet<>();
-        pads.add(pad);
-        pads.add(pad);
+        pads.add(Pad.at(Pad.X_MAX, Pad.Y_MAX));
+        pads.add(Pad.at(7, 7));
 
         assertEquals(1, pads.size());
     }

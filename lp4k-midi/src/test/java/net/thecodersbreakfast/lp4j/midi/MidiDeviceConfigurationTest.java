@@ -81,24 +81,36 @@ public class MidiDeviceConfigurationTest {
     }
 
     @Test
-    void auto_detection_not_found_launchpad_midi_input_device() throws MidiUnavailableException {
-        assertNull(MidiDeviceConfiguration.autodetectInputDevice());
+    void auto_detection_not_found_launchpad_midi_input_device() {
+        assertThrows(
+            DeviceNotFoundException.class,
+            MidiDeviceConfiguration::autodetectInputDevice
+        );
     }
 
     @Test
-    void auto_detection_not_found_launchpad_midi_output_device() throws MidiUnavailableException {
-        assertNull(MidiDeviceConfiguration.autodetectOutputDevice());
+    void auto_detection_not_found_launchpad_midi_output_device() {
+        assertThrows(
+            DeviceNotFoundException.class,
+            MidiDeviceConfiguration::autodetectOutputDevice
+        );
     }
 
     @Test
-    void auto_detection_not_found_launchpad_midi_input_and_output_device() throws MidiUnavailableException {
-        MidiDeviceConfiguration deviceConfiguration = MidiDeviceConfiguration.autodetect();
+    void auto_detection_failed_because_not_found_device() {
+        assertThrows(
+            DeviceNotFoundException.class,
+            MidiDeviceConfiguration::autodetect
+        );
+    }
 
-        MidiDevice inputDevice = deviceConfiguration.getInputDevice();
-        MidiDevice outputDevice = deviceConfiguration.getOutputDevice();
+    @Test
+    void auto_detection_found_devices() {
+        MidiDeviceConfiguration midiDeviceConfiguration = assertDoesNotThrow(
+            () -> MidiDeviceConfiguration.autodetect(JDK_MIDI_DEVICE_DESCRIPTION)
+        );
 
-        assertNull(inputDevice);
-        assertNull(outputDevice);
+        assertNotNull(midiDeviceConfiguration);
     }
 
     @Test

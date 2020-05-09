@@ -24,10 +24,17 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BrightnessTest {
 
     @Test
-    public void valueOf() {
-        Brightness brightness = Brightness.of(Brightness.MIN_VALUE);
+    public void valueOf_for_brightness_min_level() {
+        Brightness brightness = Brightness.of(0);
         assertNotNull(brightness);
-        assertEquals(Brightness.MIN_VALUE, brightness.getBrightnessLevel());
+        assertEquals(0, brightness.getBrightnessLevel());
+    }
+
+    @Test
+    public void valueOf_for_brightness_max_level() {
+        Brightness brightness = Brightness.of(15);
+        assertNotNull(brightness);
+        assertEquals(15, brightness.getBrightnessLevel());
     }
 
     @Test
@@ -77,8 +84,8 @@ public class BrightnessTest {
     @Test
     void hashcode_are_equal() {
         assertEquals(
-            Brightness.BRIGHTNESS_MIN.hashCode(),
-            Brightness.of(Brightness.MIN_VALUE).hashCode()
+            Brightness.MAX_VALUE,
+            Brightness.of(15).hashCode()
         );
     }
 

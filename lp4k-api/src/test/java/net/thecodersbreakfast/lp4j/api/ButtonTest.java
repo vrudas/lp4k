@@ -34,8 +34,8 @@ public class ButtonTest {
 
     @Test
     public void at_rightButton() {
-        Button button = Button.atRight(0);
-        assertEquals(Button.VOL, button);
+        Button button = Button.atRight(7);
+        assertEquals(Button.ARM, button);
         assertTrue(button.isRightButton());
     }
 
