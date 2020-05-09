@@ -20,6 +20,8 @@ import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 
+import static net.thecodersbreakfast.lp4j.midi.DeviceNotFoundException.inputDeviceNotFound;
+
 /**
  * Configuration for MIDI I/O.
  *
@@ -63,6 +65,8 @@ public class MidiDeviceConfiguration {
      * @param deviceSignature The MIDI device signature used for device detection. Must be not null or not blank.
      * @return The auto-detected configuration.
      * @throws MidiUnavailableException If an error occurs during device probing.
+     * @throws IllegalArgumentException If deviceSignature is null or empty.
+     * @throws DeviceNotFoundException If device was not found.
      */
     static MidiDeviceConfiguration autodetect(String deviceSignature) throws MidiUnavailableException {
         if (deviceSignature == null || deviceSignature.isBlank()) {
@@ -138,7 +142,7 @@ public class MidiDeviceConfiguration {
      * Tries to detect a valid inbound communication channel, based on a known device signature
      * (see {@link net.thecodersbreakfast.lp4j.midi.MidiDeviceConfiguration#DEVICE_SIGNATURE}).
      *
-     * @return A valid outbound communication channel, or {@code null} if non was found.
+     * @return A valid outbound communication channel if was found.
      * @throws MidiUnavailableException if the requested device is not available due to resource restrictions
      */
     public static MidiDevice autodetectInputDevice() throws MidiUnavailableException {
@@ -149,8 +153,9 @@ public class MidiDeviceConfiguration {
      * Tries to detect a valid inbound communication channel, based on a device signature
      *
      * @param deviceSignature The MIDI device signature used for device detection.
-     * @return A valid outbound communication channel, or {@code null} if non was found.
+     * @return A valid outbound communication channel if was found.
      * @throws MidiUnavailableException if the requested device is not available due to resource restrictions
+     * @throws DeviceNotFoundException If device was not found.
      */
     static MidiDevice autodetectInputDevice(String deviceSignature) throws MidiUnavailableException {
         MidiDevice.Info[] midiDeviceInfo = MidiSystem.getMidiDeviceInfo();
@@ -162,7 +167,7 @@ public class MidiDeviceConfiguration {
                 }
             }
         }
-        return null;
+        throw inputDeviceNotFound(deviceSignature);
     }
 
 }
