@@ -56,7 +56,7 @@ public final class Brightness {
         if (brightness < MIN_VALUE || brightness > MAX_VALUE) {
             throw new IllegalArgumentException("Invalid brightness level : " + brightness + ". Acceptable values are in range [0..15].");
         }
-        return CACHE[brightness - MIN_VALUE];
+        return CACHE[brightness];
     }
 
     /** Level of brightness */
