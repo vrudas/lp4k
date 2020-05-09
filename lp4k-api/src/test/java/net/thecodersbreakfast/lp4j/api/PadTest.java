@@ -36,6 +36,14 @@ public class PadTest {
     }
 
     @Test
+    public void check_pad_coordinates_for_different_input_values() {
+        Pad pad = Pad.at(1, 2);
+        assertNotNull(pad);
+        assertEquals(1, pad.getX());
+        assertEquals(2, pad.getY());
+    }
+
+    @Test
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public void at_xTooLow() {
         assertThrows(IllegalArgumentException.class, () -> Pad.at(Pad.X_MIN - 1, Pad.Y_MIN));
