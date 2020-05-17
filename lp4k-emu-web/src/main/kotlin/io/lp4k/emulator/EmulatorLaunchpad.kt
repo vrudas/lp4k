@@ -34,14 +34,12 @@ import org.slf4j.LoggerFactory
 /**
  * A web-based (HTML/SVG/WebSockets) Launchpad emulator.
  */
-class EmulatorLaunchpad internal constructor(
-    private val vertx: Vertx,
+class EmulatorLaunchpad : Launchpad {
+
+    private val vertx: Vertx
     private val eventBusHandler: EventBusHandler
-) : Launchpad {
 
     /**
-     * Constructor.
-     *
      * @param httpPort The HTTP port on which the emulator should run.
      */
     constructor (httpPort: Int) : this(httpPort, Vertx.vertx())
@@ -57,6 +55,14 @@ class EmulatorLaunchpad internal constructor(
         eventBusHandler: EventBusHandler
     ) : this(vertx, eventBusHandler) {
         configureVertx(httpPort)
+    }
+
+    internal constructor(
+        vertx: Vertx,
+        eventBusHandler: EventBusHandler
+    ) {
+        this.vertx = vertx
+        this.eventBusHandler = eventBusHandler
     }
 
     private fun configureVertx(httpPort: Int) {
