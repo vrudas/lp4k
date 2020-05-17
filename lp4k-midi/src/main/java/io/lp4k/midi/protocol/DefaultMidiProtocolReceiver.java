@@ -16,7 +16,7 @@
  *
  */
 
-package net.thecodersbreakfast.lp4j.midi.protocol;
+package io.lp4k.midi.protocol;
 
 import net.thecodersbreakfast.lp4j.api.LaunchpadException;
 
@@ -27,7 +27,7 @@ import javax.sound.midi.ShortMessage;
 /**
  * A MIDI Receiver, to which the Launchpad sends low-level commands.
  * Those commands are parsed and transmitted (still in a close-to-the-metal format) to a
- * {@link net.thecodersbreakfast.lp4j.midi.protocol.MidiProtocolListener} for further processing.
+ * {@link MidiProtocolListener} for further processing.
  *
  * @author Olivier Croisier (olivier.croisier@gmail.com)
  */

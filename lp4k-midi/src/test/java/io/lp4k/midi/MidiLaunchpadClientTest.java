@@ -16,10 +16,10 @@
  *
  */
 
-package net.thecodersbreakfast.lp4j.midi;
+package io.lp4k.midi;
 
 import net.thecodersbreakfast.lp4j.api.*;
-import net.thecodersbreakfast.lp4j.midi.protocol.MidiProtocolClient;
+import io.lp4k.midi.protocol.MidiProtocolClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
