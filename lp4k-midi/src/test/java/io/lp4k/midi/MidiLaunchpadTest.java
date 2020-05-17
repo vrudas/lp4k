@@ -21,7 +21,6 @@ import io.lp4k.midi.protocol.DefaultMidiProtocolReceiver;
 import net.thecodersbreakfast.lp4j.api.Launchpad;
 import net.thecodersbreakfast.lp4j.api.LaunchpadException;
 import net.thecodersbreakfast.lp4j.api.LaunchpadListenerAdapter;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,13 +38,6 @@ import static org.mockito.Mockito.*;
 class MidiLaunchpadTest {
 
     private Launchpad launchpad;
-
-    @BeforeEach
-    void setUp() throws MidiUnavailableException {
-        MidiDeviceConfiguration deviceConfiguration = mockEmptyDeviceConfiguration();
-
-        launchpad = new MidiLaunchpad(deviceConfiguration);
-    }
 
     private MidiDeviceConfiguration mockEmptyDeviceConfiguration() {
         return mockDeviceConfiguration(
