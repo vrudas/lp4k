@@ -14,19 +14,16 @@
  *    limitations under the License.
  *
  */
+package io.lp4k.midi
 
-package io.lp4k.midi;
+class DeviceNotFoundException private constructor(message: String) : RuntimeException(message) {
+    companion object {
+        fun inputDeviceNotFound(deviceSignature: String): Nothing {
+            throw DeviceNotFoundException("Input device not found for signature: '$deviceSignature'")
+        }
 
-public class DeviceNotFoundException extends RuntimeException {
-    private DeviceNotFoundException(String message) {
-        super(message);
-    }
-
-    public static DeviceNotFoundException inputDeviceNotFound(String deviceSignature) {
-        return new DeviceNotFoundException("Input device not found for signature: '" + deviceSignature + "'");
-    }
-
-    public static DeviceNotFoundException outputDeviceNotFound(String deviceSignature) {
-        return new DeviceNotFoundException("OOutput device not found for signature: '" + deviceSignature + "'");
+        fun outputDeviceNotFound(deviceSignature: String): Nothing {
+            throw DeviceNotFoundException("OOutput device not found for signature: '$deviceSignature'")
+        }
     }
 }
