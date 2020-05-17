@@ -85,7 +85,7 @@ public class MidiDeviceConfigurationTest {
     void auto_detection_not_found_launchpad_midi_input_device() {
         assertThrows(
             DeviceNotFoundException.class,
-            MidiDeviceConfiguration::autodetectInputDevice
+            MidiDeviceConfiguration.Companion::autodetectInputDevice
         );
     }
 
@@ -93,7 +93,7 @@ public class MidiDeviceConfigurationTest {
     void auto_detection_not_found_launchpad_midi_output_device() {
         assertThrows(
             DeviceNotFoundException.class,
-            MidiDeviceConfiguration::autodetectOutputDevice
+            MidiDeviceConfiguration.Companion::autodetectOutputDevice
         );
     }
 
@@ -101,14 +101,14 @@ public class MidiDeviceConfigurationTest {
     void auto_detection_failed_because_not_found_device() {
         assertThrows(
             DeviceNotFoundException.class,
-            MidiDeviceConfiguration::autodetect
+            MidiDeviceConfiguration.Companion::autodetect
         );
     }
 
     @Test
     void auto_detection_found_devices() {
         MidiDeviceConfiguration midiDeviceConfiguration = Assertions.assertDoesNotThrow(
-            () -> MidiDeviceConfiguration.autodetect(JDK_MIDI_DEVICE_DESCRIPTION)
+            () -> MidiDeviceConfiguration.Companion.autodetect(JDK_MIDI_DEVICE_DESCRIPTION)
         );
 
         assertNotNull(midiDeviceConfiguration);
@@ -118,7 +118,7 @@ public class MidiDeviceConfigurationTest {
     void auto_detection_failed_because_of_null_device_signature() {
         assertThrows(
             IllegalArgumentException.class,
-            () -> MidiDeviceConfiguration.autodetect(null)
+            () -> MidiDeviceConfiguration.Companion.autodetect(null)
         );
     }
 
@@ -126,7 +126,7 @@ public class MidiDeviceConfigurationTest {
     void auto_detection_failed_because_of_empty_device_signature() {
         assertThrows(
             IllegalArgumentException.class,
-            () -> MidiDeviceConfiguration.autodetect("")
+            () -> MidiDeviceConfiguration.Companion.autodetect("")
         );
     }
 
@@ -134,34 +134,34 @@ public class MidiDeviceConfigurationTest {
     void auto_detection_failed_because_of_blank_device_signature() {
         assertThrows(
             IllegalArgumentException.class,
-            () -> MidiDeviceConfiguration.autodetect(" ")
+            () -> MidiDeviceConfiguration.Companion.autodetect(" ")
         );
     }
 
     @Test
     void detect_by_name_software_midi_input_device_provided_from_jdk() throws MidiUnavailableException {
-        MidiDevice inputDevice = MidiDeviceConfiguration.autodetectInputDevice(JDK_MIDI_DEVICE_NAME);
+        MidiDevice inputDevice = MidiDeviceConfiguration.Companion.autodetectInputDevice(JDK_MIDI_DEVICE_NAME);
 
         assertMidiInputDevice(inputDevice);
     }
 
     @Test
     void detect_by_description_software_midi_input_device_provided_from_jdk() throws MidiUnavailableException {
-        MidiDevice inputDevice = MidiDeviceConfiguration.autodetectInputDevice(JDK_MIDI_DEVICE_DESCRIPTION);
+        MidiDevice inputDevice = MidiDeviceConfiguration.Companion.autodetectInputDevice(JDK_MIDI_DEVICE_DESCRIPTION);
 
         assertMidiInputDevice(inputDevice);
     }
 
     @Test
     void detect_by_name_software_midi_output_device_provided_from_jdk() throws MidiUnavailableException {
-        MidiDevice outputDevice = MidiDeviceConfiguration.autodetectOutputDevice(JDK_MIDI_DEVICE_NAME);
+        MidiDevice outputDevice = MidiDeviceConfiguration.Companion.autodetectOutputDevice(JDK_MIDI_DEVICE_NAME);
 
         assertMidiOutputDevice(outputDevice);
     }
 
     @Test
     void detect_by_description_software_midi_output_device_provided_from_jdk() throws MidiUnavailableException {
-        MidiDevice outputDevice = MidiDeviceConfiguration.autodetectOutputDevice(JDK_MIDI_DEVICE_DESCRIPTION);
+        MidiDevice outputDevice = MidiDeviceConfiguration.Companion.autodetectOutputDevice(JDK_MIDI_DEVICE_DESCRIPTION);
 
         assertMidiOutputDevice(outputDevice);
     }
