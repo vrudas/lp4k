@@ -16,7 +16,7 @@
  *
  */
 
-package net.thecodersbreakfast.lp4j.midi.protocol;
+package io.lp4k.midi.protocol;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

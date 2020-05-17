@@ -16,7 +16,7 @@
  *
  */
 
-package net.thecodersbreakfast.lp4j.midi.protocol;
+package io.lp4k.midi.protocol;
 
 import net.thecodersbreakfast.lp4j.api.Button;
 import net.thecodersbreakfast.lp4j.api.LaunchpadListener;

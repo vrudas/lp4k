@@ -15,15 +15,12 @@
  *
  */
 
-package net.thecodersbreakfast.lp4j.midi;
+package io.lp4k.midi;
 
-import io.lp4k.midi.FakeMidiDevice;
-import io.lp4k.midi.FakeReceiver;
-import io.lp4k.midi.FakeTransmitter;
 import net.thecodersbreakfast.lp4j.api.Launchpad;
 import net.thecodersbreakfast.lp4j.api.LaunchpadException;
 import net.thecodersbreakfast.lp4j.api.LaunchpadListenerAdapter;
-import net.thecodersbreakfast.lp4j.midi.protocol.DefaultMidiProtocolReceiver;
+import io.lp4k.midi.protocol.DefaultMidiProtocolReceiver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

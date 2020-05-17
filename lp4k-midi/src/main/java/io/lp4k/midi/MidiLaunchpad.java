@@ -1,29 +1,31 @@
 /*
- * Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
+ *    Copyright 2020 Vasyl Rudas
+ *    Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ *
  */
 
-package net.thecodersbreakfast.lp4j.midi;
+package io.lp4k.midi;
 
+import io.lp4k.midi.protocol.DefaultMidiProtocolListener;
+import io.lp4k.midi.protocol.DefaultMidiProtocolReceiver;
+import io.lp4k.midi.protocol.MidiProtocolListener;
 import net.thecodersbreakfast.lp4j.api.Launchpad;
 import net.thecodersbreakfast.lp4j.api.LaunchpadClient;
 import net.thecodersbreakfast.lp4j.api.LaunchpadException;
 import net.thecodersbreakfast.lp4j.api.LaunchpadListener;
-import net.thecodersbreakfast.lp4j.midi.protocol.DefaultMidiProtocolClient;
-import net.thecodersbreakfast.lp4j.midi.protocol.DefaultMidiProtocolListener;
-import net.thecodersbreakfast.lp4j.midi.protocol.DefaultMidiProtocolReceiver;
-import net.thecodersbreakfast.lp4j.midi.protocol.MidiProtocolListener;
+import io.lp4k.midi.protocol.DefaultMidiProtocolClient;
 
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiUnavailableException;

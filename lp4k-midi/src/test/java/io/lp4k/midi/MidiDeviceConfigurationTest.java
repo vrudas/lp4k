@@ -16,8 +16,9 @@
  *
  */
 
-package net.thecodersbreakfast.lp4j.midi;
+package io.lp4k.midi;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -106,7 +107,7 @@ public class MidiDeviceConfigurationTest {
 
     @Test
     void auto_detection_found_devices() {
-        MidiDeviceConfiguration midiDeviceConfiguration = assertDoesNotThrow(
+        MidiDeviceConfiguration midiDeviceConfiguration = Assertions.assertDoesNotThrow(
             () -> MidiDeviceConfiguration.autodetect(JDK_MIDI_DEVICE_DESCRIPTION)
         );
 

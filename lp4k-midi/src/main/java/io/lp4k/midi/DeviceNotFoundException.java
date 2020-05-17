@@ -15,7 +15,7 @@
  *
  */
 
-package net.thecodersbreakfast.lp4j.midi;
+package io.lp4k.midi;
 
 public class DeviceNotFoundException extends RuntimeException {
     private DeviceNotFoundException(String message) {

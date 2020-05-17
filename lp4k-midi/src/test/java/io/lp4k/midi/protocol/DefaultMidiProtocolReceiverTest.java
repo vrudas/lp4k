@@ -16,7 +16,7 @@
  *
  */
 
-package net.thecodersbreakfast.lp4j.midi.protocol;
+package io.lp4k.midi.protocol;
 
 import net.thecodersbreakfast.lp4j.api.LaunchpadException;
 import org.junit.jupiter.api.BeforeEach;

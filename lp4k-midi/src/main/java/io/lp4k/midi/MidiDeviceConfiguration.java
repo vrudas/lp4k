@@ -1,27 +1,26 @@
 /*
- * Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
+ *    Copyright 2020 Vasyl Rudas
+ *    Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ *
  */
 
-package net.thecodersbreakfast.lp4j.midi;
+package io.lp4k.midi;
 
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
-
-import static net.thecodersbreakfast.lp4j.midi.DeviceNotFoundException.inputDeviceNotFound;
-import static net.thecodersbreakfast.lp4j.midi.DeviceNotFoundException.outputDeviceNotFound;
 
 /**
  * Configuration for MIDI I/O.
@@ -110,7 +109,7 @@ public class MidiDeviceConfiguration {
 
     /**
      * Tries to detect a valid outbound communication channel, based on a known device signature
-     * (see {@link net.thecodersbreakfast.lp4j.midi.MidiDeviceConfiguration#DEVICE_SIGNATURE}).
+     * (see {@link MidiDeviceConfiguration#DEVICE_SIGNATURE}).
      *
      * @return A valid outbound communication channel if was found.
      * @throws MidiUnavailableException if the requested device is not available due to resource restrictions
@@ -138,12 +137,12 @@ public class MidiDeviceConfiguration {
                 }
             }
         }
-        throw outputDeviceNotFound(deviceSignature);
+        throw DeviceNotFoundException.outputDeviceNotFound(deviceSignature);
     }
 
     /**
      * Tries to detect a valid inbound communication channel, based on a known device signature
-     * (see {@link net.thecodersbreakfast.lp4j.midi.MidiDeviceConfiguration#DEVICE_SIGNATURE}).
+     * (see {@link MidiDeviceConfiguration#DEVICE_SIGNATURE}).
      *
      * @return A valid outbound communication channel if was found.
      * @throws MidiUnavailableException if the requested device is not available due to resource restrictions
@@ -170,7 +169,7 @@ public class MidiDeviceConfiguration {
                 }
             }
         }
-        throw inputDeviceNotFound(deviceSignature);
+        throw DeviceNotFoundException.inputDeviceNotFound(deviceSignature);
     }
 
 }
