@@ -17,18 +17,18 @@
 
 package io.lp4k.midi;
 
+import io.lp4k.midi.protocol.DefaultMidiProtocolReceiver;
 import net.thecodersbreakfast.lp4j.api.Launchpad;
 import net.thecodersbreakfast.lp4j.api.LaunchpadException;
 import net.thecodersbreakfast.lp4j.api.LaunchpadListenerAdapter;
-import io.lp4k.midi.protocol.DefaultMidiProtocolReceiver;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiUnavailableException;
-
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -99,6 +99,7 @@ class MidiLaunchpadTest {
     }
 
     @Test
+    @Disabled("as after migration to Kotlin situation is not reachable")
     void get_client_failed_because_of_null_receiver() throws MidiUnavailableException {
         var launchpad = new MidiLaunchpad(
             mockEmptyDeviceConfiguration()
@@ -111,6 +112,7 @@ class MidiLaunchpadTest {
     }
 
     @Test
+    @Disabled("as after migration to Kotlin situation is not reachable")
     void set_listener_failed_because_of_null_transmitter() throws MidiUnavailableException {
         var launchpad = new MidiLaunchpad(
             mockEmptyDeviceConfiguration()
@@ -131,7 +133,7 @@ class MidiLaunchpadTest {
 
         launchpad = new MidiLaunchpad(
             mockDeviceConfiguration(
-                null,
+                mockInputDevice(true),
                 outputDevice
             )
         );
@@ -145,7 +147,7 @@ class MidiLaunchpadTest {
 
         launchpad = new MidiLaunchpad(
             mockDeviceConfiguration(
-                null,
+                mockInputDevice(false),
                 outputDevice
             )
         );
@@ -160,7 +162,7 @@ class MidiLaunchpadTest {
         launchpad = new MidiLaunchpad(
             mockDeviceConfiguration(
                 inputDevice,
-                null
+                mockOutputDevice(false)
             )
         );
 
@@ -174,7 +176,7 @@ class MidiLaunchpadTest {
         launchpad = new MidiLaunchpad(
             mockDeviceConfiguration(
                 inputDevice,
-                null
+                mockOutputDevice(false)
             )
         );
 
@@ -219,7 +221,7 @@ class MidiLaunchpadTest {
 
         launchpad = new MidiLaunchpad(
             mockDeviceConfiguration(
-                null,
+                mockInputDevice(false),
                 outputDevice
             )
         );
@@ -235,7 +237,7 @@ class MidiLaunchpadTest {
 
         launchpad = new MidiLaunchpad(
             mockDeviceConfiguration(
-                null,
+                mockInputDevice(true),
                 outputDevice
             )
         );
@@ -252,7 +254,7 @@ class MidiLaunchpadTest {
         launchpad = new MidiLaunchpad(
             mockDeviceConfiguration(
                 inputDevice,
-                null
+                mockOutputDevice(false)
             )
         );
 
@@ -268,7 +270,7 @@ class MidiLaunchpadTest {
         launchpad = new MidiLaunchpad(
             mockDeviceConfiguration(
                 inputDevice,
-                null
+                mockOutputDevice(false)
             )
         );
 
