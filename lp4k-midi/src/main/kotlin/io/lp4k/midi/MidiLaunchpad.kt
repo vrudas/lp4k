@@ -1,6 +1,5 @@
 /*
  *    Copyright 2020 Vasyl Rudas
- *    Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -90,25 +89,16 @@ class MidiLaunchpad(
         return inputDevice.transmitter
     }
 
-    /**
-     * {@inheritDoc}
-     */
     override fun getClient(): LaunchpadClient {
         return MidiLaunchpadClient(DefaultMidiProtocolClient(this.receiver))
     }
 
-    /**
-     * {@inheritDoc}
-     */
     override fun setListener(listener: LaunchpadListener) {
         val midiProtocolListener = DefaultMidiProtocolListener(listener)
         val midiReceiver = DefaultMidiProtocolReceiver(midiProtocolListener)
         transmitter.receiver = midiReceiver
     }
 
-    /**
-     * {@inheritDoc}
-     */
     override fun close() {
         if (openedOutputDevice) {
             val outputDevice = configuration.outputDevice
