@@ -18,6 +18,8 @@
 
 package io.lp4k.midi
 
+import io.lp4k.midi.DeviceNotFoundException.Companion.inputDeviceNotFound
+import io.lp4k.midi.DeviceNotFoundException.Companion.outputDeviceNotFound
 import javax.sound.midi.MidiDevice
 import javax.sound.midi.MidiSystem
 import javax.sound.midi.MidiUnavailableException
@@ -123,7 +125,7 @@ class MidiDeviceConfiguration(
                 .filter { info -> info.description.contains(deviceSignature) || info.name.contains(deviceSignature) }
                 .map { info -> MidiSystem.getMidiDevice(info) }
                 .find { device -> device.maxTransmitters == -1 }
-                ?: throw DeviceNotFoundException.inputDeviceNotFound(deviceSignature)
+                ?: inputDeviceNotFound(deviceSignature)
         }
 
         /**
@@ -141,7 +143,7 @@ class MidiDeviceConfiguration(
                 .filter { info -> info.description.contains(deviceSignature) || info.name.contains(deviceSignature) }
                 .map { info -> MidiSystem.getMidiDevice(info) }
                 .find { device -> device.maxReceivers == -1 }
-                ?: throw DeviceNotFoundException.outputDeviceNotFound(deviceSignature)
+                ?: outputDeviceNotFound(deviceSignature)
         }
     }
 }
