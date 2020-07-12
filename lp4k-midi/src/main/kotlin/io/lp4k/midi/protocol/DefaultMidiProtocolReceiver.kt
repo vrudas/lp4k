@@ -15,52 +15,37 @@
  *    limitations under the License.
  *
  */
+package io.lp4k.midi.protocol
 
-package io.lp4k.midi.protocol;
-
-import net.thecodersbreakfast.lp4j.api.LaunchpadException;
-
-import javax.sound.midi.MidiMessage;
-import javax.sound.midi.Receiver;
-import javax.sound.midi.ShortMessage;
+import net.thecodersbreakfast.lp4j.api.LaunchpadException
+import javax.sound.midi.MidiMessage
+import javax.sound.midi.Receiver
+import javax.sound.midi.ShortMessage
 
 /**
  * A MIDI Receiver, to which the Launchpad sends low-level commands.
  * Those commands are parsed and transmitted (still in a close-to-the-metal format) to a
- * {@link MidiProtocolListener} for further processing.
+ * [MidiProtocolListener] for further processing.
  *
  * @author Olivier Croisier (olivier.croisier@gmail.com)
  */
-public class DefaultMidiProtocolReceiver implements Receiver {
-
+class DefaultMidiProtocolReceiver(
     /**
      * The MidiProtocolListener to to notify when commands are received.
      */
-    private final MidiProtocolListener midiProtocolListener;
-
-    /**
-     * Constructor.
-     *
-     * @param listener The MidiProtocolListener to to notify when commands are received. Must not be null.
-     */
-    public DefaultMidiProtocolReceiver(MidiProtocolListener listener) {
-        if (listener == null) {
-            throw new IllegalArgumentException("Listener must not be null.");
-        }
-        this.midiProtocolListener = listener;
-    }
+    private val midiProtocolListener: MidiProtocolListener
+) : Receiver {
 
     /**
      * {@inheritDoc}
-     * <p>
+     *
      * THIS METHOD SHOULD ONLY BE CALLED BY THE LAUNCHPAD DEVICE.
      */
-    @Override
-    public void send(MidiMessage message, long timestamp) {
-        if (message instanceof ShortMessage) {
-            handleShortMessage((ShortMessage) message, timestamp);
+    override fun send(message: MidiMessage, timestamp: Long) {
+        if (message is ShortMessage) {
+            handleShortMessage(message, timestamp)
         } else {
-            throw new LaunchpadException("Unknown event : " + message);
+            throw LaunchpadException("Unknown event : $message")
         }
     }
 
@@ -70,53 +55,56 @@ public class DefaultMidiProtocolReceiver implements Receiver {
      * @param message   The incoming message.
      * @param timestamp When the message arrived.
      */
-    protected void handleShortMessage(ShortMessage message, long timestamp) {
-        int status = message.getStatus();
-        int note = message.getData1();
-        int velocity = message.getData2();
+    private fun handleShortMessage(message: ShortMessage, timestamp: Long) {
+        val status = message.status
+        val note = message.data1
+        val velocity = message.data2
 
-        if (status == ShortMessage.NOTE_ON) {
-            handleNoteOnMessage(note, velocity, timestamp);
-        } else if (status == ShortMessage.CONTROL_CHANGE) {
-            handleControlChangeMessage(note, velocity, timestamp);
-        } else {
-            throw new LaunchpadException("Unknown event : " + message);
+        when (status) {
+            ShortMessage.NOTE_ON -> {
+                handleNoteOnMessage(note, velocity, timestamp)
+            }
+            ShortMessage.CONTROL_CHANGE -> {
+                handleControlChangeMessage(note, velocity, timestamp)
+            }
+            else -> {
+                throw LaunchpadException("Unknown event : $message")
+            }
         }
     }
 
     /**
-     * Parses "note on" messages and notifies the to the higher-level {@code midiProtocolListener}
+     * Parses "note on" messages and notifies the to the higher-level `midiProtocolListener`
      *
      * @param note      The activated note.
      * @param velocity  The note velocity.
      * @param timestamp When the note was activated.
      */
-    protected void handleNoteOnMessage(int note, int velocity, long timestamp) {
+    private fun handleNoteOnMessage(note: Int, velocity: Int, timestamp: Long) {
         if (velocity == 0) {
-            midiProtocolListener.onNoteOff(note, timestamp);
+            midiProtocolListener.onNoteOff(note, timestamp)
         } else {
-            midiProtocolListener.onNoteOn(note, timestamp);
+            midiProtocolListener.onNoteOn(note, timestamp)
         }
     }
 
     /**
-     * Parses "control" messages and notifies the to the higher-level {@code midiProtocolListener}
+     * Parses "control" messages and notifies the to the higher-level `midiProtocolListener`
      *
      * @param note      The activated note.
      * @param velocity  The note velocity.
      * @param timestamp When the note was activated.
      */
-    protected void handleControlChangeMessage(int note, int velocity, long timestamp) {
+    private fun handleControlChangeMessage(note: Int, velocity: Int, timestamp: Long) {
         if (note == 0 && velocity == 3) {
-            midiProtocolListener.onTextScrolled(timestamp);
+            midiProtocolListener.onTextScrolled(timestamp)
         } else if (velocity == 0) {
-            midiProtocolListener.onButtonOff(note, timestamp);
+            midiProtocolListener.onButtonOff(note, timestamp)
         } else {
-            midiProtocolListener.onButtonOn(note, timestamp);
+            midiProtocolListener.onButtonOn(note, timestamp)
         }
     }
 
-    @Override
-    public void close() {
-    }
+    override fun close() = Unit
+
 }
