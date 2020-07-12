@@ -28,7 +28,7 @@ import javax.sound.midi.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class DefaultMidiProtocolReceiverTest {
+class DefaultMidiProtocolReceiverTest {
 
     private static final int VELOCITY_PRESSED = 127;
     private static final int VELOCITY_RELEASED = 0;
@@ -39,32 +39,32 @@ public class DefaultMidiProtocolReceiverTest {
     private MidiProtocolListener listener;
 
     @BeforeEach
-    public void init() {
+    void init() {
         listener = Mockito.mock(MidiProtocolListener.class);
         receiver = new DefaultMidiProtocolReceiver(listener);
     }
 
     @Test
-    public void send_sysexMessage() {
+    void send_sysexMessage() {
         MidiMessage message = new SysexMessage();
         assertThrows(LaunchpadException.class, () -> receiver.send(message, TIMESTAMP));
     }
 
     @Test
-    public void send_metaMessage() {
+    void send_metaMessage() {
         MidiMessage message = new MetaMessage();
         assertThrows(LaunchpadException.class, () -> receiver.send(message, TIMESTAMP));
     }
 
     @Test
-    public void send_shortMessage_unknown() throws Exception {
+    void send_shortMessage_unknown() throws Exception {
         ShortMessage message = new ShortMessage();
         message.setMessage(ShortMessage.STOP, 0, 0);
         assertThrows(LaunchpadException.class, () -> receiver.send(message, TIMESTAMP));
     }
 
     @Test
-    public void send_noteOn_pressed() throws Exception {
+    void send_noteOn_pressed() throws Exception {
         ShortMessage message = new ShortMessage();
         message.setMessage(ShortMessage.NOTE_ON, 42, VELOCITY_PRESSED);
         receiver.send(message, TIMESTAMP);
@@ -72,7 +72,7 @@ public class DefaultMidiProtocolReceiverTest {
     }
 
     @Test
-    public void send_noteOn_released() throws Exception {
+    void send_noteOn_released() throws Exception {
         ShortMessage message = new ShortMessage();
         message.setMessage(ShortMessage.NOTE_ON, 42, VELOCITY_RELEASED);
         receiver.send(message, TIMESTAMP);
@@ -80,7 +80,7 @@ public class DefaultMidiProtocolReceiverTest {
     }
 
     @Test
-    public void send_controlChange_pressed() throws Exception {
+    void send_controlChange_pressed() throws Exception {
         ShortMessage message = new ShortMessage();
         message.setMessage(ShortMessage.CONTROL_CHANGE, 42, VELOCITY_PRESSED);
         receiver.send(message, TIMESTAMP);
@@ -88,7 +88,7 @@ public class DefaultMidiProtocolReceiverTest {
     }
 
     @Test
-    public void send_controlChange_released() throws Exception {
+    void send_controlChange_released() throws Exception {
         ShortMessage message = new ShortMessage();
         message.setMessage(ShortMessage.CONTROL_CHANGE, 42, VELOCITY_RELEASED);
         receiver.send(message, TIMESTAMP);
@@ -96,7 +96,7 @@ public class DefaultMidiProtocolReceiverTest {
     }
 
     @Test
-    public void send_controlChange_textScrolled() throws Exception {
+    void send_controlChange_textScrolled() throws Exception {
         ShortMessage message = new ShortMessage();
         message.setMessage(ShortMessage.CONTROL_CHANGE, 0, VELOCITY_TEXT_SCROLLED);
         receiver.send(message, TIMESTAMP);
@@ -104,7 +104,7 @@ public class DefaultMidiProtocolReceiverTest {
     }
 
     @Test
-    public void close() {
+    void close() {
         assertDoesNotThrow(() -> receiver.close());
     }
 
