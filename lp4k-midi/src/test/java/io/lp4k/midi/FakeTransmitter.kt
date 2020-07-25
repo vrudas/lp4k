@@ -14,10 +14,8 @@
  *    limitations under the License.
  *
  */
+package io.lp4k.midi
 
-package io.lp4k.midi;
+import javax.sound.midi.Transmitter
 
-import javax.sound.midi.Transmitter;
-
-public interface FakeTransmitter extends Transmitter {
-}
+interface FakeTransmitter : Transmitter 
