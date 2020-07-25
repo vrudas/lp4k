@@ -15,54 +15,41 @@
  *    limitations under the License.
  *
  */
+package io.lp4k.midi.protocol
 
-package io.lp4k.midi.protocol;
+import org.junit.jupiter.api.Assertions.assertArrayEquals
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.ArgumentCaptor
+import org.mockito.ArgumentMatchers.eq
+import org.mockito.Captor
+import org.mockito.Mock
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
+import org.mockito.junit.jupiter.MockitoExtension
+import javax.sound.midi.Receiver
+import javax.sound.midi.ShortMessage
+import javax.sound.midi.SysexMessage
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import javax.sound.midi.Receiver;
-import javax.sound.midi.ShortMessage;
-import javax.sound.midi.SysexMessage;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
-@ExtendWith(MockitoExtension.class)
-public class DefaultMidiProtocolClientTest {
-
-    public static final int LIGHT_INTENSITY = 125;
-    public static final int COLOR_RED = 3;
-    public static final int COLOR_BLACK = 0;
-    public static final int NOTE_1_1 = 17;
-    public static final int LAYOUT_XY = 1;
-    public static final int BUTTON_UP = 104;
+@ExtendWith(MockitoExtension::class)
+class DefaultMidiProtocolClientTest {
 
     @Mock
-    private Receiver receiver;
-    private MidiProtocolClient midiProtocolClient;
-    private ArgumentCaptor<ShortMessage> shortMessage;
-    private ArgumentCaptor<SysexMessage> sysexMessage;
+    private lateinit var receiver: Receiver
+
+    private lateinit var midiProtocolClient: MidiProtocolClient
+
+    @Captor
+    private lateinit var shortMessage: ArgumentCaptor<ShortMessage>
+
+    @Captor
+    private lateinit var sysexMessage: ArgumentCaptor<SysexMessage>
 
     @BeforeEach
-    public void init() {
-        midiProtocolClient = new DefaultMidiProtocolClient(receiver);
-        shortMessage = ArgumentCaptor.forClass(ShortMessage.class);
-        sysexMessage = ArgumentCaptor.forClass(SysexMessage.class);
-    }
-
-    @Test
-    void default_midi_protocol_not_created_because_of_null_receiver() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> new DefaultMidiProtocolClient(null)
-        );
+    fun init() {
+        midiProtocolClient = DefaultMidiProtocolClient(receiver)
     }
 
     /*
@@ -70,13 +57,13 @@ public class DefaultMidiProtocolClientTest {
     reset
     ================================================================================
     */
-
     @Test
-    public void testReset() throws Exception {
-        midiProtocolClient.reset();
+    @Throws(Exception::class)
+    fun testReset() {
+        midiProtocolClient.reset()
 
-        verify(receiver).send(shortMessage.capture(), eq(-1L));
-        checkShortMessage(shortMessage.getValue(), ShortMessage.CONTROL_CHANGE, 0, 0);
+        verify(receiver).send(shortMessage.capture(), eq(-1L))
+        checkShortMessage(shortMessage.value, ShortMessage.CONTROL_CHANGE, 0, 0)
     }
 
     /*
@@ -84,13 +71,13 @@ public class DefaultMidiProtocolClientTest {
     lightsOn
     ================================================================================
     */
-
     @Test
-    public void testLightsOn() throws Exception {
-        midiProtocolClient.lightsOn(LIGHT_INTENSITY);
+    @Throws(Exception::class)
+    fun testLightsOn() {
+        midiProtocolClient.lightsOn(LIGHT_INTENSITY)
 
-        verify(receiver).send(shortMessage.capture(), eq(-1L));
-        checkShortMessage(shortMessage.getValue(), ShortMessage.CONTROL_CHANGE, 0, LIGHT_INTENSITY);
+        verify(receiver).send(shortMessage.capture(), eq(-1L))
+        checkShortMessage(shortMessage.value, ShortMessage.CONTROL_CHANGE, 0, LIGHT_INTENSITY)
     }
 
     /*
@@ -98,13 +85,13 @@ public class DefaultMidiProtocolClientTest {
     noteOn
     ================================================================================
     */
-
     @Test
-    public void testNoteOn() throws Exception {
-        midiProtocolClient.noteOn(NOTE_1_1, COLOR_RED);
+    @Throws(Exception::class)
+    fun testNoteOn() {
+        midiProtocolClient.noteOn(NOTE_1_1, COLOR_RED)
 
-        verify(receiver).send(shortMessage.capture(), eq(-1L));
-        checkShortMessage(shortMessage.getValue(), ShortMessage.NOTE_ON, NOTE_1_1, COLOR_RED);
+        verify(receiver).send(shortMessage.capture(), eq(-1L))
+        checkShortMessage(shortMessage.value, ShortMessage.NOTE_ON, NOTE_1_1, COLOR_RED)
     }
 
     /*
@@ -112,13 +99,13 @@ public class DefaultMidiProtocolClientTest {
     noteOff
     ================================================================================
     */
-
     @Test
-    public void testNoteOff() throws Exception {
-        midiProtocolClient.noteOff(NOTE_1_1);
+    @Throws(Exception::class)
+    fun testNoteOff() {
+        midiProtocolClient.noteOff(NOTE_1_1)
 
-        verify(receiver).send(shortMessage.capture(), eq(-1L));
-        checkShortMessage(shortMessage.getValue(), ShortMessage.NOTE_OFF, NOTE_1_1, COLOR_BLACK);
+        verify(receiver).send(shortMessage.capture(), eq(-1L))
+        checkShortMessage(shortMessage.value, ShortMessage.NOTE_OFF, NOTE_1_1, COLOR_BLACK)
     }
 
     /*
@@ -126,22 +113,15 @@ public class DefaultMidiProtocolClientTest {
     notesOn
     ================================================================================
     */
-
     @Test
-    public void testNotesOn() throws Exception {
-        midiProtocolClient.notesOn(42, 42, 42, 42);
+    @Throws(Exception::class)
+    fun testNotesOn() {
+        midiProtocolClient.notesOn(42, 42, 42, 42)
 
-        verify(receiver, times(2)).send(shortMessage.capture(), eq(-1L));
-        checkShortMessage(shortMessage.getValue(), ShortMessage.NOTE_ON, 42, 42);
-        assertEquals(3, shortMessage.getValue().getChannel());
-    }
-
-    @Test
-    void notesOn_failed_because_of_null_argument() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> midiProtocolClient.notesOn((int[]) null)
-        );
+        verify(receiver, times(2))
+            .send(shortMessage.capture(), eq(-1L))
+        checkShortMessage(shortMessage.value, ShortMessage.NOTE_ON, 42, 42)
+        assertEquals(3, shortMessage.value.channel)
     }
 
     /*
@@ -149,13 +129,13 @@ public class DefaultMidiProtocolClientTest {
     layout
     ================================================================================
     */
-
     @Test
-    public void testLayout() throws Exception {
-        midiProtocolClient.layout(LAYOUT_XY);
+    @Throws(Exception::class)
+    fun testLayout() {
+        midiProtocolClient.layout(LAYOUT_XY)
 
-        verify(receiver).send(shortMessage.capture(), eq(-1L));
-        checkShortMessage(shortMessage.getValue(), ShortMessage.CONTROL_CHANGE, 0, LAYOUT_XY);
+        verify(receiver).send(shortMessage.capture(), eq(-1L))
+        checkShortMessage(shortMessage.value, ShortMessage.CONTROL_CHANGE, 0, LAYOUT_XY)
     }
 
     /*
@@ -163,13 +143,13 @@ public class DefaultMidiProtocolClientTest {
     buttonOn
     ================================================================================
     */
-
     @Test
-    public void testButtonOn() throws Exception {
-        midiProtocolClient.buttonOn(BUTTON_UP, COLOR_RED);
+    @Throws(Exception::class)
+    fun testButtonOn() {
+        midiProtocolClient.buttonOn(BUTTON_UP, COLOR_RED)
 
-        verify(receiver).send(shortMessage.capture(), eq(-1L));
-        checkShortMessage(shortMessage.getValue(), ShortMessage.CONTROL_CHANGE, BUTTON_UP, COLOR_RED);
+        verify(receiver).send(shortMessage.capture(), eq(-1L))
+        checkShortMessage(shortMessage.value, ShortMessage.CONTROL_CHANGE, BUTTON_UP, COLOR_RED)
     }
 
     /*
@@ -177,21 +157,22 @@ public class DefaultMidiProtocolClientTest {
     brightness
     ================================================================================
     */
-
     @Test
-    public void testBrightness_low() throws Exception {
-        midiProtocolClient.brightness(1, 3);
+    @Throws(Exception::class)
+    fun testBrightness_low() {
+        midiProtocolClient.brightness(1, 3)
 
-        verify(receiver).send(shortMessage.capture(), eq(-1L));
-        checkShortMessage(shortMessage.getValue(), ShortMessage.CONTROL_CHANGE, 30, 0);
+        verify(receiver).send(shortMessage.capture(), eq(-1L))
+        checkShortMessage(shortMessage.value, ShortMessage.CONTROL_CHANGE, 30, 0)
     }
 
     @Test
-    public void testBrightness_high() throws Exception {
-        midiProtocolClient.brightness(9, 3);
+    @Throws(Exception::class)
+    fun testBrightness_high() {
+        midiProtocolClient.brightness(9, 3)
 
-        verify(receiver).send(shortMessage.capture(), eq(-1L));
-        checkShortMessage(shortMessage.getValue(), ShortMessage.CONTROL_CHANGE, 31, 0);
+        verify(receiver).send(shortMessage.capture(), eq(-1L))
+        checkShortMessage(shortMessage.value, ShortMessage.CONTROL_CHANGE, 31, 0)
     }
 
     /*
@@ -199,21 +180,28 @@ public class DefaultMidiProtocolClientTest {
     text
     ================================================================================
     */
-
     @Test
-    public void testText() throws Exception {
-        midiProtocolClient.text("Hello", COLOR_BLACK, 1, false);
+    @Throws(Exception::class)
+    fun testText() {
+        midiProtocolClient.text("Hello", COLOR_BLACK, 1, false)
 
-        verify(receiver).send(sysexMessage.capture(), eq(-1L));
-        checkSysexMessage(sysexMessage.getValue(), new byte[]{0, 32, 41, 9, 0, 1, 72, 101, 108, 108, 111, (byte) 247});
+        verify(receiver).send(sysexMessage.capture(), eq(-1L))
+        checkSysexMessage(
+            sysexMessage.value,
+            byteArrayOf(0, 32, 41, 9, 0, 1, 72, 101, 108, 108, 111, 247.toByte())
+        )
     }
 
     @Test
-    public void testText_loop() throws Exception {
-        midiProtocolClient.text("Hello", COLOR_BLACK, 1, true);
+    @Throws(Exception::class)
+    fun testText_loop() {
+        midiProtocolClient.text("Hello", COLOR_BLACK, 1, true)
 
-        verify(receiver).send(sysexMessage.capture(), eq(-1L));
-        checkSysexMessage(sysexMessage.getValue(), new byte[]{0, 32, 41, 9, 64, 1, 72, 101, 108, 108, 111, (byte) 247});
+        verify(receiver).send(sysexMessage.capture(), eq(-1L))
+        checkSysexMessage(
+            sysexMessage.value,
+            byteArrayOf(0, 32, 41, 9, 64, 1, 72, 101, 108, 108, 111, 247.toByte())
+        )
     }
 
     /*
@@ -221,33 +209,80 @@ public class DefaultMidiProtocolClientTest {
     doubleBufferMode
     ================================================================================
     */
-
     @Test
-    public void testDoubleBufferMode_0_1() throws Exception {
-        midiProtocolClient.doubleBufferMode(0, 1, false, false);
-        verify(receiver).send(shortMessage.capture(), eq(-1L));
-        checkShortMessage(shortMessage.getValue(), ShortMessage.CONTROL_CHANGE, 0, 36);
+    @Throws(Exception::class)
+    fun testDoubleBufferMode_0_1() {
+        midiProtocolClient.doubleBufferMode(
+            visibleBuffer = 0,
+            writeBuffer = 1,
+            copyVisibleBufferToWriteBuffer = false,
+            autoSwap = false
+        )
+
+        verify(receiver).send(shortMessage.capture(), eq(-1L))
+        checkShortMessage(
+            shortMessage.value,
+            ShortMessage.CONTROL_CHANGE,
+            data1 = 0,
+            data2 = 36
+        )
     }
 
     @Test
-    public void testDoubleBufferMode_1_0() throws Exception {
-        midiProtocolClient.doubleBufferMode(1, 0, false, false);
-        verify(receiver).send(shortMessage.capture(), eq(-1L));
-        checkShortMessage(shortMessage.getValue(), ShortMessage.CONTROL_CHANGE, 0, 33);
+    @Throws(Exception::class)
+    fun testDoubleBufferMode_1_0() {
+        midiProtocolClient.doubleBufferMode(
+            visibleBuffer = 1,
+            writeBuffer = 0,
+            copyVisibleBufferToWriteBuffer = false,
+            autoSwap = false
+        )
+
+        verify(receiver).send(shortMessage.capture(), eq(-1L))
+        checkShortMessage(
+            shortMessage.value,
+            ShortMessage.CONTROL_CHANGE,
+            data1 = 0,
+            data2 = 33
+        )
     }
 
     @Test
-    public void testDoubleBufferMode_COPY() throws Exception {
-        midiProtocolClient.doubleBufferMode(0, 0, true, false);
-        verify(receiver).send(shortMessage.capture(), eq(-1L));
-        checkShortMessage(shortMessage.getValue(), ShortMessage.CONTROL_CHANGE, 0, 32 + 16);
+    @Throws(Exception::class)
+    fun testDoubleBufferMode_COPY() {
+        midiProtocolClient.doubleBufferMode(
+            visibleBuffer = 0,
+            writeBuffer = 0,
+            copyVisibleBufferToWriteBuffer = true,
+            autoSwap = false
+        )
+
+        verify(receiver).send(shortMessage.capture(), eq(-1L))
+        checkShortMessage(
+            shortMessage.value,
+            ShortMessage.CONTROL_CHANGE,
+            data1 = 0,
+            data2 = 32 + 16
+        )
     }
 
     @Test
-    public void testDoubleBufferMode_LOOP() throws Exception {
-        midiProtocolClient.doubleBufferMode(0, 0, false, true);
-        verify(receiver).send(shortMessage.capture(), eq(-1L));
-        checkShortMessage(shortMessage.getValue(), ShortMessage.CONTROL_CHANGE, 0, 32 + 8);
+    @Throws(Exception::class)
+    fun testDoubleBufferMode_LOOP() {
+        midiProtocolClient.doubleBufferMode(
+            visibleBuffer = 0,
+            writeBuffer = 0,
+            copyVisibleBufferToWriteBuffer = false,
+            autoSwap = true
+        )
+
+        verify(receiver).send(shortMessage.capture(), eq(-1L))
+        checkShortMessage(
+            shortMessage.value,
+            ShortMessage.CONTROL_CHANGE,
+            data1 = 0,
+            data2 = 32 + 8
+        )
     }
 
     /*
@@ -255,14 +290,27 @@ public class DefaultMidiProtocolClientTest {
     UTILS
     ================================================================================
     */
-
-    private void checkShortMessage(ShortMessage message, int command, int data1, int data2) {
-        assertEquals(command, message.getCommand());
-        assertEquals(data1, message.getData1());
-        assertEquals(data2, message.getData2());
+    private fun checkShortMessage(
+        message: ShortMessage,
+        command: Int,
+        data1: Int,
+        data2: Int
+    ) {
+        assertEquals(command, message.command)
+        assertEquals(data1, message.data1)
+        assertEquals(data2, message.data2)
     }
 
-    private void checkSysexMessage(SysexMessage message, byte[] data) {
-        assertArrayEquals(data, message.getData());
+    private fun checkSysexMessage(message: SysexMessage, data: ByteArray) {
+        assertArrayEquals(data, message.data)
+    }
+
+    companion object {
+        const val LIGHT_INTENSITY = 125
+        const val COLOR_RED = 3
+        const val COLOR_BLACK = 0
+        const val NOTE_1_1 = 17
+        const val LAYOUT_XY = 1
+        const val BUTTON_UP = 104
     }
 }
