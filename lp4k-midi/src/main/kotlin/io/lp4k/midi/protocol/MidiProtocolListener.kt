@@ -15,23 +15,21 @@
  *    limitations under the License.
  *
  */
-
-package io.lp4k.midi.protocol;
+package io.lp4k.midi.protocol
 
 /**
  * This listener allows to be notified of any MIDI event occurring on the Launchpad
  *
  * @author Olivier Croisier (olivier.croisier@gmail.com)
  */
-public interface MidiProtocolListener {
-
+interface MidiProtocolListener {
     /**
      * Called when a note starts being emitted.
      *
      * @param note      The note emitted.
      * @param timestamp When the event occurred.
      */
-    void onNoteOn(int note, long timestamp);
+    fun onNoteOn(note: Int, timestamp: Long)
 
     /**
      * Called when a note is not emitted anymore.
@@ -39,7 +37,7 @@ public interface MidiProtocolListener {
      * @param note      The note silenced.
      * @param timestamp When the event occurred.
      */
-    void onNoteOff(int note, long timestamp);
+    fun onNoteOff(note: Int, timestamp: Long)
 
     /**
      * Called when a button starts being pressed.
@@ -47,7 +45,7 @@ public interface MidiProtocolListener {
      * @param button    The button pressed.
      * @param timestamp When the event occurred.
      */
-    void onButtonOn(int button, long timestamp);
+    fun onButtonOn(button: Int, timestamp: Long)
 
     /**
      * Called when a button is released.
@@ -55,12 +53,12 @@ public interface MidiProtocolListener {
      * @param button    The button released.
      * @param timestamp When the event occurred.
      */
-    void onButtonOff(int button, long timestamp);
+    fun onButtonOff(button: Int, timestamp: Long)
 
     /**
      * Called when text has been fully scrolled through the board.
      *
      * @param timestamp When the event occurred.
      */
-    void onTextScrolled(long timestamp);
+    fun onTextScrolled(timestamp: Long)
 }
