@@ -14,10 +14,8 @@
  *    limitations under the License.
  *
  */
+package io.lp4k.midi
 
-package io.lp4k.midi;
+import javax.sound.midi.Receiver
 
-import javax.sound.midi.Receiver;
-
-public interface FakeReceiver extends Receiver {
-}
+interface FakeReceiver : Receiver 
