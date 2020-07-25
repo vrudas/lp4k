@@ -42,18 +42,18 @@ interface MidiProtocolListener {
     /**
      * Called when a button starts being pressed.
      *
-     * @param button    The button pressed.
+     * @param buttonNote    The button pressed.
      * @param timestamp When the event occurred.
      */
-    fun onButtonOn(button: Int, timestamp: Long)
+    fun onButtonOn(buttonNote: Int, timestamp: Long)
 
     /**
      * Called when a button is released.
      *
-     * @param button    The button released.
+     * @param buttonNote    The button released.
      * @param timestamp When the event occurred.
      */
-    fun onButtonOff(button: Int, timestamp: Long)
+    fun onButtonOff(buttonNote: Int, timestamp: Long)
 
     /**
      * Called when text has been fully scrolled through the board.
