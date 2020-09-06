@@ -15,104 +15,113 @@
  *    limitations under the License.
  *
  */
+package io.lp4k.midi.protocol
 
-package io.lp4k.midi.protocol;
+import net.thecodersbreakfast.lp4j.api.LaunchpadException
+import org.junit.jupiter.api.Assertions.assertDoesNotThrow
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
+import javax.sound.midi.*
 
-import net.thecodersbreakfast.lp4j.api.LaunchpadException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+internal class DefaultMidiProtocolReceiverTest {
 
-import javax.sound.midi.*;
-
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-class DefaultMidiProtocolReceiverTest {
-
-    private static final int VELOCITY_PRESSED = 127;
-    private static final int VELOCITY_RELEASED = 0;
-    private static final int VELOCITY_TEXT_SCROLLED = 3;
-    private static final long TIMESTAMP = -1;
-
-    private Receiver receiver;
-    private MidiProtocolListener listener;
+    private lateinit var receiver: Receiver
+    private lateinit var listener: MidiProtocolListener
 
     @BeforeEach
-    void init() {
-        listener = Mockito.mock(MidiProtocolListener.class);
-        receiver = new DefaultMidiProtocolReceiver(listener);
+    fun init() {
+        listener = mock(MidiProtocolListener::class.java)
+        receiver = DefaultMidiProtocolReceiver(listener)
     }
 
     @Test
-    void send_sysexMessage() {
-        MidiMessage message = new SysexMessage();
-        assertThrows(LaunchpadException.class, () -> receiver.send(message, TIMESTAMP));
+    fun send_sysexMessage() {
+        val message: MidiMessage = SysexMessage()
+        assertThrows(LaunchpadException::class.java) {
+            receiver.send(message, TIMESTAMP)
+        }
     }
 
     @Test
-    void send_metaMessage() {
-        MidiMessage message = new MetaMessage();
-        assertThrows(LaunchpadException.class, () -> receiver.send(message, TIMESTAMP));
+    fun send_metaMessage() {
+        val message: MidiMessage = MetaMessage()
+        assertThrows(LaunchpadException::class.java) {
+            receiver.send(message, TIMESTAMP)
+        }
     }
 
     @Test
-    void send_shortMessage_unknown() throws Exception {
-        ShortMessage message = new ShortMessage();
-        message.setMessage(ShortMessage.STOP, 0, 0);
-        assertThrows(LaunchpadException.class, () -> receiver.send(message, TIMESTAMP));
+    fun send_shortMessage_unknown() {
+        val message = ShortMessage()
+        message.setMessage(ShortMessage.STOP, 0, 0)
+
+        assertThrows(LaunchpadException::class.java) {
+            receiver.send(message, TIMESTAMP)
+        }
     }
 
     @Test
-    void send_noteOn_pressed() throws Exception {
-        ShortMessage message = new ShortMessage();
-        message.setMessage(ShortMessage.NOTE_ON, 42, VELOCITY_PRESSED);
-        receiver.send(message, TIMESTAMP);
-        Mockito.verify(listener).onNoteOn(42, TIMESTAMP);
+    fun send_noteOn_pressed() {
+        val message = ShortMessage()
+        message.setMessage(ShortMessage.NOTE_ON, 42, VELOCITY_PRESSED)
+
+        receiver.send(message, TIMESTAMP)
+
+        verify(listener).onNoteOn(42, TIMESTAMP)
     }
 
     @Test
-    void send_noteOn_released() throws Exception {
-        ShortMessage message = new ShortMessage();
-        message.setMessage(ShortMessage.NOTE_ON, 42, VELOCITY_RELEASED);
-        receiver.send(message, TIMESTAMP);
-        Mockito.verify(listener).onNoteOff(42, TIMESTAMP);
+    fun send_noteOn_released() {
+        val message = ShortMessage()
+        message.setMessage(ShortMessage.NOTE_ON, 42, VELOCITY_RELEASED)
+
+        receiver.send(message, TIMESTAMP)
+
+        verify(listener).onNoteOff(42, TIMESTAMP)
     }
 
     @Test
-    void send_controlChange_pressed() throws Exception {
-        ShortMessage message = new ShortMessage();
-        message.setMessage(ShortMessage.CONTROL_CHANGE, 42, VELOCITY_PRESSED);
-        receiver.send(message, TIMESTAMP);
-        Mockito.verify(listener).onButtonOn(42, TIMESTAMP);
+    fun send_controlChange_pressed() {
+        val message = ShortMessage()
+        message.setMessage(ShortMessage.CONTROL_CHANGE, 42, VELOCITY_PRESSED)
+
+        receiver.send(message, TIMESTAMP)
+
+        verify(listener).onButtonOn(42, TIMESTAMP)
     }
 
     @Test
-    void send_controlChange_released() throws Exception {
-        ShortMessage message = new ShortMessage();
-        message.setMessage(ShortMessage.CONTROL_CHANGE, 42, VELOCITY_RELEASED);
-        receiver.send(message, TIMESTAMP);
-        Mockito.verify(listener).onButtonOff(42, TIMESTAMP);
+    fun send_controlChange_released() {
+        val message = ShortMessage()
+        message.setMessage(ShortMessage.CONTROL_CHANGE, 42, VELOCITY_RELEASED)
+
+        receiver.send(message, TIMESTAMP)
+
+        verify(listener).onButtonOff(42, TIMESTAMP)
     }
 
     @Test
-    void send_controlChange_textScrolled() throws Exception {
-        ShortMessage message = new ShortMessage();
-        message.setMessage(ShortMessage.CONTROL_CHANGE, 0, VELOCITY_TEXT_SCROLLED);
-        receiver.send(message, TIMESTAMP);
-        Mockito.verify(listener).onTextScrolled(TIMESTAMP);
+    fun send_controlChange_textScrolled() {
+        val message = ShortMessage()
+        message.setMessage(ShortMessage.CONTROL_CHANGE, 0, VELOCITY_TEXT_SCROLLED)
+
+        receiver.send(message, TIMESTAMP)
+
+        verify(listener).onTextScrolled(TIMESTAMP)
     }
 
     @Test
-    void close() {
-        assertDoesNotThrow(() -> receiver.close());
+    fun close() {
+        assertDoesNotThrow { receiver.close() }
     }
 
-    @Test
-    void midi_protocol_receiver_cant_be_created_if_listener_is_null() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> new DefaultMidiProtocolReceiver(null)
-        );
+    companion object {
+        private const val VELOCITY_PRESSED = 127
+        private const val VELOCITY_RELEASED = 0
+        private const val VELOCITY_TEXT_SCROLLED = 3
+        private const val TIMESTAMP: Long = -1L
     }
 }
