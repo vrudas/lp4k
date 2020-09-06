@@ -15,155 +15,125 @@
  *    limitations under the License.
  *
  */
+package io.lp4k.midi
 
-package io.lp4k.midi;
+import io.lp4k.midi.MidiDeviceConfiguration.Companion.autodetect
+import io.lp4k.midi.MidiDeviceConfiguration.Companion.autodetectInputDevice
+import io.lp4k.midi.MidiDeviceConfiguration.Companion.autodetectOutputDevice
+import org.junit.jupiter.api.Assertions.assertDoesNotThrow
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.Mock
+import org.mockito.junit.jupiter.MockitoExtension
+import javax.sound.midi.MidiDevice
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import javax.sound.midi.MidiDevice;
-import javax.sound.midi.MidiUnavailableException;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-@ExtendWith({MockitoExtension.class,})
-public class MidiDeviceConfigurationTest {
-
-    public static final String JDK_MIDI_DEVICE_NAME = "Real Time Sequencer";
-    public static final String JDK_MIDI_DEVICE_DESCRIPTION = "Software sequencer";
+@ExtendWith(MockitoExtension::class)
+class MidiDeviceConfigurationTest {
 
     @Mock
-    private MidiDevice inputDevice;
+    private lateinit var inputDevice: MidiDevice
 
     @Mock
-    private MidiDevice outputDevice;
+    private lateinit var outputDevice: MidiDevice
 
-    private MidiDeviceConfiguration configuration;
+    private lateinit var configuration: MidiDeviceConfiguration
 
     @BeforeEach
-    public void init() {
-        configuration = new MidiDeviceConfiguration(inputDevice, outputDevice);
+    fun init() {
+        configuration = MidiDeviceConfiguration(inputDevice, outputDevice)
     }
 
-    private void assertMidiInputDevice(MidiDevice inputDevice) {
-        int expectedMaxTransmittersValue = -1;
+    private fun assertMidiInputDevice(inputDevice: MidiDevice) {
+        val expectedMaxTransmittersValue = -1
 
-        assertNotNull(inputDevice);
         assertEquals(
             expectedMaxTransmittersValue,
-            inputDevice.getMaxTransmitters()
-        );
+            inputDevice.maxTransmitters
+        )
     }
 
-    private void assertMidiOutputDevice(MidiDevice outputDevice) {
-        int expectedMaxReceiversValue = -1;
+    private fun assertMidiOutputDevice(outputDevice: MidiDevice) {
+        val expectedMaxReceiversValue = -1
 
-        assertNotNull(outputDevice);
         assertEquals(
             expectedMaxReceiversValue,
-            outputDevice.getMaxReceivers()
-        );
+            outputDevice.maxReceivers
+        )
     }
 
     @Test
-    public void testGetInputDevice() {
-        MidiDevice device = configuration.getInputDevice();
-        assertEquals(inputDevice, device);
+    fun testGetInputDevice() {
+        val device = configuration.inputDevice
+        assertEquals(inputDevice, device)
     }
 
     @Test
-    public void testGetOutputDevice() {
-        MidiDevice device = configuration.getOutputDevice();
-        assertEquals(outputDevice, device);
+    fun testGetOutputDevice() {
+        val device = configuration.outputDevice
+        assertEquals(outputDevice, device)
     }
 
     @Test
-    void auto_detection_not_found_launchpad_midi_input_device() {
-        assertThrows(
-            DeviceNotFoundException.class,
-            MidiDeviceConfiguration.Companion::autodetectInputDevice
-        );
+    fun auto_detection_not_found_launchpad_midi_input_device() {
+        assertThrows<DeviceNotFoundException> { autodetectInputDevice() }
     }
 
     @Test
-    void auto_detection_not_found_launchpad_midi_output_device() {
-        assertThrows(
-            DeviceNotFoundException.class,
-            MidiDeviceConfiguration.Companion::autodetectOutputDevice
-        );
+    fun auto_detection_not_found_launchpad_midi_output_device() {
+        assertThrows<DeviceNotFoundException> { autodetectOutputDevice() }
     }
 
     @Test
-    void auto_detection_failed_because_not_found_device() {
-        assertThrows(
-            DeviceNotFoundException.class,
-            MidiDeviceConfiguration.Companion::autodetect
-        );
+    fun auto_detection_failed_because_not_found_device() {
+        assertThrows<DeviceNotFoundException> { autodetect() }
     }
 
     @Test
-    void auto_detection_found_devices() {
-        MidiDeviceConfiguration midiDeviceConfiguration = Assertions.assertDoesNotThrow(
-            () -> MidiDeviceConfiguration.Companion.autodetect(JDK_MIDI_DEVICE_DESCRIPTION)
-        );
-
-        assertNotNull(midiDeviceConfiguration);
+    fun auto_detection_found_devices() {
+        assertDoesNotThrow<MidiDeviceConfiguration> {
+            autodetect(JDK_MIDI_DEVICE_DESCRIPTION)
+        }
     }
 
     @Test
-    void auto_detection_failed_because_of_null_device_signature() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> MidiDeviceConfiguration.Companion.autodetect(null)
-        );
+    fun auto_detection_failed_because_of_empty_device_signature() {
+        assertThrows<IllegalArgumentException> { autodetect("") }
     }
 
     @Test
-    void auto_detection_failed_because_of_empty_device_signature() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> MidiDeviceConfiguration.Companion.autodetect("")
-        );
+    fun auto_detection_failed_because_of_blank_device_signature() {
+        assertThrows<IllegalArgumentException> { autodetect(" ") }
     }
 
     @Test
-    void auto_detection_failed_because_of_blank_device_signature() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> MidiDeviceConfiguration.Companion.autodetect(" ")
-        );
+    fun detect_by_name_software_midi_input_device_provided_from_jdk() {
+        val inputDevice = autodetectInputDevice(JDK_MIDI_DEVICE_NAME)
+        assertMidiInputDevice(inputDevice)
     }
 
     @Test
-    void detect_by_name_software_midi_input_device_provided_from_jdk() throws MidiUnavailableException {
-        MidiDevice inputDevice = MidiDeviceConfiguration.Companion.autodetectInputDevice(JDK_MIDI_DEVICE_NAME);
-
-        assertMidiInputDevice(inputDevice);
+    fun detect_by_description_software_midi_input_device_provided_from_jdk() {
+        val inputDevice = autodetectInputDevice(JDK_MIDI_DEVICE_DESCRIPTION)
+        assertMidiInputDevice(inputDevice)
     }
 
     @Test
-    void detect_by_description_software_midi_input_device_provided_from_jdk() throws MidiUnavailableException {
-        MidiDevice inputDevice = MidiDeviceConfiguration.Companion.autodetectInputDevice(JDK_MIDI_DEVICE_DESCRIPTION);
-
-        assertMidiInputDevice(inputDevice);
+    fun detect_by_name_software_midi_output_device_provided_from_jdk() {
+        val outputDevice = autodetectOutputDevice(JDK_MIDI_DEVICE_NAME)
+        assertMidiOutputDevice(outputDevice)
     }
 
     @Test
-    void detect_by_name_software_midi_output_device_provided_from_jdk() throws MidiUnavailableException {
-        MidiDevice outputDevice = MidiDeviceConfiguration.Companion.autodetectOutputDevice(JDK_MIDI_DEVICE_NAME);
-
-        assertMidiOutputDevice(outputDevice);
+    fun detect_by_description_software_midi_output_device_provided_from_jdk() {
+        val outputDevice = autodetectOutputDevice(JDK_MIDI_DEVICE_DESCRIPTION)
+        assertMidiOutputDevice(outputDevice)
     }
 
-    @Test
-    void detect_by_description_software_midi_output_device_provided_from_jdk() throws MidiUnavailableException {
-        MidiDevice outputDevice = MidiDeviceConfiguration.Companion.autodetectOutputDevice(JDK_MIDI_DEVICE_DESCRIPTION);
-
-        assertMidiOutputDevice(outputDevice);
+    companion object {
+        const val JDK_MIDI_DEVICE_NAME = "Real Time Sequencer"
+        const val JDK_MIDI_DEVICE_DESCRIPTION = "Software sequencer"
     }
-
 }
