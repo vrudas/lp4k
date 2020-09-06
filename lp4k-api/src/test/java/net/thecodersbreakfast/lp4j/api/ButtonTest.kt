@@ -14,67 +14,66 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package net.thecodersbreakfast.lp4j.api
 
-package net.thecodersbreakfast.lp4j.api;
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
-import org.junit.jupiter.api.Test;
-
-import static net.thecodersbreakfast.lp4j.api.Button.BUTTONS_RIGHT;
-import static net.thecodersbreakfast.lp4j.api.Button.BUTTONS_TOP;
-import static org.junit.jupiter.api.Assertions.*;
-
-public class ButtonTest {
+class ButtonTest {
 
     @Test
-    public void at_topButton() {
-        Button button = Button.atTop(0);
-        assertEquals(Button.UP, button);
-        assertTrue(button.isTopButton());
+    fun at_topButton() {
+        val button = Button.atTop(0)
+
+        assertEquals(Button.UP, button)
+        assertTrue(button.isTopButton)
     }
 
     @Test
-    public void at_rightButton() {
-        Button button = Button.atRight(7);
-        assertEquals(Button.ARM, button);
-        assertTrue(button.isRightButton());
+    fun at_rightButton() {
+        val button = Button.atRight(7)
+
+        assertEquals(Button.ARM, button)
+        assertTrue(button.isRightButton)
     }
 
     @Test
-    public void at_coordinateTooLow() {
-        assertThrows(IllegalArgumentException.class, () -> Button.atTop(Button.MIN_COORD - 1));
+    fun at_coordinateTooLow() {
+        assertThrows<IllegalArgumentException> { Button.atTop(Button.MIN_COORD - 1) }
     }
 
     @Test
-    public void at_coordinateTooHigh() {
-        assertThrows(IllegalArgumentException.class, () -> Button.atTop(Button.MAX_COORD + 1));
+    fun at_coordinateTooHigh() {
+        assertThrows<IllegalArgumentException> { Button.atTop(Button.MAX_COORD + 1) }
     }
 
     @Test
-    public void isTopOrRight() {
-        assertTrue(Button.UP.isTopButton());
-        assertFalse(Button.UP.isRightButton());
-        assertTrue(Button.VOL.isRightButton());
-        assertFalse(Button.VOL.isTopButton());
+    fun `is Top or Right`() {
+        assertTrue(Button.UP.isTopButton)
+        assertFalse(Button.UP.isRightButton)
+        assertTrue(Button.VOL.isRightButton)
+        assertFalse(Button.VOL.isTopButton)
     }
 
     @Test
-    public void tostring() {
-        assertEquals("Button[UP(top,0)]", Button.UP.toString());
+    fun tostring() {
+        assertEquals("Button[UP(top,0)]", Button.UP.toString())
     }
 
     @Test
-    void top_buttons_coordinate_are_correct() {
-        for (int expectedCoordinate = 0; expectedCoordinate < BUTTONS_TOP.length; expectedCoordinate++) {
-            int buttonCoordinate = BUTTONS_TOP[expectedCoordinate].getCoordinate();
-            assertEquals(expectedCoordinate, buttonCoordinate);
+    fun top_buttons_coordinate_are_correct() {
+        for (expectedCoordinate in Button.BUTTONS_TOP.indices) {
+            val buttonCoordinate = Button.BUTTONS_TOP[expectedCoordinate].coordinate
+            assertEquals(expectedCoordinate, buttonCoordinate)
         }
     }
 
     @Test
-    void right_buttons_coordinate_are_correct() {
-        for (int expectedCoordinate = 0; expectedCoordinate < BUTTONS_RIGHT.length; expectedCoordinate++) {
-            int buttonCoordinate = BUTTONS_RIGHT[expectedCoordinate].getCoordinate();
-            assertEquals(expectedCoordinate, buttonCoordinate);
+    fun right_buttons_coordinate_are_correct() {
+        for (expectedCoordinate in Button.BUTTONS_RIGHT.indices) {
+            val buttonCoordinate = Button.BUTTONS_RIGHT[expectedCoordinate].coordinate
+            assertEquals(expectedCoordinate, buttonCoordinate)
         }
     }
 }
