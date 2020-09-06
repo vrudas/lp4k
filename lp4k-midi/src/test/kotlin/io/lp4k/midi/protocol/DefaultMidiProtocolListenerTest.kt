@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
@@ -47,7 +48,7 @@ class DefaultMidiProtocolListenerTest {
 
     @Test
     fun onButtonOn_unknown() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertThrows<IllegalArgumentException> {
             midiProtocolListener.onButtonOn(BUTTON_UNKNOWN, TIMESTAMP)
             verify(listener).onButtonPressed(Button.UP, TIMESTAMP)
         }
@@ -61,7 +62,7 @@ class DefaultMidiProtocolListenerTest {
 
     @Test
     fun onButtonOff_unknown() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertThrows<IllegalArgumentException> {
             midiProtocolListener.onButtonOff(BUTTON_UNKNOWN, TIMESTAMP)
             verify(listener).onButtonReleased(Button.UP, TIMESTAMP)
         }
@@ -93,7 +94,7 @@ class DefaultMidiProtocolListenerTest {
 
     @Test
     fun onNoteOn_unknown() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertThrows<IllegalArgumentException> {
             midiProtocolListener.onNoteOn(NOTE_UNKNOWN, TIMESTAMP)
             verify(listener).onPadPressed(Pad.at(0, 0), TIMESTAMP)
         }
@@ -101,7 +102,7 @@ class DefaultMidiProtocolListenerTest {
 
     @Test
     fun onNoteOff_unknown() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertThrows<IllegalArgumentException> {
             midiProtocolListener.onNoteOff(NOTE_UNKNOWN, TIMESTAMP)
             verify(listener).onPadReleased(Pad.at(0, 0), TIMESTAMP)
         }
