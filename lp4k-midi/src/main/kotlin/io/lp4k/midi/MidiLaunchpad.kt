@@ -68,6 +68,8 @@ class MidiLaunchpad(
         this.transmitter = openTransmitter()
     }
 
+    override val client: LaunchpadClient = MidiLaunchpadClient(DefaultMidiProtocolClient(this.receiver))
+
     private fun openReceiver(): Receiver {
         val outputDevice = configuration.outputDevice
         if (!outputDevice.isOpen) {
@@ -88,10 +90,6 @@ class MidiLaunchpad(
         openedInputDevice = true
 
         return inputDevice.transmitter
-    }
-
-    override fun getClient(): LaunchpadClient {
-        return MidiLaunchpadClient(DefaultMidiProtocolClient(this.receiver))
     }
 
     override fun setListener(listener: LaunchpadListener) {

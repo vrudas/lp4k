@@ -36,6 +36,8 @@ import org.slf4j.LoggerFactory
  */
 class EmulatorLaunchpad : Launchpad {
 
+    override val client: LaunchpadClient by lazy { EmulatorLaunchpadClient(vertx) }
+
     private val vertx: Vertx
     private val eventBusHandler: EventBusHandler
 
@@ -91,23 +93,10 @@ class EmulatorLaunchpad : Launchpad {
         httpServer.requestHandler(router).listen(httpPort)
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    override fun getClient(): LaunchpadClient {
-        return EmulatorLaunchpadClient(vertx)
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     override fun setListener(listener: LaunchpadListener) {
         this.eventBusHandler.listener = listener
     }
 
-    /**
-     * {@inheritDoc}
-     */
     override fun close() {
         vertx.close()
     }
