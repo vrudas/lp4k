@@ -22,6 +22,7 @@ import net.thecodersbreakfast.lp4j.api.Pad
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.mockito.ArgumentMatchers.anyLong
 import org.mockito.ArgumentMatchers.eq
 import org.mockito.Mockito.mock
@@ -43,21 +44,21 @@ internal class EventBusHandlerTest {
 
     @Test
     fun `exception is thrown for null input event type`() {
-        assertThrows(IllegalStateException::class.java) {
+        assertThrows<IllegalStateException> {
             handler.handle(message(null))
         }
     }
 
     @Test
     fun `exception is thrown for empty input event type`() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertThrows<IllegalArgumentException> {
             handler.handle(message(""))
         }
     }
 
     @Test
     fun `exception is thrown for invalid input event type`() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertThrows<IllegalArgumentException> {
             handler.handle(message("InputEventType"))
         }
     }
@@ -70,14 +71,14 @@ internal class EventBusHandlerTest {
 
     @Test
     fun `launchpad listener pad press event was not called because of missing x coordinate`() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertThrows<IllegalArgumentException> {
             handler.handle(padPressMessage(null, null))
         }
     }
 
     @Test
     fun `launchpad listener pad press event was not called because of missing y coordinate`() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertThrows<IllegalArgumentException> {
             handler.handle(padPressMessage(Pad.X_MAX, null))
         }
     }
@@ -93,14 +94,14 @@ internal class EventBusHandlerTest {
 
     @Test
     fun `launchpad listener pad release event was not called because of missing x coordinate`() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertThrows<IllegalArgumentException> {
             handler.handle(padPressMessage(null, null))
         }
     }
 
     @Test
     fun `launchpad listener pad release event was not called because of missing y coordinate`() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertThrows<IllegalArgumentException> {
             handler.handle(padPressMessage(Pad.X_MIN, null))
         }
     }
@@ -116,14 +117,14 @@ internal class EventBusHandlerTest {
 
     @Test
     fun `launchpad listener button press event was not called because of missing x coordinate`() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertThrows<IllegalArgumentException> {
             handler.handle(buttonPressMessage(null, null))
         }
     }
 
     @Test
     fun `launchpad listener button press event was not called because of missing y coordinate`() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertThrows<IllegalArgumentException> {
             handler.handle(buttonPressMessage(Button.MAX_COORD, null))
         }
     }
@@ -148,14 +149,14 @@ internal class EventBusHandlerTest {
 
     @Test
     fun `launchpad listener button release event was not called because of missing x coordinate`() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertThrows<IllegalArgumentException> {
             handler.handle(buttonReleaseMessage(null, null))
         }
     }
 
     @Test
     fun `launchpad listener button release event was not called because of missing y coordinate`() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertThrows<IllegalArgumentException> {
             handler.handle(buttonReleaseMessage(Button.MAX_COORD, null))
         }
     }

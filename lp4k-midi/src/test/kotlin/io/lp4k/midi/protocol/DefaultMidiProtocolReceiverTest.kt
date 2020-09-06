@@ -22,6 +22,7 @@ import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 import javax.sound.midi.*
@@ -40,7 +41,7 @@ internal class DefaultMidiProtocolReceiverTest {
     @Test
     fun send_sysexMessage() {
         val message: MidiMessage = SysexMessage()
-        assertThrows(LaunchpadException::class.java) {
+        assertThrows<LaunchpadException> {
             receiver.send(message, TIMESTAMP)
         }
     }
@@ -48,7 +49,7 @@ internal class DefaultMidiProtocolReceiverTest {
     @Test
     fun send_metaMessage() {
         val message: MidiMessage = MetaMessage()
-        assertThrows(LaunchpadException::class.java) {
+        assertThrows<LaunchpadException> {
             receiver.send(message, TIMESTAMP)
         }
     }
@@ -58,7 +59,7 @@ internal class DefaultMidiProtocolReceiverTest {
         val message = ShortMessage()
         message.setMessage(ShortMessage.STOP, 0, 0)
 
-        assertThrows(LaunchpadException::class.java) {
+        assertThrows<LaunchpadException> {
             receiver.send(message, TIMESTAMP)
         }
     }

@@ -22,6 +22,7 @@ import net.thecodersbreakfast.lp4j.api.*
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.*
 
 @Suppress("kotlin:S100")
@@ -62,7 +63,7 @@ internal class EmulatorLaunchpadClientTest {
 
     @Test
     fun `set lights event not published because not implemented`() {
-        assertThrows(UnsupportedOperationException::class.java) {
+        assertThrows<UnsupportedOperationException> {
             emulatorLaunchpadClient.setLights(
                 emptyArray(),
                 BackBufferOperation.NONE
@@ -197,7 +198,7 @@ internal class EmulatorLaunchpadClientTest {
 
     @Test
     fun `scroll text event not published because not implemented`() {
-        assertThrows(UnsupportedOperationException::class.java) {
+        assertThrows<UnsupportedOperationException> {
             emulatorLaunchpadClient.scrollText(
                 "",
                 Color.AMBER,
