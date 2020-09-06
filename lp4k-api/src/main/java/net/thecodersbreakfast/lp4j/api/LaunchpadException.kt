@@ -13,24 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package net.thecodersbreakfast.lp4j.api;
+package net.thecodersbreakfast.lp4j.api
 
 /**
  * Represents any error that could occur while using the Launchpad API.
  *
  * @author Olivier Croisier (olivier.croisier@gmail.com)
  */
-public class LaunchpadException extends RuntimeException {
-
+class LaunchpadException : RuntimeException {
     /**
      * Constructor.
      *
      * @param message The error message.
      */
-    public LaunchpadException(String message) {
-        super(message);
-    }
+    constructor(message: String) : super(message)
 
     /**
      * Constructor.
@@ -38,17 +34,12 @@ public class LaunchpadException extends RuntimeException {
      * @param message The error message.
      * @param cause The root cause of the exception.
      */
-    public LaunchpadException(String message, Throwable cause) {
-        super(message, cause);
-    }
+    constructor(message: String, cause: Throwable) : super(message, cause)
 
     /**
      * Constructor.
      *
      * @param cause The root cause of the exception.
      */
-    public LaunchpadException(Throwable cause) {
-        super(cause);
-    }
-
+    constructor(cause: Throwable) : super(cause)
 }
