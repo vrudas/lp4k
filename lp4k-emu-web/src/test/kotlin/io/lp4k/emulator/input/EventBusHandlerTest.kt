@@ -19,7 +19,6 @@ package io.lp4k.emulator.input
 import net.thecodersbreakfast.lp4j.api.Button
 import net.thecodersbreakfast.lp4j.api.LaunchpadListener
 import net.thecodersbreakfast.lp4j.api.Pad
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

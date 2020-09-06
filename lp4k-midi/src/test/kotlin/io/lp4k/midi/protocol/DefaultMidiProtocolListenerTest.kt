@@ -20,12 +20,9 @@ package io.lp4k.midi.protocol
 import net.thecodersbreakfast.lp4j.api.Button
 import net.thecodersbreakfast.lp4j.api.LaunchpadListener
 import net.thecodersbreakfast.lp4j.api.Pad
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 
