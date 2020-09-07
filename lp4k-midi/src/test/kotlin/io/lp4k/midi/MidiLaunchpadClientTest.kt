@@ -51,10 +51,6 @@ class MidiLaunchpadClientTest {
     setBrightness
     ================================================================================
     */
-    @Test
-    fun brightness_was_not_set_for_null_argument() {
-        assertThrows<IllegalArgumentException> { launchpadClient.setBrightness(null) }
-    }
 
     @Test
     fun brightness_set_successful() {
@@ -97,7 +93,12 @@ class MidiLaunchpadClientTest {
     */
     @Test
     fun setBuffers() {
-        launchpadClient.setBuffers(Buffer.BUFFER_0, Buffer.BUFFER_1, false, false)
+        launchpadClient.setBuffers(
+            Buffer.BUFFER_0,
+            Buffer.BUFFER_1,
+            copyVisibleBufferToWriteBuffer = false,
+            autoSwap = false
+        )
 
         verify(midiProtocolClient).doubleBufferMode(
             visibleBuffer = 0,
@@ -116,32 +117,8 @@ class MidiLaunchpadClientTest {
             launchpadClient.setBuffers(
                 Buffer.BUFFER_0,
                 Buffer.BUFFER_1,
-                false,
-                false
-            )
-        }
-    }
-
-    @Test
-    fun set_buffers_failed_for_null_visible_buffer() {
-        assertThrows<IllegalArgumentException> {
-            launchpadClient.setBuffers(
-                null,
-                Buffer.BUFFER_1,
-                true,
-                true
-            )
-        }
-    }
-
-    @Test
-    fun set_buffers_failed_for_null_write_buffer() {
-        assertThrows<IllegalArgumentException> {
-            launchpadClient.setBuffers(
-                Buffer.BUFFER_0,
-                null,
-                false,
-                false
+                copyVisibleBufferToWriteBuffer = false,
+                autoSwap = false
             )
         }
     }
@@ -161,41 +138,6 @@ class MidiLaunchpadClientTest {
                 Button.UP,
                 Color.BLACK,
                 BackBufferOperation.COPY
-            )
-        }
-    }
-
-    @Test
-    fun set_button_light_failed_for_null_button() {
-        assertThrows(
-            IllegalArgumentException::class.java
-        ) {
-            launchpadClient.setButtonLight(
-                null,
-                Color.RED,
-                BackBufferOperation.NONE
-            )
-        }
-    }
-
-    @Test
-    fun set_button_light_failed_for_null_color() {
-        assertThrows<IllegalArgumentException> {
-            launchpadClient.setButtonLight(
-                Button.MIXER,
-                null,
-                BackBufferOperation.NONE
-            )
-        }
-    }
-
-    @Test
-    fun set_button_light_failed_for_null_operation() {
-        assertThrows<IllegalArgumentException> {
-            launchpadClient.setButtonLight(
-                Button.MIXER,
-                Color.RED,
-                null
             )
         }
     }
@@ -295,39 +237,6 @@ class MidiLaunchpadClientTest {
         }
     }
 
-    @Test
-    fun set_pad_light_failed_for_null_pad() {
-        assertThrows<IllegalArgumentException> {
-            launchpadClient.setPadLight(
-                null,
-                Color.AMBER,
-                BackBufferOperation.NONE
-            )
-        }
-    }
-
-    @Test
-    fun set_pad_light_failed_for_null_color() {
-        assertThrows<IllegalArgumentException> {
-            launchpadClient.setPadLight(
-                Pad.at(Pad.X_MAX, Pad.Y_MAX),
-                null,
-                BackBufferOperation.NONE
-            )
-        }
-    }
-
-    @Test
-    fun set_pad_light_failed_for_null_operation() {
-        assertThrows<IllegalArgumentException> {
-            launchpadClient.setPadLight(
-                Pad.at(Pad.X_MAX, Pad.Y_MAX),
-                Color.AMBER,
-                null
-            )
-        }
-    }
-
     /*
     ================================================================================
     reset
@@ -371,29 +280,11 @@ class MidiLaunchpadClientTest {
         assertThrows<LaunchpadException> { launchpadClient.testLights(LightIntensity.LOW) }
     }
 
-    @Test
-    fun test_lights_failed_because_of_null_input() {
-        assertThrows<IllegalArgumentException> { launchpadClient.testLights(null) }
-    }
-
     /*
     ================================================================================
     setLights
     ================================================================================
     */
-    @Test
-    fun setLights_null() {
-        assertThrows<IllegalArgumentException> {
-            launchpadClient.setLights(null, BackBufferOperation.NONE)
-        }
-    }
-
-    @Test
-    fun setLights_odd() {
-        assertThrows<IllegalArgumentException> {
-            launchpadClient.setLights(arrayOfNulls(1), BackBufferOperation.NONE)
-        }
-    }
 
     @Test
     fun setLights_exception() {
@@ -409,11 +300,6 @@ class MidiLaunchpadClientTest {
     fun setLights_COPY() {
         launchpadClient.setLights(arrayOf(Color.BLACK, Color.BLACK), BackBufferOperation.COPY)
         verify(midiProtocolClient).notesOn(12, 12)
-    }
-
-    @Test
-    fun set_lights_failed_for_null_operation() {
-        assertThrows<IllegalArgumentException> { launchpadClient.setLights(arrayOf(), null) }
     }
 
     /*
@@ -445,19 +331,6 @@ class MidiLaunchpadClientTest {
     }
 
     @Test
-    fun scrollText_nullColor() {
-        assertThrows<IllegalArgumentException> {
-            launchpadClient.scrollText(
-                "Hello",
-                null,
-                ScrollSpeed.SPEED_MIN,
-                false,
-                BackBufferOperation.COPY
-            )
-        }
-    }
-
-    @Test
     fun scrollText_COPY() {
         launchpadClient.scrollText(
             "Hello",
@@ -482,32 +355,6 @@ class MidiLaunchpadClientTest {
                 ScrollSpeed.SPEED_MIN,
                 false,
                 BackBufferOperation.COPY
-            )
-        }
-    }
-
-    @Test
-    fun set_scroll_text_failed_for_null_speed() {
-        assertThrows<IllegalArgumentException> {
-            launchpadClient.scrollText(
-                "text",
-                Color.ORANGE,
-                null,
-                true,
-                BackBufferOperation.NONE
-            )
-        }
-    }
-
-    @Test
-    fun set_scroll_text_failed_for_null_operation() {
-        assertThrows<IllegalArgumentException> {
-            launchpadClient.scrollText(
-                "text",
-                Color.ORANGE,
-                ScrollSpeed.SPEED_MAX,
-                true,
-                null
             )
         }
     }
