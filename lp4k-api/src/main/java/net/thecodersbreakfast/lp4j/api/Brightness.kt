@@ -22,7 +22,7 @@ package net.thecodersbreakfast.lp4j.api
  *
  * `Brightness` instances are immutable and cached.
  *
- * @param brightnessLevel The desired level of brightess.
+ * @param brightnessLevel The desired level of brightness.
  *
  * @author Olivier Croisier (olivier.croisier@gmail.com)
  */
@@ -48,7 +48,7 @@ data class Brightness constructor(
         /**
          * Factory method.
          *
-         * @param brightness The desired level of brightess. Must be in range [[net.thecodersbreakfast.lp4j.api.Brightness.MIN_VALUE],[net.thecodersbreakfast.lp4j.api.Brightness.MAX_VALUE]]
+         * @param brightness The desired level of brightness. Must be in range [[net.thecodersbreakfast.lp4j.api.Brightness.MIN_VALUE],[net.thecodersbreakfast.lp4j.api.Brightness.MAX_VALUE]]
          * @return The Brightness instance.
          * @throws java.lang.IllegalArgumentException If the requested brightness level is out of acceptable range.
          */
