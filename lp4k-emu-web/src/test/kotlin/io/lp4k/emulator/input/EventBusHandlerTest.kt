@@ -16,27 +16,30 @@
  */
 package io.lp4k.emulator.input
 
+import com.nhaarman.mockitokotlin2.eq
+import com.nhaarman.mockitokotlin2.verify
 import net.thecodersbreakfast.lp4j.api.Button
 import net.thecodersbreakfast.lp4j.api.LaunchpadListener
 import net.thecodersbreakfast.lp4j.api.Pad
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.ArgumentMatchers.anyLong
-import org.mockito.ArgumentMatchers.eq
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
+import org.mockito.Mock
+import org.mockito.junit.jupiter.MockitoExtension
 
 @Suppress("kotlin:S100")
+@ExtendWith(MockitoExtension::class)
 internal class EventBusHandlerTest {
 
+    @Mock
     private lateinit var launchpadListener: LaunchpadListener
+
     private lateinit var handler: EventBusHandler
 
     @BeforeEach
     fun setUp() {
-        launchpadListener = mock(LaunchpadListener::class.java)
-
         handler = EventBusHandler()
         handler.listener = launchpadListener
     }

@@ -28,7 +28,7 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:${slf4jVersion}")
 
     testImplementation("org.junit.jupiter:junit-jupiter:${junitVersion}")
-    testImplementation("org.mockito:mockito-core:${mockitoVersion}")
+    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:${mockitoKotlinVersion}")
     testImplementation("org.mockito:mockito-junit-jupiter:${mockitoVersion}")
     testImplementation("io.vertx:vertx-junit5:3.8.5")
 }
