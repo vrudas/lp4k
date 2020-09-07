@@ -26,7 +26,7 @@ package net.thecodersbreakfast.lp4j.api
  *
  * @author Olivier Croisier (olivier.croisier@gmail.com)
  */
-data class Brightness constructor(
+data class Brightness(
     val brightnessLevel: Int
 ) {
     companion object {
