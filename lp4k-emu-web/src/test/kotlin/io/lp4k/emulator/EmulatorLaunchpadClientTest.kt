@@ -19,7 +19,6 @@ package io.lp4k.emulator
 import io.lp4k.emulator.output.OutputEventType
 import io.vertx.core.json.JsonObject
 import net.thecodersbreakfast.lp4j.api.*
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
