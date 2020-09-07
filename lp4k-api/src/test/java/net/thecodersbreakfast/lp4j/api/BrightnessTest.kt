@@ -14,94 +14,84 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package net.thecodersbreakfast.lp4j.api
 
-package net.thecodersbreakfast.lp4j.api;
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-public class BrightnessTest {
+class BrightnessTest {
 
     @Test
-    public void valueOf_for_brightness_min_level() {
-        Brightness brightness = Brightness.of(0);
-        assertNotNull(brightness);
-        assertEquals(0, brightness.getBrightnessLevel());
+    fun valueOf_for_brightness_min_level() {
+        val brightness = Brightness.of(0)
+        assertEquals(0, brightness.brightnessLevel)
     }
 
     @Test
-    public void valueOf_for_brightness_max_level() {
-        Brightness brightness = Brightness.of(15);
-        assertNotNull(brightness);
-        assertEquals(15, brightness.getBrightnessLevel());
+    fun valueOf_for_brightness_max_level() {
+        val brightness = Brightness.of(15)
+        assertEquals(15, brightness.brightnessLevel)
     }
 
     @Test
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    public void valueOf_tooLow() {
-        assertThrows(IllegalArgumentException.class, () -> Brightness.of(Brightness.MIN_VALUE - 1));
+    fun valueOf_tooLow() {
+        assertThrows<IllegalArgumentException> { Brightness.of(Brightness.MIN_VALUE - 1) }
     }
 
     @Test
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    public void valueOf_tooHigh() {
-        assertThrows(IllegalArgumentException.class, () -> Brightness.of(Brightness.MAX_VALUE + 1));
+    fun valueOf_tooHigh() {
+        assertThrows<IllegalArgumentException> { Brightness.of(Brightness.MAX_VALUE + 1) }
     }
 
     @Test
-    void call_of_more_method_returns_max_brightness() {
-        var almostMaxBrightness = Brightness.of(Brightness.MAX_VALUE - 1);
-
-        assertEquals(Brightness.BRIGHTNESS_MAX, almostMaxBrightness.more());
+    fun call_of_more_method_returns_max_brightness() {
+        val almostMaxBrightness = Brightness.of(Brightness.MAX_VALUE - 1)
+        assertEquals(Brightness.BRIGHTNESS_MAX, almostMaxBrightness.more())
     }
 
     @Test
-    void call_of_less_method_returns_min_brightness() {
-        var almostMaxBrightness = Brightness.of(Brightness.MIN_VALUE + 1);
-
-        assertEquals(Brightness.BRIGHTNESS_MIN, almostMaxBrightness.less());
+    fun call_of_less_method_returns_min_brightness() {
+        val almostMaxBrightness = Brightness.of(Brightness.MIN_VALUE + 1)
+        assertEquals(Brightness.BRIGHTNESS_MIN, almostMaxBrightness.less())
     }
 
     @Test
-    @SuppressWarnings("java:S3415")
-    void not_equal() {
-        assertNotEquals(Brightness.BRIGHTNESS_MAX, Brightness.BRIGHTNESS_MIN);
+    fun not_equal() {
+        assertNotEquals(Brightness.BRIGHTNESS_MAX, Brightness.BRIGHTNESS_MIN)
     }
 
     @Test
-    @SuppressWarnings("java:S3415")
-    void not_equal_for_different_type() {
-        assertNotEquals(Brightness.BRIGHTNESS_MAX, Brightness.MAX_VALUE);
+    fun not_equal_for_different_type() {
+        assertNotEquals(Brightness.BRIGHTNESS_MAX, Brightness.MAX_VALUE)
     }
 
     @Test
-    @SuppressWarnings("java:S3415")
-    void not_equal_for_null() {
-        assertNotEquals(Brightness.BRIGHTNESS_MAX, null);
+    fun not_equal_for_null() {
+        assertNotEquals(Brightness.BRIGHTNESS_MAX, null)
     }
 
     @Test
-    void hashcode_are_equal() {
+    fun hashcode_are_equal() {
         assertEquals(
             Brightness.MAX_VALUE,
             Brightness.of(15).hashCode()
-        );
+        )
     }
 
     @Test
-    void more_return_same_max_brightness_value_for_already_max_value() {
+    fun more_return_same_max_brightness_value_for_already_max_value() {
         assertEquals(
             Brightness.BRIGHTNESS_MAX,
             Brightness.BRIGHTNESS_MAX.more()
-        );
+        )
     }
 
     @Test
-    void less_return_same_min_brightness_value_for_already_min_value() {
+    fun less_return_same_min_brightness_value_for_already_min_value() {
         assertEquals(
             Brightness.BRIGHTNESS_MIN,
             Brightness.BRIGHTNESS_MIN.less()
-        );
+        )
     }
 }
