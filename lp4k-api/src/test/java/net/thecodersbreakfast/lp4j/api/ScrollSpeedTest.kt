@@ -14,64 +14,57 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package net.thecodersbreakfast.lp4j.api
 
-package net.thecodersbreakfast.lp4j.api;
+import net.thecodersbreakfast.lp4j.api.ScrollSpeed.Companion.of
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotEquals
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-public class ScrollSpeedTest {
+class ScrollSpeedTest {
 
     @Test
-    public void valueOf() {
-        ScrollSpeed scrollSpeed = ScrollSpeed.of(ScrollSpeed.MIN_VALUE);
-        assertNotNull(scrollSpeed);
-        assertEquals(ScrollSpeed.MIN_VALUE, scrollSpeed.getSpeedValue());
+    fun valueOf() {
+        val scrollSpeed = of(ScrollSpeed.MIN_VALUE)
+        assertEquals(ScrollSpeed.MIN_VALUE, scrollSpeed.speedValue)
     }
 
     @Test
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    public void valueOf_tooLow() {
-        assertThrows(IllegalArgumentException.class, () -> ScrollSpeed.of(ScrollSpeed.MIN_VALUE - 1));
+    fun valueOf_tooLow() {
+        assertThrows<IllegalArgumentException> { of(ScrollSpeed.MIN_VALUE - 1) }
     }
 
     @Test
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    public void valueOf_tooHigh() {
-        assertThrows(IllegalArgumentException.class, () -> ScrollSpeed.of(ScrollSpeed.MAX_VALUE + 1));
+    fun valueOf_tooHigh() {
+        assertThrows<IllegalArgumentException> { of(ScrollSpeed.MAX_VALUE + 1) }
     }
 
     @Test
-    @SuppressWarnings("java:S3415")
-    void check_equals() {
-        assertEquals(ScrollSpeed.SPEED_MAX, ScrollSpeed.of(7));
+    fun check_equals() {
+        assertEquals(ScrollSpeed.SPEED_MAX, of(7))
     }
 
     @Test
-    @SuppressWarnings("java:S3415")
-    void not_equal() {
-        assertNotEquals(ScrollSpeed.SPEED_MAX, ScrollSpeed.SPEED_MIN);
+    fun not_equal() {
+        assertNotEquals(ScrollSpeed.SPEED_MAX, ScrollSpeed.SPEED_MIN)
     }
 
     @Test
-    @SuppressWarnings("java:S3415")
-    void not_equal_for_different_type() {
-        assertNotEquals(ScrollSpeed.SPEED_MAX, ScrollSpeed.MAX_VALUE);
+    fun not_equal_for_different_type() {
+        assertNotEquals(ScrollSpeed.SPEED_MAX, ScrollSpeed.MAX_VALUE)
     }
 
     @Test
-    @SuppressWarnings("java:S3415")
-    void not_equal_for_null() {
-        assertNotEquals(ScrollSpeed.SPEED_MAX, null);
+    fun not_equal_for_null() {
+        assertNotEquals(ScrollSpeed.SPEED_MAX, null)
     }
 
     @Test
-    void hashcode_are_equal() {
+    fun hashcode_are_equal() {
         assertEquals(
             ScrollSpeed.MAX_VALUE,
-            ScrollSpeed.of(7).hashCode()
-        );
+            of(7).hashCode()
+        )
     }
-
 }
