@@ -14,24 +14,25 @@
  *    limitations under the License.
  *
  */
-package net.thecodersbreakfast.lp4j.api
+package io.lp4k.api
 
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class BackBufferOperationTest {
+class LightIntensityTest {
 
     @Test
-    fun check_back_buffer_operation_values_exists() {
-        val backBufferOperationNames = listOf("NONE", "COPY", "CLEAR")
+    fun check_light_intensity_values_exists() {
+        val lightIntensityNames = listOf("LOW", "MEDIUM", "HIGH")
 
-        assertEquals(backBufferOperationNames.size, BackBufferOperation.values().size)
+        assertEquals(lightIntensityNames.size, LightIntensity.values().size)
 
         assertDoesNotThrow {
-            backBufferOperationNames.forEach {
-                BackBufferOperation.valueOf(it)
+            lightIntensityNames.forEach {
+                LightIntensity.valueOf(it)
             }
         }
     }
+
 }

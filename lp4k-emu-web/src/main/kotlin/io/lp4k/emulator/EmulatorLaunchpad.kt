@@ -18,6 +18,9 @@
 
 package io.lp4k.emulator
 
+import io.lp4k.api.Launchpad
+import io.lp4k.api.LaunchpadClient
+import io.lp4k.api.LaunchpadListener
 import io.lp4k.emulator.input.EventBusHandler
 import io.lp4k.emulator.input.EventBusMessageDebugger
 import io.vertx.core.Vertx
@@ -26,9 +29,6 @@ import io.vertx.ext.web.Router
 import io.vertx.ext.web.handler.StaticHandler
 import io.vertx.ext.web.handler.sockjs.BridgeOptions
 import io.vertx.ext.web.handler.sockjs.SockJSHandler
-import net.thecodersbreakfast.lp4j.api.Launchpad
-import net.thecodersbreakfast.lp4j.api.LaunchpadClient
-import net.thecodersbreakfast.lp4j.api.LaunchpadListener
 import org.slf4j.LoggerFactory
 
 /**

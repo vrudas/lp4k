@@ -18,13 +18,12 @@
 
 package io.lp4k.midi
 
+import io.lp4k.api.Launchpad
+import io.lp4k.api.LaunchpadClient
+import io.lp4k.api.LaunchpadListener
 import io.lp4k.midi.protocol.DefaultMidiProtocolClient
 import io.lp4k.midi.protocol.DefaultMidiProtocolListener
 import io.lp4k.midi.protocol.DefaultMidiProtocolReceiver
-import net.thecodersbreakfast.lp4j.api.Launchpad
-import net.thecodersbreakfast.lp4j.api.LaunchpadClient
-import net.thecodersbreakfast.lp4j.api.LaunchpadListener
-import javax.sound.midi.MidiDevice
 import javax.sound.midi.MidiUnavailableException
 import javax.sound.midi.Receiver
 import javax.sound.midi.Transmitter

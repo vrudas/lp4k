@@ -16,10 +16,6 @@
  */
 package io.lp4k.api
 
-import net.thecodersbreakfast.lp4j.api.Button
-import net.thecodersbreakfast.lp4j.api.LaunchpadListener
-import net.thecodersbreakfast.lp4j.api.Pad
-
 interface MockLaunchpadListener : LaunchpadListener {
 
     /**

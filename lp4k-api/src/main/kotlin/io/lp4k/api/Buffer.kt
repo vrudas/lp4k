@@ -15,7 +15,7 @@
  *    limitations under the License.
  *
  */
-package net.thecodersbreakfast.lp4j.api
+package io.lp4k.api
 
 /**
  * The Launchpad handles two buffers internally. It is up to the user to select which one is written to, and which one

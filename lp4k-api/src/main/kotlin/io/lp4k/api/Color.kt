@@ -15,7 +15,7 @@
  *    limitations under the License.
  *
  */
-package net.thecodersbreakfast.lp4j.api
+package io.lp4k.api
 
 /**
  * Represents the color of a pad or button on the Launchpad. The Launchpad has a red light and a green light under each
