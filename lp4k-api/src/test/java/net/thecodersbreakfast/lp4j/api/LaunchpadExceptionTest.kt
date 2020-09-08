@@ -14,42 +14,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package net.thecodersbreakfast.lp4j.api
 
-package net.thecodersbreakfast.lp4j.api;
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class LaunchpadExceptionTest {
+class LaunchpadExceptionTest {
 
     @Test
-    public void testLaunchpadException_message() {
-        String expectedMessage = "message";
+    fun testLaunchpadException_message() {
+        val expectedMessage = "message"
+        val launchpadException = LaunchpadException(expectedMessage)
 
-        LaunchpadException launchpadException = new LaunchpadException(expectedMessage);
-
-        assertEquals(expectedMessage, launchpadException.getMessage());
+        assertEquals(expectedMessage, launchpadException.message)
     }
 
     @Test
-    public void testLaunchpadException_cause() {
-        RuntimeException expectedCause = new RuntimeException();
+    fun testLaunchpadException_cause() {
+        val expectedCause = RuntimeException()
+        val launchpadException = LaunchpadException(expectedCause)
 
-        LaunchpadException launchpadException = new LaunchpadException(expectedCause);
-
-        assertEquals(expectedCause, launchpadException.getCause());
+        assertEquals(expectedCause, launchpadException.cause)
     }
 
     @Test
-    public void testLaunchpadException_both_message_and_cause() {
-        String expectedMessage = "message";
-        RuntimeException expectedCause = new RuntimeException();
+    fun testLaunchpadException_both_message_and_cause() {
+        val expectedMessage = "message"
+        val expectedCause = RuntimeException()
+        val launchpadException = LaunchpadException(expectedMessage, expectedCause)
 
-        LaunchpadException launchpadException = new LaunchpadException(expectedMessage, expectedCause);
-
-        assertEquals(expectedMessage, launchpadException.getMessage());
-        assertEquals(expectedCause, launchpadException.getCause());
+        assertEquals(expectedMessage, launchpadException.message)
+        assertEquals(expectedCause, launchpadException.cause)
     }
-
 }
