@@ -1,4 +1,4 @@
-LP4K - A Launchpad API for Java
+LP4K - A Launchpad API for Kotlin
 ====
 ![](https://github.com/vrudas/lp4k/workflows/build/badge.svg)
 ![](https://github.com/vrudas/lp4k/workflows/sonarqube/badge.svg)
