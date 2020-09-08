@@ -14,26 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package net.thecodersbreakfast.lp4j.api
 
-package net.thecodersbreakfast.lp4j.api;
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
-
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class BufferTest {
+class BufferTest {
 
     @Test
-    public void other_0() {
-        Buffer other = Buffer.BUFFER_0.other();
-        assertEquals(Buffer.BUFFER_1, other);
+    fun other_0() {
+        val other = Buffer.BUFFER_0.other()
+        assertEquals(Buffer.BUFFER_1, other)
     }
 
     @Test
-    public void other_1() {
-        Buffer other = Buffer.BUFFER_1.other();
-        assertEquals(Buffer.BUFFER_0, other);
+    fun other_1() {
+        val other = Buffer.BUFFER_1.other()
+        assertEquals(Buffer.BUFFER_0, other)
     }
 
 }
