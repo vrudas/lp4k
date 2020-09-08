@@ -14,23 +14,25 @@
  *    limitations under the License.
  *
  */
+package net.thecodersbreakfast.lp4j.api
 
-package net.thecodersbreakfast.lp4j.api;
-
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Assertions.assertDoesNotThrow
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
 class LightIntensityTest {
 
     @Test
-    void check_light_intensity_values_exists() {
-        List<String> lightIntensityNames = List.of("LOW", "MEDIUM", "HIGH");
+    fun check_light_intensity_values_exists() {
+        val lightIntensityNames = listOf("LOW", "MEDIUM", "HIGH")
 
-        assertEquals(lightIntensityNames.size(), LightIntensity.values().length);
+        assertEquals(lightIntensityNames.size, LightIntensity.values().size)
 
-        assertDoesNotThrow(() -> lightIntensityNames.forEach(LightIntensity::valueOf));
+        assertDoesNotThrow {
+            lightIntensityNames.forEach {
+                LightIntensity.valueOf(it)
+            }
+        }
     }
+
 }
