@@ -1,131 +1,95 @@
 /*
- * Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
+ *    Copyright 2020 Vasyl Rudas
+ *    Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ *
  */
-
-package net.thecodersbreakfast.lp4j.api;
+package net.thecodersbreakfast.lp4j.api
 
 /**
  * Represents the color of a pad or button on the Launchpad. The Launchpad has a red light and a green light under each
  * pad or button. The actual color is obtained by adjusting their respective intensities.
  *
- * <p>{@code Color} instances are immutable and cached.
+ *
+ * `Color` instances are immutable and cached.
+ *
+ * @param redIntensity The red component intensity
+ * @param greenIntensity The green component intensity
  *
  * @author Olivier Croisier (olivier.croisier@gmail.com)
  */
-public final class Color {
+data class Color(val redIntensity: Int, val greenIntensity: Int) {
 
-    /** Minimal red or green component intensity */
-    public static final int MIN_INTENSITY = 0;
-    /** Maximal red or green component intensity */
-    public static final int MAX_INTENSITY = 3;
+    companion object {
 
-    // Color cache
-    private static final Color[][] CACHE = new Color[4][4];
+        /** Minimal red or green component intensity  */
+        const val MIN_INTENSITY = 0
 
-    static {
-        for (int r = 0; r < 4; r++) {
-            for (int g = 0; g < 4; g++) {
-                CACHE[r][g] = new Color(r, g);
+        /** Maximal red or green component intensity  */
+        const val MAX_INTENSITY = 3
+
+        // Color cache
+        private val CACHE = initColors()
+
+        private fun initColors(): Array<Array<Color>> {
+            val dimensionSize = MAX_INTENSITY + 1
+
+            return Array(dimensionSize) { i ->
+                Array(dimensionSize) { j -> Color(i, j) }
             }
         }
-    }
 
-    // Most used colors
-    /** Black (red 0, green 0) */
-    public static final Color BLACK = CACHE[0][0];
-    /** Red (red 3, green 0) */
-    public static final Color RED = CACHE[3][0];
-    /** Green (red 0, green 3) */
-    public static final Color GREEN = CACHE[0][3];
-    /** Orange (red 3, green 2) */
-    public static final Color ORANGE = CACHE[3][2];
-    /** Amber (red 3, green 3) */
-    public static final Color AMBER = CACHE[3][3];
-    /** Yellow (red 2, green 3) */
-    public static final Color YELLOW = CACHE[2][3];
+        // Most used colors
+        /** Black (red 0, green 0)  */
+        val BLACK = CACHE[0][0]
 
-    /**
-     * Factory method
-     *
-     * @param red The red component. Acceptable values are in [{@link net.thecodersbreakfast.lp4j.api.Color#MIN_INTENSITY},{@link
-     * net.thecodersbreakfast.lp4j.api.Color#MAX_INTENSITY}].
-     * @param green The green component. Acceptable values are in [{@link net.thecodersbreakfast.lp4j.api.Color#MIN_INTENSITY},{@link
-     * net.thecodersbreakfast.lp4j.api.Color#MAX_INTENSITY}].
-     * @return The Color obtained by mixing the given red and green values.
-     * @throws java.lang.IllegalArgumentException If the red or green parameters are out of acceptable range.
-     */
-    public static Color of(int red, int green) {
-        if (red < MIN_INTENSITY || red > MAX_INTENSITY) {
-            throw new IllegalArgumentException("Invalid red value : " + red + ". Acceptable values are in range [0..3].");
+        /** Red (red 3, green 0)  */
+        val RED = CACHE[3][0]
+
+        /** Green (red 0, green 3)  */
+        val GREEN = CACHE[0][3]
+
+        /** Orange (red 3, green 2)  */
+        val ORANGE = CACHE[3][2]
+
+        /** Amber (red 3, green 3)  */
+        val AMBER = CACHE[3][3]
+
+        /** Yellow (red 2, green 3)  */
+        val YELLOW = CACHE[2][3]
+
+        /**
+         * Factory method
+         *
+         * @param red The red component. Acceptable values are in [[net.thecodersbreakfast.lp4j.api.Color.MIN_INTENSITY],[net.thecodersbreakfast.lp4j.api.Color.MAX_INTENSITY]].
+         * @param green The green component. Acceptable values are in [[net.thecodersbreakfast.lp4j.api.Color.MIN_INTENSITY],[net.thecodersbreakfast.lp4j.api.Color.MAX_INTENSITY]].
+         *
+         * @return The Color obtained by mixing the given red and green values.
+         *
+         * @throws java.lang.IllegalArgumentException If the red or green parameters are out of acceptable range.
+         */
+        fun of(red: Int, green: Int): Color {
+            require(red in (MIN_INTENSITY..MAX_INTENSITY)) {
+                "Invalid red value : $red. Acceptable values are in range [0..3]."
+            }
+            require(green in (MIN_INTENSITY..MAX_INTENSITY)) {
+                "Invalid green value : $green. Acceptable values are in range [0..3]."
+            }
+
+            return CACHE[red][green]
         }
-        if (green < MIN_INTENSITY || green > MAX_INTENSITY) {
-            throw new IllegalArgumentException("Invalid green value : " + green + ". Acceptable values are in range [0..3].");
-        }
-        return CACHE[red][green];
+
     }
 
-    /** The red component intensity */
-    private final int redIntensity;
-    /** The green component intensity */
-    private final int greenIntensity;
-
-    /**
-     * Constructor
-     *
-     * @param redIntensity The red component
-     * @param greenIntensity The green component
-     */
-    private Color(int redIntensity, int greenIntensity) {
-        this.redIntensity = redIntensity;
-        this.greenIntensity = greenIntensity;
-    }
-
-    /**
-     * Returns the red intensity
-     *
-     * @return the red intensity
-     */
-    public int getRedIntensity() {
-        return redIntensity;
-    }
-
-    /**
-     * Returns the green intensity
-     *
-     * @return the green intensity
-     */
-    public int getGreenIntensity() {
-        return greenIntensity;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Color color = (Color) o;
-        return greenIntensity == color.greenIntensity && redIntensity == color.redIntensity;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = redIntensity;
-        result = 31 * result + greenIntensity;
-        return result;
-    }
 }

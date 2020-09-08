@@ -1,106 +1,94 @@
 /*
- * Copyright 2020 Vasyl Rudas
- * Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
+ *    Copyright 2020 Vasyl Rudas
+ *    Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ *
  */
+package net.thecodersbreakfast.lp4j.api
 
-package net.thecodersbreakfast.lp4j.api;
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotEquals
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
-import org.junit.jupiter.api.Test;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-public class ColorTest {
+class ColorTest {
 
     @Test
-    public void valueOf() {
-        Color color = Color.of(Color.MIN_INTENSITY, Color.MIN_INTENSITY);
-        assertEquals(Color.BLACK, color);
-        assertEquals(Color.MIN_INTENSITY, color.getRedIntensity());
-        assertEquals(Color.MIN_INTENSITY, color.getGreenIntensity());
-        Color colorMax = Color.of(Color.MAX_INTENSITY, Color.MAX_INTENSITY);
-        assertEquals(Color.AMBER, colorMax);
-        assertEquals(Color.MAX_INTENSITY, colorMax.getRedIntensity());
-        assertEquals(Color.MAX_INTENSITY, colorMax.getGreenIntensity());
+    fun valueOf() {
+        val color = Color.of(Color.MIN_INTENSITY, Color.MIN_INTENSITY)
+
+        assertEquals(Color.BLACK, color)
+        assertEquals(Color.MIN_INTENSITY, color.redIntensity)
+        assertEquals(Color.MIN_INTENSITY, color.greenIntensity)
+
+        val colorMax = Color.of(Color.MAX_INTENSITY, Color.MAX_INTENSITY)
+
+        assertEquals(Color.AMBER, colorMax)
+        assertEquals(Color.MAX_INTENSITY, colorMax.redIntensity)
+        assertEquals(Color.MAX_INTENSITY, colorMax.greenIntensity)
     }
 
     @Test
-    public void valueOf_redTooLow() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> Color.of(Color.MIN_INTENSITY - 1, Color.MIN_INTENSITY)
-        );
+    fun valueOf_redTooLow() {
+        assertThrows<IllegalArgumentException> {
+            Color.of(Color.MIN_INTENSITY - 1, Color.MIN_INTENSITY)
+        }
     }
 
     @Test
-    public void valueOf_redTooHigh() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> Color.of(Color.MAX_INTENSITY + 1, Color.MIN_INTENSITY)
-        );
+    fun valueOf_redTooHigh() {
+        assertThrows<IllegalArgumentException> {
+            Color.of(Color.MAX_INTENSITY + 1, Color.MIN_INTENSITY)
+        }
     }
 
     @Test
-    public void valueOf_greenTooLow() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> Color.of(Color.MIN_INTENSITY, Color.MIN_INTENSITY - 1)
-        );
+    fun valueOf_greenTooLow() {
+        assertThrows<IllegalArgumentException> {
+            Color.of(Color.MIN_INTENSITY, Color.MIN_INTENSITY - 1)
+        }
     }
 
     @Test
-    public void valueOf_greenTooHigh() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> Color.of(Color.MIN_INTENSITY, Color.MAX_INTENSITY + 1)
-        );
+    fun valueOf_greenTooHigh() {
+        assertThrows<IllegalArgumentException> {
+            Color.of(Color.MIN_INTENSITY, Color.MAX_INTENSITY + 1)
+        }
     }
 
     @Test
-    @SuppressWarnings("java:S3415")
-    void check_equals() {
-        assertEquals(Color.RED, Color.RED);
+    fun check_equals() {
+        assertEquals(Color.RED, Color.RED)
     }
 
     @Test
-    @SuppressWarnings("java:S3415")
-    void not_equal() {
-        assertNotEquals(Color.GREEN, Color.ORANGE);
+    fun not_equal() {
+        assertNotEquals(Color.GREEN, Color.ORANGE)
     }
 
     @Test
-    @SuppressWarnings("java:S3415")
-    void not_equal_for_different_type() {
-        assertNotEquals(Color.YELLOW, Color.MIN_INTENSITY);
+    fun not_equal_for_different_type() {
+        assertNotEquals(Color.YELLOW, Color.MIN_INTENSITY)
     }
 
     @Test
-    @SuppressWarnings("java:S3415")
-    void not_equal_for_null() {
-        assertNotEquals(Color.AMBER, null);
+    fun hashcode_is_equal_for_same_colors() {
+        val colors = setOf(
+            Color.AMBER,
+            Color.of(3, 3)
+        )
+
+        assertEquals(1, colors.size)
     }
-
-    @Test
-    void hashcode_is_equal_for_same_colors() {
-        Set<Color> colors = new HashSet<>();
-        colors.add(Color.AMBER);
-        colors.add(Color.of(3, 3));
-
-        assertEquals(1, colors.size());
-    }
-
 }
