@@ -29,33 +29,30 @@ From a developper's perspective, all interaction with LP4K are done through the 
 
 First, you need to get a reference to a Launchpad :
 
-```java
+```kotlin
     // Physical device (with auto-detected ports configuration)
-    Launchpad launchpad = new MidiLaunchpad(MidiDeviceConfiguration.autodetect());
+    val launchpad: Launchpad = MidiLaunchpad(MidiDeviceConfiguration.autodetect())
 
     // Or start the emulator on http://localhost:9000
-    Launchpad launchpad = new EmulatorLaunchpad(9000);
+    val launchpad: Launchpad = EmulatorLaunchpad(9000)
 ```
 
 From this Launchpad instance, you can :
 - retrieve a LaunchpadClient, used to send commands TO the device or emulator (mostly to turn on/off the pads or buttons lights),
 - set up a LaunchpadListener to react to events.
 
-```java
-     LaunchpadClient client = launchpad.getClient();
-     launchpad.setListener(new MyListener());
+```kotlin
+    val client: LaunchpadClient = launchpad.getClient()
+    launchpad.setListener(ListenerExample())
 ```
 
 A very simple debugging listener can look like this :
 
-```java
-    public static class MyListener extends LaunchpadListenerAdapter {
-
-        @Override
-        public void onPadPressed(Pad pad, long timestamp) {
-            System.out.println("Pad pressed : "+pad);
+```kotlin
+    class ListenerExample : LaunchpadListenerAdapter() {
+        override fun onPadPressed(pad: Pad, timestamp: Long) {
+            println("Pad pressed : $pad")
         }
-
     }
 ```
 
@@ -67,55 +64,50 @@ For example, the following Listener sends commands back to the Launchpad to put 
 
 Please also note the use of a CountDownLatch to wait for the user to press the "STOP" button before exiting the application.
 
-```java
-public class Example {
+```kotlin
+import io.lp4k.api.*
+import java.util.concurrent.CountDownLatch
 
-    private static CountDownLatch stop = new CountDownLatch(1);
 
-    public static void main(String[] args) throws Exception {
+private val stop = CountDownLatch(1)
 
-        Launchpad launchpad = new EmulatorLaunchpad(9000);
-        LaunchpadClient client = launchpad.getClient();
+fun main() {
+    val launchpad = MidiLaunchpad(MidiDeviceConfiguration.autodetect())
+    val client = launchpad.client
 
-        MyListener myListener = new MyListener(client);
-        launchpad.setListener(myListener);
+    val listener = ListenerExample(client)
+    launchpad.setListener(listener)
 
-        // Set a red light under the STOP button
-        client.reset();
-        client.setButtonLight(Button.STOP, Color.RED, BackBufferOperation.NONE);
+    // Set a red light under the STOP button
+    client.reset()
+    client.setButtonLight(Button.STOP, Color.RED, BackBufferOperation.NONE)
 
-        stop.await();
-        client.reset();
-        launchpad.close();
+    stop.await()
+    client.reset()
+    launchpad.close()
+}
+
+class ListenerExample(private val client: LaunchpadClient) : LaunchpadListenerAdapter() {
+
+    override fun onPadPressed(pad: Pad, timestamp: Long) {
+        client.setPadLight(pad, Color.YELLOW, BackBufferOperation.NONE)
     }
 
-    public static class MyListener extends LaunchpadListenerAdapter {
+    override fun onPadReleased(pad: Pad, timestamp: Long) {
+        client.setPadLight(pad, Color.BLACK, BackBufferOperation.NONE)
+    }
 
-        private final LaunchpadClient client;
+    override fun onButtonReleased(button: Button, timestamp: Long) {
+        client.setButtonLight(button, Color.BLACK, BackBufferOperation.NONE)
 
-        public MyListener(LaunchpadClient client) {
-            this.client = client;
+        when (button) {
+            Button.STOP -> stop.countDown()
+            else -> client.setButtonLight(button, Color.BLACK, BackBufferOperation.NONE)
         }
+    }
 
-        @Override
-        public void onPadPressed(Pad pad, long timestamp) {
-            client.setPadLight(pad, Color.YELLOW, BackBufferOperation.NONE);
-        }
-
-        @Override
-        public void onPadReleased(Pad pad, long timestamp) {
-            client.setPadLight(pad, Color.BLACK, BackBufferOperation.NONE);
-        }
-
-        @Override
-        public void onButtonReleased(Button button, long timestamp) {
-            client.setButtonLight(button, Color.BLACK, BackBufferOperation.NONE);
-            switch (button) {
-                case STOP:
-                    stop.countDown();
-                    break;
-            }
-        }
+    override fun onButtonPressed(button: Button, timestamp: Long) {
+        client.setButtonLight(button, Color.GREEN, BackBufferOperation.NONE)
     }
 
 }
