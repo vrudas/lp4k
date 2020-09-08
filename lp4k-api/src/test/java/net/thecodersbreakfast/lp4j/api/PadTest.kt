@@ -17,10 +17,10 @@
  */
 package net.thecodersbreakfast.lp4j.api
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.util.*
 
 class PadTest {
 
@@ -86,9 +86,11 @@ class PadTest {
 
     @Test
     fun hashcode_is_equal_for_pads_with_same_coordinates() {
-        val pads: MutableSet<Pad?> = HashSet()
-        pads.add(Pad.at(Pad.X_MAX, Pad.Y_MAX))
-        pads.add(Pad.at(7, 7))
+        val pads = setOf(
+            Pad.at(Pad.X_MAX, Pad.Y_MAX),
+            Pad.at(7, 7)
+        )
+
         assertEquals(1, pads.size)
     }
 }
