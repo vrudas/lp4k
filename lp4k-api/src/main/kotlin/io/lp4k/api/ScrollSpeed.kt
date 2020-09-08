@@ -15,7 +15,7 @@
  *    limitations under the License.
  *
  */
-package net.thecodersbreakfast.lp4j.api
+package io.lp4k.api
 
 /**
  * Represents the speed at which the text scrolls through the Launchpad grid (see [net.thecodersbreakfast.lp4j.api.LaunchpadClient.scrollText]).

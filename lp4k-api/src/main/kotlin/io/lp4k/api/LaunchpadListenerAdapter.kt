@@ -15,21 +15,23 @@
  *    limitations under the License.
  *
  */
-package net.thecodersbreakfast.lp4j.api
+package io.lp4k.api
 
 /**
- * Represents a light intensity used during led testing (see [net.thecodersbreakfast.lp4j.api.LaunchpadClient.testLights].
+ * Convenient empty implementation of a [net.thecodersbreakfast.lp4j.api.LaunchpadListener].
  *
  * @author Olivier Croisier (olivier.croisier@gmail.com)
  */
-enum class LightIntensity {
+abstract class LaunchpadListenerAdapter : LaunchpadListener {
 
-    /** Low light intensity  */
-    LOW,
+    override fun onPadPressed(pad: Pad, timestamp: Long) = Unit
 
-    /** Medium light intensity  */
-    MEDIUM,
+    override fun onPadReleased(pad: Pad, timestamp: Long) = Unit
 
-    /** High light intensity  */
-    HIGH
+    override fun onButtonPressed(button: Button, timestamp: Long) = Unit
+
+    override fun onButtonReleased(button: Button, timestamp: Long) = Unit
+
+    override fun onTextScrolled(timestamp: Long) = Unit
+
 }

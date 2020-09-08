@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.thecodersbreakfast.lp4j.api
+package io.lp4k.api
 
 /**
  * Represents any error that could occur while using the Launchpad API.

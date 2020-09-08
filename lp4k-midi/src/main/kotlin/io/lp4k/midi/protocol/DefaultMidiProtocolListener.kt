@@ -16,9 +16,10 @@
  */
 package io.lp4k.midi.protocol
 
-import net.thecodersbreakfast.lp4j.api.Button
-import net.thecodersbreakfast.lp4j.api.LaunchpadListener
-import net.thecodersbreakfast.lp4j.api.Pad
+import io.lp4k.api.Button
+import io.lp4k.api.LaunchpadListener
+import io.lp4k.api.Pad
+
 
 /**
  * Parses low-level messages and notifies a high-level [net.thecodersbreakfast.lp4j.api.LaunchpadListener].

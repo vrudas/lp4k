@@ -15,7 +15,7 @@
  *    limitations under the License.
  *
  */
-package net.thecodersbreakfast.lp4j.api
+package io.lp4k.api
 
 /**
  * Describes how the backbuffer is impacted by the operation currently applied to the write buffer.

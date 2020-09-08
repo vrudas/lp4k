@@ -18,11 +18,11 @@
 
 package io.lp4k.emulator
 
+import io.lp4k.api.*
+import io.lp4k.api.LightIntensity.*
 import io.lp4k.emulator.output.OutputEventType
 import io.vertx.core.Vertx
 import io.vertx.core.json.JsonObject
-import net.thecodersbreakfast.lp4j.api.*
-import net.thecodersbreakfast.lp4j.api.LightIntensity.*
 
 /**
  * A client to communicate with the Launchpad emulator

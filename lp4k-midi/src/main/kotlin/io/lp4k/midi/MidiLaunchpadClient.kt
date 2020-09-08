@@ -16,8 +16,8 @@
  */
 package io.lp4k.midi
 
+import io.lp4k.api.*
 import io.lp4k.midi.protocol.MidiProtocolClient
-import net.thecodersbreakfast.lp4j.api.*
 import javax.sound.midi.InvalidMidiDataException
 
 /**

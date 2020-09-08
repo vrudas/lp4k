@@ -17,13 +17,13 @@
 
 package io.lp4k.emulator.input
 
+import io.lp4k.api.Button
+import io.lp4k.api.LaunchpadListener
+import io.lp4k.api.Pad
 import io.lp4k.emulator.input.InputEventType.*
 import io.vertx.core.Handler
 import io.vertx.core.eventbus.Message
 import io.vertx.core.json.JsonObject
-import net.thecodersbreakfast.lp4j.api.Button
-import net.thecodersbreakfast.lp4j.api.LaunchpadListener
-import net.thecodersbreakfast.lp4j.api.Pad
 
 /**
  * Handler for Vertx eventbus messages.

@@ -15,7 +15,7 @@
  *    limitations under the License.
  *
  */
-package net.thecodersbreakfast.lp4j.api
+package io.lp4k.api
 
 /**
  * Describes the level of brightness of the pads and buttons lights.

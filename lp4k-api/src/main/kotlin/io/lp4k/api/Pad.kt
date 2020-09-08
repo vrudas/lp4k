@@ -15,7 +15,7 @@
  *    limitations under the License.
  *
  */
-package net.thecodersbreakfast.lp4j.api
+package io.lp4k.api
 
 /**
  * Represents a square pad on the Launchpad.

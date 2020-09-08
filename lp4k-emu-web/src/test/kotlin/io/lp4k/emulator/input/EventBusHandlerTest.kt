@@ -18,9 +18,9 @@ package io.lp4k.emulator.input
 
 import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.verify
-import net.thecodersbreakfast.lp4j.api.Button
-import net.thecodersbreakfast.lp4j.api.LaunchpadListener
-import net.thecodersbreakfast.lp4j.api.Pad
+import io.lp4k.api.Button
+import io.lp4k.api.LaunchpadListener
+import io.lp4k.api.Pad
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
