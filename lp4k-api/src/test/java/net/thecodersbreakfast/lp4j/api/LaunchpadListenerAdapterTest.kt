@@ -14,46 +14,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package net.thecodersbreakfast.lp4j.api
 
-package net.thecodersbreakfast.lp4j.api;
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertDoesNotThrow
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
-public class LaunchpadListenerAdapterTest {
-
-    private LaunchpadListenerAdapter adapter;
-
+class LaunchpadListenerAdapterTest {
+    private lateinit var adapter: LaunchpadListenerAdapter
+ 
     @BeforeEach
-    public void init() {
-        adapter = new LaunchpadListenerAdapter() {
-        };
+    fun init() {
+        adapter = object : LaunchpadListenerAdapter() {}
     }
 
     @Test
-    public void testOnPadPressed() {
-        assertDoesNotThrow(() -> adapter.onPadPressed(Pad.at(0, 0), -1L));
+    fun testOnPadPressed() {
+        assertDoesNotThrow { adapter.onPadPressed(Pad.at(0, 0), -1L) }
     }
 
     @Test
-    public void testOnPadReleased() {
-        assertDoesNotThrow(() -> adapter.onPadReleased(Pad.at(0, 0), -1L));
+    fun testOnPadReleased() {
+        assertDoesNotThrow { adapter.onPadReleased(Pad.at(0, 0), -1L) }
     }
 
     @Test
-    public void testOnButtonPressed() {
-        assertDoesNotThrow(() -> adapter.onButtonPressed(Button.UP, -1L));
+    fun testOnButtonPressed() {
+        assertDoesNotThrow { adapter.onButtonPressed(Button.UP, -1L) }
     }
 
     @Test
-    public void testOnButtonReleased() {
-        assertDoesNotThrow(() -> adapter.onButtonReleased(Button.UP, -1L));
+    fun testOnButtonReleased() {
+        assertDoesNotThrow { adapter.onButtonReleased(Button.UP, -1L) }
     }
 
     @Test
-    public void testOnTextScrolled() {
-        assertDoesNotThrow(() -> adapter.onTextScrolled(-1L));
+    fun testOnTextScrolled() {
+        assertDoesNotThrow { adapter.onTextScrolled(-1L) }
     }
 }
