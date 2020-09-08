@@ -14,24 +14,24 @@
  *    limitations under the License.
  *
  */
+package net.thecodersbreakfast.lp4j.api
 
-package net.thecodersbreakfast.lp4j.api;
-
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Assertions.assertDoesNotThrow
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
 class BackBufferOperationTest {
 
     @Test
-    void check_back_buffer_operation_values_exists() {
-        List<String> backBufferOperationNames = List.of("NONE", "COPY", "CLEAR");
+    fun check_back_buffer_operation_values_exists() {
+        val backBufferOperationNames = listOf("NONE", "COPY", "CLEAR")
 
-        assertEquals(backBufferOperationNames.size(), BackBufferOperation.values().length);
+        assertEquals(backBufferOperationNames.size, BackBufferOperation.values().size)
 
-        assertDoesNotThrow(() -> backBufferOperationNames.forEach(BackBufferOperation::valueOf));
+        assertDoesNotThrow {
+            backBufferOperationNames.forEach {
+                BackBufferOperation.valueOf(it)
+            }
+        }
     }
 }
