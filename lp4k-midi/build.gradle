@@ -16,7 +16,6 @@
  */
 
 dependencies {
-    implementation project(":launchpad-api")
     implementation(project(":launchpad-s-api"))
 
     testImplementation("org.junit.jupiter:junit-jupiter:${junitVersion}")

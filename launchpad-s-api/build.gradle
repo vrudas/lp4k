@@ -16,7 +16,7 @@
  */
 
 dependencies {
-    implementation project(":launchpad-api")
+    compile project(":launchpad-api")
 
     testImplementation("org.junit.jupiter:junit-jupiter:${junitVersion}")
     testImplementation("org.mockito:mockito-core:${mockitoVersion}")
