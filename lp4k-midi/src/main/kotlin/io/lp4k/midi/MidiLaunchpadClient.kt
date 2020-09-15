@@ -17,6 +17,7 @@
 package io.lp4k.midi
 
 import io.lp4k.api.*
+import io.lp4k.launchpad.api.*
 import io.lp4k.midi.protocol.MidiProtocolClient
 import javax.sound.midi.InvalidMidiDataException
 
@@ -49,10 +50,10 @@ class MidiLaunchpadClient(
 
     override fun testLights(intensity: LightIntensity) {
         val value: Int = when (intensity) {
-            LightIntensity.LOW -> 125
-            LightIntensity.MEDIUM -> 126
-            LightIntensity.HIGH -> 127
-            else -> throw IllegalArgumentException("Unknown intensity value : ${intensity.name}")
+            LightIntensityLaunchS.LOW -> 125
+            LightIntensityLaunchS.MEDIUM -> 126
+            LightIntensityLaunchS.HIGH -> 127
+            else -> throw IllegalArgumentException("Unknown intensity value : $intensity")
         }
         try {
             midiProtocolClient.lightsOn(value)
@@ -172,6 +173,8 @@ class MidiLaunchpadClient(
      * @return A binary representation of the color and how it should be applied to the Launchpad's buffers.
      */
     private fun toRawColor(color: Color, operation: BackBufferOperation): Byte {
+        color as ColorLaunchS
+
         val flags: Int = when (operation) {
             BackBufferOperation.CLEAR -> 8
             BackBufferOperation.COPY -> 12

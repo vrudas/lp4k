@@ -16,8 +16,8 @@
  */
 package io.lp4k.midi
 
-import io.lp4k.api.Launchpad
-import io.lp4k.api.LaunchpadListenerAdapter
+import io.lp4k.launchpad.api.Launchpad
+import io.lp4k.launchpad.api.LaunchpadListenerAdapter
 import io.lp4k.midi.protocol.DefaultMidiProtocolReceiver
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test

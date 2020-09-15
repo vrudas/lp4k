@@ -14,7 +14,7 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.api
+package io.lp4k.launchpad.api
 
 /**
  * Represents a client through which the API user can send commands to a particular Launchpad implementation. Usually

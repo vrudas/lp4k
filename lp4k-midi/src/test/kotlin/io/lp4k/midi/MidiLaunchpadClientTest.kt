@@ -18,8 +18,11 @@
 package io.lp4k.midi
 
 import io.lp4k.api.*
+import io.lp4k.launchpad.api.BackBufferOperation
+import io.lp4k.launchpad.api.Buffer
+import io.lp4k.launchpad.api.LaunchpadClient
+import io.lp4k.launchpad.api.LaunchpadException
 import io.lp4k.midi.protocol.MidiProtocolClient
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -55,9 +58,9 @@ class MidiLaunchpadClientTest {
     @Test
     fun brightness_set_successful() {
         val expectedNumerator = 1
-        val expectedDenominator = 18 - Brightness.BRIGHTNESS_MAX.brightnessLevel
+        val expectedDenominator = 18 - BrightnessLaunchS.BRIGHTNESS_MAX.brightnessLevel
 
-        launchpadClient.setBrightness(Brightness.BRIGHTNESS_MAX)
+        launchpadClient.setBrightness(BrightnessLaunchS.BRIGHTNESS_MAX)
 
         verify(midiProtocolClient).brightness(expectedNumerator, expectedDenominator)
     }
@@ -65,14 +68,14 @@ class MidiLaunchpadClientTest {
     @Test
     fun setBrightness_tooLow() {
         assertThrows<IllegalArgumentException> {
-            launchpadClient.setBrightness(Brightness.of(Brightness.MIN_VALUE - 1))
+            launchpadClient.setBrightness(BrightnessLaunchS.of(BrightnessLaunchS.MIN_VALUE - 1))
         }
     }
 
     @Test
     fun setBrightness_tooHigh() {
         assertThrows<IllegalArgumentException> {
-            launchpadClient.setBrightness(Brightness.of(Brightness.MAX_VALUE + 1))
+            launchpadClient.setBrightness(BrightnessLaunchS.of(BrightnessLaunchS.MAX_VALUE + 1))
         }
     }
 
@@ -82,7 +85,7 @@ class MidiLaunchpadClientTest {
             .`when`(midiProtocolClient).brightness(anyInt(), anyInt())
 
         assertThrows<LaunchpadException> {
-            launchpadClient.setBrightness(Brightness.BRIGHTNESS_MIN)
+            launchpadClient.setBrightness(BrightnessLaunchS.BRIGHTNESS_MIN)
         }
     }
 
@@ -135,8 +138,8 @@ class MidiLaunchpadClientTest {
 
         assertThrows<LaunchpadException> {
             launchpadClient.setButtonLight(
-                Button.UP,
-                Color.BLACK,
+                ButtonLaunchS.UP,
+                ColorLaunchS.BLACK,
                 BackBufferOperation.COPY
             )
         }
@@ -144,61 +147,61 @@ class MidiLaunchpadClientTest {
 
     @Test
     fun setButtonLight_topButton_NONE() {
-        launchpadClient.setButtonLight(Button.DOWN, Color.BLACK, BackBufferOperation.NONE)
+        launchpadClient.setButtonLight(ButtonLaunchS.DOWN, ColorLaunchS.BLACK, BackBufferOperation.NONE)
 
         verify(midiProtocolClient)
             .buttonOn(
-                LAUNCHPAD_S_RAW_TOP_BUTTON_MIDI_CODE + Button.DOWN.coordinate,
+                LAUNCHPAD_S_RAW_TOP_BUTTON_MIDI_CODE + ButtonLaunchS.DOWN.coordinate,
                 0
             )
     }
 
     @Test
     fun setButtonLight_topButton_CLEAR() {
-        launchpadClient.setButtonLight(Button.UP, Color.BLACK, BackBufferOperation.CLEAR)
+        launchpadClient.setButtonLight(ButtonLaunchS.UP, ColorLaunchS.BLACK, BackBufferOperation.CLEAR)
         verify(midiProtocolClient).buttonOn(LAUNCHPAD_S_RAW_TOP_BUTTON_MIDI_CODE, 8)
     }
 
     @Test
     fun setButtonLight_topButton_COPY() {
-        launchpadClient.setButtonLight(Button.UP, Color.BLACK, BackBufferOperation.COPY)
+        launchpadClient.setButtonLight(ButtonLaunchS.UP, ColorLaunchS.BLACK, BackBufferOperation.COPY)
         verify(midiProtocolClient).buttonOn(LAUNCHPAD_S_RAW_TOP_BUTTON_MIDI_CODE, 12)
     }
 
     @Test
     fun setButtonLight_OORANGE_for_topButton_COPY() {
-        launchpadClient.setButtonLight(Button.UP, Color.ORANGE, BackBufferOperation.COPY)
+        launchpadClient.setButtonLight(ButtonLaunchS.UP, ColorLaunchS.ORANGE, BackBufferOperation.COPY)
         verify(midiProtocolClient).buttonOn(LAUNCHPAD_S_RAW_TOP_BUTTON_MIDI_CODE, 47)
     }
 
     @Test
     fun setButtonLight_rightButton() {
-        launchpadClient.setButtonLight(Button.PAN, Color.BLACK, BackBufferOperation.COPY)
+        launchpadClient.setButtonLight(ButtonLaunchS.PAN, ColorLaunchS.BLACK, BackBufferOperation.COPY)
         verify(midiProtocolClient).noteOn(24, 12)
     }
 
     @Test
     fun setButtonLight_rightButton_COPY() {
-        launchpadClient.setButtonLight(Button.VOL, Color.BLACK, BackBufferOperation.COPY)
+        launchpadClient.setButtonLight(ButtonLaunchS.VOL, ColorLaunchS.BLACK, BackBufferOperation.COPY)
         verify(midiProtocolClient).noteOn(LAUNCHPAD_S_RAW_RIGHT_BUTTON_MIDI_CODE, 12)
     }
 
     @Test
     fun setButtonLight_XY_illegal_COPY() {
         assertThrows<IllegalArgumentException> {
-            launchpadClient.setButtonLight(Button.atTop(-1), Color.BLACK, BackBufferOperation.COPY)
+            launchpadClient.setButtonLight(ButtonLaunchS.atTop(-1), ColorLaunchS.BLACK, BackBufferOperation.COPY)
         }
     }
 
     @Test
     fun setButtonLight_topButton_XY_COPY() {
-        launchpadClient.setButtonLight(Button.atTop(0), Color.BLACK, BackBufferOperation.COPY) // UP
+        launchpadClient.setButtonLight(ButtonLaunchS.atTop(0), ColorLaunchS.BLACK, BackBufferOperation.COPY) // UP
         verify(midiProtocolClient).buttonOn(LAUNCHPAD_S_RAW_TOP_BUTTON_MIDI_CODE, 12)
     }
 
     @Test
     fun setButtonLight_rightButton_XY_COPY() {
-        launchpadClient.setButtonLight(Button.atRight(0), Color.BLACK, BackBufferOperation.COPY) // VOL
+        launchpadClient.setButtonLight(ButtonLaunchS.atRight(0), ColorLaunchS.BLACK, BackBufferOperation.COPY) // VOL
         verify(midiProtocolClient).noteOn(8, 12)
     }
 
@@ -209,7 +212,7 @@ class MidiLaunchpadClientTest {
     */
     @Test
     fun setPadLight_COPY() {
-        launchpadClient.setPadLight(Pad.at(0, 0), Color.BLACK, BackBufferOperation.COPY)
+        launchpadClient.setPadLight(PadLaunchS.at(0, 0), ColorLaunchS.BLACK, BackBufferOperation.COPY)
         verify(midiProtocolClient).noteOn(0, 12)
     }
 
@@ -217,8 +220,8 @@ class MidiLaunchpadClientTest {
     fun setPadLight_illegal() {
         assertThrows<IllegalArgumentException> {
             launchpadClient.setPadLight(
-                Pad.at(-1, -1),
-                Color.BLACK,
+                PadLaunchS.at(-1, -1),
+                ColorLaunchS.BLACK,
                 BackBufferOperation.COPY
             )
         }
@@ -230,8 +233,8 @@ class MidiLaunchpadClientTest {
             .`when`(midiProtocolClient).noteOn(anyInt(), anyInt())
         assertThrows<LaunchpadException> {
             launchpadClient.setPadLight(
-                Pad.at(1, 1),
-                Color.BLACK,
+                PadLaunchS.at(1, 1),
+                ColorLaunchS.BLACK,
                 BackBufferOperation.COPY
             )
         }
@@ -262,13 +265,13 @@ class MidiLaunchpadClientTest {
     */
     @Test
     fun testLights() {
-        launchpadClient.testLights(LightIntensity.LOW)
+        launchpadClient.testLights(LightIntensityLaunchS.LOW)
         verify(midiProtocolClient).lightsOn(125)
 
-        launchpadClient.testLights(LightIntensity.MEDIUM)
+        launchpadClient.testLights(LightIntensityLaunchS.MEDIUM)
         verify(midiProtocolClient).lightsOn(126)
 
-        launchpadClient.testLights(LightIntensity.HIGH)
+        launchpadClient.testLights(LightIntensityLaunchS.HIGH)
         verify(midiProtocolClient).lightsOn(127)
     }
 
@@ -277,7 +280,7 @@ class MidiLaunchpadClientTest {
         doThrow(InvalidMidiDataException())
             .`when`(midiProtocolClient).lightsOn(anyInt())
 
-        assertThrows<LaunchpadException> { launchpadClient.testLights(LightIntensity.LOW) }
+        assertThrows<LaunchpadException> { launchpadClient.testLights(LightIntensityLaunchS.LOW) }
     }
 
     /*
@@ -292,13 +295,13 @@ class MidiLaunchpadClientTest {
             .`when`(midiProtocolClient).notesOn(12, 12)
 
         assertThrows<LaunchpadException> {
-            launchpadClient.setLights(arrayOf(Color.BLACK, Color.BLACK), BackBufferOperation.COPY)
+            launchpadClient.setLights(arrayOf(ColorLaunchS.BLACK, ColorLaunchS.BLACK), BackBufferOperation.COPY)
         }
     }
 
     @Test
     fun setLights_COPY() {
-        launchpadClient.setLights(arrayOf(Color.BLACK, Color.BLACK), BackBufferOperation.COPY)
+        launchpadClient.setLights(arrayOf(ColorLaunchS.BLACK, ColorLaunchS.BLACK), BackBufferOperation.COPY)
         verify(midiProtocolClient).notesOn(12, 12)
     }
 
@@ -310,8 +313,8 @@ class MidiLaunchpadClientTest {
     @Test
     fun scrollText_speedTooLow() {
         assertThrows<IllegalArgumentException> {
-            launchpadClient.scrollText("Hello", Color.BLACK,
-                ScrollSpeed.of(ScrollSpeed.MIN_VALUE - 1),
+            launchpadClient.scrollText("Hello", ColorLaunchS.BLACK,
+                ScrollSpeedLaunchS.of(ScrollSpeedLaunchS.MIN_VALUE - 1),
                 false,
                 BackBufferOperation.COPY)
         }
@@ -322,8 +325,8 @@ class MidiLaunchpadClientTest {
         assertThrows<IllegalArgumentException> {
             launchpadClient.scrollText(
                 "Hello",
-                Color.BLACK,
-                ScrollSpeed.of(ScrollSpeed.MAX_VALUE + 1),
+                ColorLaunchS.BLACK,
+                ScrollSpeedLaunchS.of(ScrollSpeedLaunchS.MAX_VALUE + 1),
                 false,
                 BackBufferOperation.COPY
             )
@@ -334,8 +337,8 @@ class MidiLaunchpadClientTest {
     fun scrollText_COPY() {
         launchpadClient.scrollText(
             "Hello",
-            Color.BLACK,
-            ScrollSpeed.SPEED_MIN,
+            ColorLaunchS.BLACK,
+            ScrollSpeedLaunchS.SPEED_MIN,
             false,
             BackBufferOperation.COPY
         )
@@ -351,8 +354,8 @@ class MidiLaunchpadClientTest {
         assertThrows<LaunchpadException> {
             launchpadClient.scrollText(
                 "Hello",
-                Color.BLACK,
-                ScrollSpeed.SPEED_MIN,
+                ColorLaunchS.BLACK,
+                ScrollSpeedLaunchS.SPEED_MIN,
                 false,
                 BackBufferOperation.COPY
             )

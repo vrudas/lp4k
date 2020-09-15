@@ -17,6 +17,8 @@
  */
 package io.lp4k.api
 
+import io.lp4k.launchpad.api.Pad
+
 /**
  * Represents a square pad on the Launchpad.
  *
@@ -28,7 +30,10 @@ package io.lp4k.api
  *
  * @author Olivier Croisier (olivier.croisier@gmail.com)
  */
-data class Pad(val x: Int, val y: Int) {
+data class PadLaunchS(
+    override val x: Int,
+    override val y: Int
+): Pad {
 
     companion object {
 
@@ -45,26 +50,26 @@ data class Pad(val x: Int, val y: Int) {
         const val Y_MAX = 7
 
         /** Cache of all pads  */
-        private val PADS: Array<Array<Pad>> = initPads()
+        private val PADS: Array<Array<PadLaunchS>> = initPads()
 
-        private fun initPads(): Array<Array<Pad>> {
+        private fun initPads(): Array<Array<PadLaunchS>> {
             val padRowSize = X_MAX + 1
             val padColumnSize = Y_MAX + 1
 
             return Array(padRowSize) { i ->
-                Array(padColumnSize) { j -> Pad(i, j) }
+                Array(padColumnSize) { j -> PadLaunchS(i, j) }
             }
         }
 
         /**
          * Factory method.
          *
-         * @param x The X coordinate of the pad. Must be in range [[Pad.X_MIN],[Pad.X_MAX]].
-         * @param y The Y coordinate of the pad. Must be in range [[Pad.Y_MIN],[Pad.Y_MAX]].
+         * @param x The X coordinate of the pad. Must be in range [[PadLaunchS.X_MIN],[PadLaunchS.X_MAX]].
+         * @param y The Y coordinate of the pad. Must be in range [[PadLaunchS.Y_MIN],[PadLaunchS.Y_MAX]].
          * @return The pad.
          * @throws java.lang.IllegalArgumentException If the coordinates are invalid.
          */
-        fun at(x: Int, y: Int): Pad {
+        fun at(x: Int, y: Int): PadLaunchS {
             require(x in (X_MIN..X_MAX) && y in (Y_MIN..Y_MAX)) {
                 "Illegal pad coordinates : ($x,$y). Acceptable values are in [0..7] on both axis."
             }

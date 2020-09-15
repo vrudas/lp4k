@@ -17,6 +17,8 @@
  */
 package io.lp4k.api
 
+import io.lp4k.launchpad.api.ScrollSpeed
+
 /**
  * Represents the speed at which the text scrolls through the Launchpad grid (see [net.thecodersbreakfast.lp4j.api.LaunchpadClient.scrollText]).
  *
@@ -26,9 +28,9 @@ package io.lp4k.api
  *
  * @author Olivier Croisier (olivier.croisier@gmail.com)
  */
-data class ScrollSpeed(
-    val speedValue: Int
-) {
+data class ScrollSpeedLaunchS(
+    override val speedValue: Int
+): ScrollSpeed {
     companion object {
         /** Minimum value for a scrolling speed  */
         const val MIN_VALUE = 1
@@ -37,7 +39,7 @@ data class ScrollSpeed(
         const val MAX_VALUE = 7
 
         /** Cache of all possible scrolling speeds  */
-        private val CACHE: Array<ScrollSpeed> = Array(MAX_VALUE) { ScrollSpeed(it + 1) }
+        private val CACHE: Array<ScrollSpeedLaunchS> = Array(MAX_VALUE) { ScrollSpeedLaunchS(it + 1) }
 
         /** Slowest scrolling speed  */
         val SPEED_MIN = of(MIN_VALUE)
@@ -52,7 +54,7 @@ data class ScrollSpeed(
          * @return The ScrollSpeed instance
          * @throws java.lang.IllegalArgumentException If the requested speed is out of acceptable range.
          */
-        fun of(speed: Int): ScrollSpeed {
+        fun of(speed: Int): ScrollSpeedLaunchS {
             require(speed in (MIN_VALUE..MAX_VALUE)) {
                 "Invalid speed value : $speed. Acceptable values are in range [$MIN_VALUE..$MAX_VALUE]."
             }

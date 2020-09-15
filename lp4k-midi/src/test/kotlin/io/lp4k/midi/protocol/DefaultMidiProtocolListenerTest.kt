@@ -17,9 +17,9 @@
  */
 package io.lp4k.midi.protocol
 
-import io.lp4k.api.Button
-import io.lp4k.api.LaunchpadListener
-import io.lp4k.api.Pad
+import io.lp4k.api.ButtonLaunchS
+import io.lp4k.api.PadLaunchS
+import io.lp4k.launchpad.api.LaunchpadListener
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -40,60 +40,60 @@ class DefaultMidiProtocolListenerTest {
     @Test
     fun onButtonOn_up() {
         midiProtocolListener.onButtonOn(BUTTON_UP, TIMESTAMP)
-        verify(listener).onButtonPressed(Button.UP, TIMESTAMP)
+        verify(listener).onButtonPressed(ButtonLaunchS.UP, TIMESTAMP)
     }
 
     @Test
     fun onButtonOn_unknown() {
         assertThrows<IllegalArgumentException> {
             midiProtocolListener.onButtonOn(BUTTON_UNKNOWN, TIMESTAMP)
-            verify(listener).onButtonPressed(Button.UP, TIMESTAMP)
+            verify(listener).onButtonPressed(ButtonLaunchS.UP, TIMESTAMP)
         }
     }
 
     @Test
     fun onButtonOff_up() {
         midiProtocolListener.onButtonOff(BUTTON_UP, TIMESTAMP)
-        verify(listener).onButtonReleased(Button.UP, TIMESTAMP)
+        verify(listener).onButtonReleased(ButtonLaunchS.UP, TIMESTAMP)
     }
 
     @Test
     fun onButtonOff_unknown() {
         assertThrows<IllegalArgumentException> {
             midiProtocolListener.onButtonOff(BUTTON_UNKNOWN, TIMESTAMP)
-            verify(listener).onButtonReleased(Button.UP, TIMESTAMP)
+            verify(listener).onButtonReleased(ButtonLaunchS.UP, TIMESTAMP)
         }
     }
 
     @Test
     fun onNoteOn_vol() {
         midiProtocolListener.onNoteOn(NOTE_VOL, TIMESTAMP)
-        verify(listener).onButtonPressed(Button.VOL, TIMESTAMP)
+        verify(listener).onButtonPressed(ButtonLaunchS.VOL, TIMESTAMP)
     }
 
     @Test
     fun onNoteOff_vol() {
         midiProtocolListener.onNoteOff(NOTE_VOL, TIMESTAMP)
-        verify(listener).onButtonReleased(Button.VOL, TIMESTAMP)
+        verify(listener).onButtonReleased(ButtonLaunchS.VOL, TIMESTAMP)
     }
 
     @Test
     fun onNoteOn_pad00() {
         midiProtocolListener.onNoteOn(NOTE_PAD00, TIMESTAMP)
-        verify(listener).onPadPressed(Pad.at(0, 0), TIMESTAMP)
+        verify(listener).onPadPressed(PadLaunchS.at(0, 0), TIMESTAMP)
     }
 
     @Test
     fun onNoteOff_pad00() {
         midiProtocolListener.onNoteOff(NOTE_PAD00, TIMESTAMP)
-        verify(listener).onPadReleased(Pad.at(0, 0), TIMESTAMP)
+        verify(listener).onPadReleased(PadLaunchS.at(0, 0), TIMESTAMP)
     }
 
     @Test
     fun onNoteOn_unknown() {
         assertThrows<IllegalArgumentException> {
             midiProtocolListener.onNoteOn(NOTE_UNKNOWN, TIMESTAMP)
-            verify(listener).onPadPressed(Pad.at(0, 0), TIMESTAMP)
+            verify(listener).onPadPressed(PadLaunchS.at(0, 0), TIMESTAMP)
         }
     }
 
@@ -101,7 +101,7 @@ class DefaultMidiProtocolListenerTest {
     fun onNoteOff_unknown() {
         assertThrows<IllegalArgumentException> {
             midiProtocolListener.onNoteOff(NOTE_UNKNOWN, TIMESTAMP)
-            verify(listener).onPadReleased(Pad.at(0, 0), TIMESTAMP)
+            verify(listener).onPadReleased(PadLaunchS.at(0, 0), TIMESTAMP)
         }
     }
 

@@ -18,9 +18,9 @@ package io.lp4k.emulator.input
 
 import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.verify
-import io.lp4k.api.Button
-import io.lp4k.api.LaunchpadListener
-import io.lp4k.api.Pad
+import io.lp4k.api.ButtonLaunchS
+import io.lp4k.api.PadLaunchS
+import io.lp4k.launchpad.api.LaunchpadListener
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -81,13 +81,13 @@ internal class EventBusHandlerTest {
     @Test
     fun `launchpad listener pad press event was not called because of missing y coordinate`() {
         assertThrows<IllegalArgumentException> {
-            handler.handle(padPressMessage(Pad.X_MAX, null))
+            handler.handle(padPressMessage(PadLaunchS.X_MAX, null))
         }
     }
 
     @Test
     fun `launchpad listener pad press was called for required input event type`() {
-        val pad = Pad.at(Pad.X_MIN, Pad.Y_MAX)
+        val pad = PadLaunchS.at(PadLaunchS.X_MIN, PadLaunchS.Y_MAX)
 
         handler.handle(padPressMessage(pad.x, pad.y))
 
@@ -104,13 +104,13 @@ internal class EventBusHandlerTest {
     @Test
     fun `launchpad listener pad release event was not called because of missing y coordinate`() {
         assertThrows<IllegalArgumentException> {
-            handler.handle(padPressMessage(Pad.X_MIN, null))
+            handler.handle(padPressMessage(PadLaunchS.X_MIN, null))
         }
     }
 
     @Test
     fun `launchpad listener pad release was called for required input event type`() {
-        val pad = Pad.at(Pad.X_MIN, Pad.Y_MAX)
+        val pad = PadLaunchS.at(PadLaunchS.X_MIN, PadLaunchS.Y_MAX)
 
         handler.handle(padReleaseMessage(pad.x, pad.y))
 
@@ -127,13 +127,13 @@ internal class EventBusHandlerTest {
     @Test
     fun `launchpad listener button press event was not called because of missing y coordinate`() {
         assertThrows<IllegalArgumentException> {
-            handler.handle(buttonPressMessage(Button.MAX_COORD, null))
+            handler.handle(buttonPressMessage(ButtonLaunchS.MAX_COORD, null))
         }
     }
 
     @Test
     fun `launchpad listener top button press was called for required input event type`() {
-        val topButton = Button.UP
+        val topButton = ButtonLaunchS.UP
 
         handler.handle(buttonPressMessage(topButton.coordinate, RIGHT_BUTTON_COORDINATE))
 
@@ -142,7 +142,7 @@ internal class EventBusHandlerTest {
 
     @Test
     fun `launchpad listener right button press was called for required input event type`() {
-        val rightButton = Button.VOL
+        val rightButton = ButtonLaunchS.VOL
 
         handler.handle(buttonPressMessage(RIGHT_BUTTON_COORDINATE, rightButton.coordinate))
 
@@ -159,13 +159,13 @@ internal class EventBusHandlerTest {
     @Test
     fun `launchpad listener button release event was not called because of missing y coordinate`() {
         assertThrows<IllegalArgumentException> {
-            handler.handle(buttonReleaseMessage(Button.MAX_COORD, null))
+            handler.handle(buttonReleaseMessage(ButtonLaunchS.MAX_COORD, null))
         }
     }
 
     @Test
     fun `launchpad listener top button release was called for required input event type`() {
-        val topButton = Button.UP
+        val topButton = ButtonLaunchS.UP
 
         handler.handle(buttonReleaseMessage(topButton.coordinate, RIGHT_BUTTON_COORDINATE))
 
@@ -174,7 +174,7 @@ internal class EventBusHandlerTest {
 
     @Test
     fun `launchpad listener right button release was called for required input event type`() {
-        val rightButton = Button.VOL
+        val rightButton = ButtonLaunchS.VOL
 
         handler.handle(buttonReleaseMessage(RIGHT_BUTTON_COORDINATE, rightButton.coordinate))
 

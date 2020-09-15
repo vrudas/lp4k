@@ -17,7 +17,7 @@
  */
 package io.lp4k.midi.protocol
 
-import io.lp4k.api.LaunchpadException
+import io.lp4k.launchpad.api.LaunchpadException
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

@@ -16,6 +16,10 @@
  */
 package io.lp4k.api
 
+import io.lp4k.launchpad.api.Button
+import io.lp4k.launchpad.api.LaunchpadListener
+import io.lp4k.launchpad.api.Pad
+
 interface MockLaunchpadListener : LaunchpadListener {
 
     /**

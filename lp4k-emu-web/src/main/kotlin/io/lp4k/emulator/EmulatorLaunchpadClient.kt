@@ -18,9 +18,10 @@
 
 package io.lp4k.emulator
 
-import io.lp4k.api.*
-import io.lp4k.api.LightIntensity.*
+import io.lp4k.api.ColorLaunchS
+import io.lp4k.api.LightIntensityLaunchS
 import io.lp4k.emulator.output.OutputEventType
+import io.lp4k.launchpad.api.*
 import io.vertx.core.Vertx
 import io.vertx.core.json.JsonObject
 
@@ -54,9 +55,9 @@ internal class EmulatorLaunchpadClient(
 
     private fun prepareBrightnessValue(intensity: LightIntensity): Int {
         return when (intensity) {
-            LOW -> 5
-            MEDIUM -> 10
-            HIGH -> 15
+            LightIntensityLaunchS.LOW -> 5
+            LightIntensityLaunchS.MEDIUM -> 10
+            LightIntensityLaunchS.HIGH -> 15
             else -> 0
         }
     }
@@ -86,6 +87,8 @@ internal class EmulatorLaunchpadClient(
         color: Color,
         operation: BackBufferOperation
     ) {
+        color as ColorLaunchS
+
         val params = JsonObject()
             .put("x", pad.x)
             .put("y", pad.y)
@@ -113,6 +116,8 @@ internal class EmulatorLaunchpadClient(
         color: Color,
         operation: BackBufferOperation
     ) {
+        color as ColorLaunchS
+
         val params = JsonObject()
             .put("t", button.isTopButton)
             .put("i", button.coordinate)

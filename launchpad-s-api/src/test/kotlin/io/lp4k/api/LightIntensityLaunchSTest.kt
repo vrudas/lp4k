@@ -20,17 +20,17 @@ import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class LightIntensityTest {
+class LightIntensityLaunchSTest {
 
     @Test
     fun check_light_intensity_values_exists() {
         val lightIntensityNames = listOf("LOW", "MEDIUM", "HIGH")
 
-        assertEquals(lightIntensityNames.size, LightIntensity.values().size)
+        assertEquals(lightIntensityNames.size, LightIntensityLaunchS.values().size)
 
         assertDoesNotThrow {
             lightIntensityNames.forEach {
-                LightIntensity.valueOf(it)
+                LightIntensityLaunchS.valueOf(it)
             }
         }
     }

@@ -16,54 +16,54 @@
  */
 package io.lp4k.api
 
-import io.lp4k.api.ScrollSpeed.Companion.of
+import io.lp4k.api.ScrollSpeedLaunchS.Companion.of
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class ScrollSpeedTest {
+class ScrollSpeedLaunchSTest {
 
     @Test
     fun valueOf() {
-        val scrollSpeed = of(ScrollSpeed.MIN_VALUE)
-        assertEquals(ScrollSpeed.MIN_VALUE, scrollSpeed.speedValue)
+        val scrollSpeed = of(ScrollSpeedLaunchS.MIN_VALUE)
+        assertEquals(ScrollSpeedLaunchS.MIN_VALUE, scrollSpeed.speedValue)
     }
 
     @Test
     fun valueOf_tooLow() {
-        assertThrows<IllegalArgumentException> { of(ScrollSpeed.MIN_VALUE - 1) }
+        assertThrows<IllegalArgumentException> { of(ScrollSpeedLaunchS.MIN_VALUE - 1) }
     }
 
     @Test
     fun valueOf_tooHigh() {
-        assertThrows<IllegalArgumentException> { of(ScrollSpeed.MAX_VALUE + 1) }
+        assertThrows<IllegalArgumentException> { of(ScrollSpeedLaunchS.MAX_VALUE + 1) }
     }
 
     @Test
     fun check_equals() {
-        assertEquals(ScrollSpeed.SPEED_MAX, of(7))
+        assertEquals(ScrollSpeedLaunchS.SPEED_MAX, of(7))
     }
 
     @Test
     fun not_equal() {
-        assertNotEquals(ScrollSpeed.SPEED_MAX, ScrollSpeed.SPEED_MIN)
+        assertNotEquals(ScrollSpeedLaunchS.SPEED_MAX, ScrollSpeedLaunchS.SPEED_MIN)
     }
 
     @Test
     fun not_equal_for_different_type() {
-        assertNotEquals(ScrollSpeed.SPEED_MAX, ScrollSpeed.MAX_VALUE)
+        assertNotEquals(ScrollSpeedLaunchS.SPEED_MAX, ScrollSpeedLaunchS.MAX_VALUE)
     }
 
     @Test
     fun not_equal_for_null() {
-        assertNotEquals(ScrollSpeed.SPEED_MAX, null)
+        assertNotEquals(ScrollSpeedLaunchS.SPEED_MAX, null)
     }
 
     @Test
     fun hashcode_are_equal() {
         assertEquals(
-            ScrollSpeed.MAX_VALUE,
+            ScrollSpeedLaunchS.MAX_VALUE,
             of(7).hashCode()
         )
     }

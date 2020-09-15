@@ -1,6 +1,5 @@
 /*
  *    Copyright 2020 Vasyl Rudas
- *    Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,7 +14,7 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.api
+package io.lp4k.launchpad.api
 
 /**
  * The Launchpad handles two buffers internally. It is up to the user to select which one is written to, and which one

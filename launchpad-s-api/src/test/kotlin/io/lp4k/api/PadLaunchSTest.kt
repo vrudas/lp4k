@@ -22,73 +22,73 @@ import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class PadTest {
+class PadLaunchSTest {
 
     @Test
     fun at() {
-        val pad = Pad.at(Pad.X_MIN, Pad.Y_MIN)
-        assertEquals(Pad.X_MIN, pad.x)
-        assertEquals(Pad.Y_MIN, pad.y)
+        val pad = PadLaunchS.at(PadLaunchS.X_MIN, PadLaunchS.Y_MIN)
+        assertEquals(PadLaunchS.X_MIN, pad.x)
+        assertEquals(PadLaunchS.Y_MIN, pad.y)
     }
 
     @Test
     fun check_pad_coordinates_for_different_input_values() {
-        val pad = Pad.at(1, 2)
+        val pad = PadLaunchS.at(1, 2)
         assertEquals(1, pad.x)
         assertEquals(2, pad.y)
     }
 
     @Test
     fun at_xTooLow() {
-        assertThrows<IllegalArgumentException> { Pad.at(Pad.X_MIN - 1, Pad.Y_MIN) }
+        assertThrows<IllegalArgumentException> { PadLaunchS.at(PadLaunchS.X_MIN - 1, PadLaunchS.Y_MIN) }
     }
 
     @Test
     fun at_xTooHigh() {
-        assertThrows<IllegalArgumentException> { Pad.at(Pad.X_MAX + 1, Pad.Y_MIN) }
+        assertThrows<IllegalArgumentException> { PadLaunchS.at(PadLaunchS.X_MAX + 1, PadLaunchS.Y_MIN) }
     }
 
     @Test
     fun at_yTooLow() {
-        assertThrows<IllegalArgumentException> { Pad.at(Pad.X_MIN, Pad.Y_MIN - 1) }
+        assertThrows<IllegalArgumentException> { PadLaunchS.at(PadLaunchS.X_MIN, PadLaunchS.Y_MIN - 1) }
     }
 
     @Test
     fun at_yTooHigh() {
-        assertThrows<IllegalArgumentException> { Pad.at(Pad.X_MIN, Pad.Y_MAX + 1) }
+        assertThrows<IllegalArgumentException> { PadLaunchS.at(PadLaunchS.X_MIN, PadLaunchS.Y_MAX + 1) }
     }
 
     @Test
     fun check_equals() {
         assertEquals(
-            Pad.at(Pad.X_MIN, Pad.Y_MIN),
-            Pad.at(Pad.X_MIN, Pad.Y_MIN)
+            PadLaunchS.at(PadLaunchS.X_MIN, PadLaunchS.Y_MIN),
+            PadLaunchS.at(PadLaunchS.X_MIN, PadLaunchS.Y_MIN)
         )
     }
 
     @Test
     fun not_equal() {
         assertNotEquals(
-            Pad.at(Pad.X_MIN, Pad.Y_MIN),
-            Pad.at(Pad.X_MAX, Pad.Y_MAX)
+            PadLaunchS.at(PadLaunchS.X_MIN, PadLaunchS.Y_MIN),
+            PadLaunchS.at(PadLaunchS.X_MAX, PadLaunchS.Y_MAX)
         )
     }
 
     @Test
     fun not_equal_for_different_type() {
-        assertNotEquals(Pad.at(Pad.X_MAX, Pad.Y_MAX), Pad.X_MIN)
+        assertNotEquals(PadLaunchS.at(PadLaunchS.X_MAX, PadLaunchS.Y_MAX), PadLaunchS.X_MIN)
     }
 
     @Test
     fun not_equal_for_null() {
-        assertNotEquals(Pad.at(Pad.X_MIN, Pad.Y_MIN), null)
+        assertNotEquals(PadLaunchS.at(PadLaunchS.X_MIN, PadLaunchS.Y_MIN), null)
     }
 
     @Test
     fun hashcode_is_equal_for_pads_with_same_coordinates() {
         val pads = setOf(
-            Pad.at(Pad.X_MAX, Pad.Y_MAX),
-            Pad.at(7, 7)
+            PadLaunchS.at(PadLaunchS.X_MAX, PadLaunchS.Y_MAX),
+            PadLaunchS.at(7, 7)
         )
 
         assertEquals(1, pads.size)

@@ -18,6 +18,8 @@ package io.lp4k.emulator
 
 import io.lp4k.api.*
 import io.lp4k.emulator.output.OutputEventType
+import io.lp4k.launchpad.api.BackBufferOperation
+import io.lp4k.launchpad.api.Buffer
 import io.vertx.core.json.JsonObject
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -72,7 +74,7 @@ internal class EmulatorLaunchpadClientTest {
 
     @Test
     fun `test lights event published with low light intensity`() {
-        emulatorLaunchpadClient.testLights(LightIntensity.LOW)
+        emulatorLaunchpadClient.testLights(LightIntensityLaunchS.LOW)
 
         verifyEventWasPublished(
             OutputEventType.TST,
@@ -82,7 +84,7 @@ internal class EmulatorLaunchpadClientTest {
 
     @Test
     fun `test lights event published with medium light intensity`() {
-        emulatorLaunchpadClient.testLights(LightIntensity.MEDIUM)
+        emulatorLaunchpadClient.testLights(LightIntensityLaunchS.MEDIUM)
 
         verifyEventWasPublished(
             OutputEventType.TST,
@@ -92,7 +94,7 @@ internal class EmulatorLaunchpadClientTest {
 
     @Test
     fun `test lights event published with high light intensity`() {
-        emulatorLaunchpadClient.testLights(LightIntensity.HIGH)
+        emulatorLaunchpadClient.testLights(LightIntensityLaunchS.HIGH)
 
         verifyEventWasPublished(
             OutputEventType.TST,
@@ -103,8 +105,8 @@ internal class EmulatorLaunchpadClientTest {
     @Test
     fun `set pad light event published`() {
         emulatorLaunchpadClient.setPadLight(
-            Pad.at(0, 0),
-            Color.RED,
+            PadLaunchS.at(0, 0),
+            ColorLaunchS.RED,
             BackBufferOperation.NONE
         )
 
@@ -124,8 +126,8 @@ internal class EmulatorLaunchpadClientTest {
     @Test
     fun `set button light event published for right button`() {
         emulatorLaunchpadClient.setButtonLight(
-            Button.VOL,
-            Color.GREEN,
+            ButtonLaunchS.VOL,
+            ColorLaunchS.GREEN,
             BackBufferOperation.CLEAR
         )
 
@@ -146,8 +148,8 @@ internal class EmulatorLaunchpadClientTest {
     @Test
     fun `set button light event published for top button`() {
         emulatorLaunchpadClient.setButtonLight(
-            Button.UP,
-            Color.GREEN,
+            ButtonLaunchS.UP,
+            ColorLaunchS.GREEN,
             BackBufferOperation.COPY
         )
 
@@ -167,11 +169,11 @@ internal class EmulatorLaunchpadClientTest {
 
     @Test
     fun `set brightness event published`() {
-        emulatorLaunchpadClient.setBrightness(Brightness.BRIGHTNESS_MAX)
+        emulatorLaunchpadClient.setBrightness(BrightnessLaunchS.BRIGHTNESS_MAX)
 
         verifyEventWasPublished(
             OutputEventType.BRGHT,
-            mapOf(BRIGHTNESS_KEY to Brightness.BRIGHTNESS_MAX.brightnessLevel)
+            mapOf(BRIGHTNESS_KEY to BrightnessLaunchS.BRIGHTNESS_MAX.brightnessLevel)
         )
     }
 
@@ -200,8 +202,8 @@ internal class EmulatorLaunchpadClientTest {
         assertThrows<UnsupportedOperationException> {
             emulatorLaunchpadClient.scrollText(
                 "",
-                Color.AMBER,
-                ScrollSpeed.SPEED_MIN,
+                ColorLaunchS.AMBER,
+                ScrollSpeedLaunchS.SPEED_MIN,
                 false,
                 BackBufferOperation.NONE
             )

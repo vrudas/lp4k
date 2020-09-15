@@ -14,10 +14,24 @@
  *    limitations under the License.
  *
  */
+package io.lp4k.launchpad.api
 
-dependencies {
-    implementation project(":launchpad-api")
+import org.junit.jupiter.api.Assertions.assertDoesNotThrow
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
-    testImplementation("org.junit.jupiter:junit-jupiter:${junitVersion}")
-    testImplementation("org.mockito:mockito-core:${mockitoVersion}")
+class BackBufferOperationTest {
+
+    @Test
+    fun check_back_buffer_operation_values_exists() {
+        val backBufferOperationNames = listOf("NONE", "COPY", "CLEAR")
+
+        assertEquals(backBufferOperationNames.size, BackBufferOperation.values().size)
+
+        assertDoesNotThrow {
+            backBufferOperationNames.forEach {
+                BackBufferOperation.valueOf(it)
+            }
+        }
+    }
 }
