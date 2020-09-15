@@ -14,7 +14,7 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.api
+package io.lp4k.launchpad.api.s
 
 import io.lp4k.launchpad.api.Button
 import io.lp4k.launchpad.api.LaunchpadListener

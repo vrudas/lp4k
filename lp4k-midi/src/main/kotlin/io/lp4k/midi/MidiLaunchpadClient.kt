@@ -16,8 +16,9 @@
  */
 package io.lp4k.midi
 
-import io.lp4k.api.*
 import io.lp4k.launchpad.api.*
+import io.lp4k.launchpad.api.s.ColorLaunchS
+import io.lp4k.launchpad.api.s.LightIntensityLaunchS
 import io.lp4k.midi.protocol.MidiProtocolClient
 import javax.sound.midi.InvalidMidiDataException
 

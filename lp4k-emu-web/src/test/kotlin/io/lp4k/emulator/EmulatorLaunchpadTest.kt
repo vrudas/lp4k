@@ -16,7 +16,7 @@
  */
 package io.lp4k.emulator
 
-import io.lp4k.api.MockLaunchpadListener
+import io.lp4k.launchpad.api.s.MockLaunchpadListener
 import io.lp4k.emulator.input.EventBusHandler
 import io.vertx.core.Vertx
 import io.vertx.ext.web.Router
