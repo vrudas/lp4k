@@ -1,5 +1,5 @@
 rootProject.name = 'lp4k'
 
-include 'lp4k-api'
+include 'launchpad-s-api'
 include 'lp4k-midi'
 include 'lp4k-emu-web'
