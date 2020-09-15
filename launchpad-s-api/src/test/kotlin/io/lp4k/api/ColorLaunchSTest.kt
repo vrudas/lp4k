@@ -22,71 +22,71 @@ import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class ColorTest {
+class ColorLaunchSTest {
 
     @Test
     fun valueOf() {
-        val color = Color.of(Color.MIN_INTENSITY, Color.MIN_INTENSITY)
+        val color = ColorLaunchS.of(ColorLaunchS.MIN_INTENSITY, ColorLaunchS.MIN_INTENSITY)
 
-        assertEquals(Color.BLACK, color)
-        assertEquals(Color.MIN_INTENSITY, color.redIntensity)
-        assertEquals(Color.MIN_INTENSITY, color.greenIntensity)
+        assertEquals(ColorLaunchS.BLACK, color)
+        assertEquals(ColorLaunchS.MIN_INTENSITY, color.redIntensity)
+        assertEquals(ColorLaunchS.MIN_INTENSITY, color.greenIntensity)
 
-        val colorMax = Color.of(Color.MAX_INTENSITY, Color.MAX_INTENSITY)
+        val colorMax = ColorLaunchS.of(ColorLaunchS.MAX_INTENSITY, ColorLaunchS.MAX_INTENSITY)
 
-        assertEquals(Color.AMBER, colorMax)
-        assertEquals(Color.MAX_INTENSITY, colorMax.redIntensity)
-        assertEquals(Color.MAX_INTENSITY, colorMax.greenIntensity)
+        assertEquals(ColorLaunchS.AMBER, colorMax)
+        assertEquals(ColorLaunchS.MAX_INTENSITY, colorMax.redIntensity)
+        assertEquals(ColorLaunchS.MAX_INTENSITY, colorMax.greenIntensity)
     }
 
     @Test
     fun valueOf_redTooLow() {
         assertThrows<IllegalArgumentException> {
-            Color.of(Color.MIN_INTENSITY - 1, Color.MIN_INTENSITY)
+            ColorLaunchS.of(ColorLaunchS.MIN_INTENSITY - 1, ColorLaunchS.MIN_INTENSITY)
         }
     }
 
     @Test
     fun valueOf_redTooHigh() {
         assertThrows<IllegalArgumentException> {
-            Color.of(Color.MAX_INTENSITY + 1, Color.MIN_INTENSITY)
+            ColorLaunchS.of(ColorLaunchS.MAX_INTENSITY + 1, ColorLaunchS.MIN_INTENSITY)
         }
     }
 
     @Test
     fun valueOf_greenTooLow() {
         assertThrows<IllegalArgumentException> {
-            Color.of(Color.MIN_INTENSITY, Color.MIN_INTENSITY - 1)
+            ColorLaunchS.of(ColorLaunchS.MIN_INTENSITY, ColorLaunchS.MIN_INTENSITY - 1)
         }
     }
 
     @Test
     fun valueOf_greenTooHigh() {
         assertThrows<IllegalArgumentException> {
-            Color.of(Color.MIN_INTENSITY, Color.MAX_INTENSITY + 1)
+            ColorLaunchS.of(ColorLaunchS.MIN_INTENSITY, ColorLaunchS.MAX_INTENSITY + 1)
         }
     }
 
     @Test
     fun check_equals() {
-        assertEquals(Color.RED, Color.RED)
+        assertEquals(ColorLaunchS.RED, ColorLaunchS.RED)
     }
 
     @Test
     fun not_equal() {
-        assertNotEquals(Color.GREEN, Color.ORANGE)
+        assertNotEquals(ColorLaunchS.GREEN, ColorLaunchS.ORANGE)
     }
 
     @Test
     fun not_equal_for_different_type() {
-        assertNotEquals(Color.YELLOW, Color.MIN_INTENSITY)
+        assertNotEquals(ColorLaunchS.YELLOW, ColorLaunchS.MIN_INTENSITY)
     }
 
     @Test
     fun hashcode_is_equal_for_same_colors() {
         val colors = setOf(
-            Color.AMBER,
-            Color.of(3, 3)
+            ColorLaunchS.AMBER,
+            ColorLaunchS.of(3, 3)
         )
 
         assertEquals(1, colors.size)

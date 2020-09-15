@@ -15,7 +15,7 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.api
+package io.lp4k.launchpad.api
 
 /**
  * This listener allows to be notified of any event occurring on the Launchpad, such as pads or buttons being pressed or

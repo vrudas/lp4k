@@ -17,6 +17,8 @@
  */
 package io.lp4k.api
 
+import io.lp4k.launchpad.api.Color
+
 /**
  * Represents the color of a pad or button on the Launchpad. The Launchpad has a red light and a green light under each
  * pad or button. The actual color is obtained by adjusting their respective intensities.
@@ -29,7 +31,7 @@ package io.lp4k.api
  *
  * @author Olivier Croisier (olivier.croisier@gmail.com)
  */
-data class Color(val redIntensity: Int, val greenIntensity: Int) {
+data class ColorLaunchS(val redIntensity: Int, val greenIntensity: Int): Color {
 
     companion object {
 
@@ -42,11 +44,11 @@ data class Color(val redIntensity: Int, val greenIntensity: Int) {
         // Color cache
         private val CACHE = initColors()
 
-        private fun initColors(): Array<Array<Color>> {
+        private fun initColors(): Array<Array<ColorLaunchS>> {
             val dimensionSize = MAX_INTENSITY + 1
 
             return Array(dimensionSize) { i ->
-                Array(dimensionSize) { j -> Color(i, j) }
+                Array(dimensionSize) { j -> ColorLaunchS(i, j) }
             }
         }
 
@@ -79,7 +81,7 @@ data class Color(val redIntensity: Int, val greenIntensity: Int) {
          *
          * @throws java.lang.IllegalArgumentException If the red or green parameters are out of acceptable range.
          */
-        fun of(red: Int, green: Int): Color {
+        fun of(red: Int, green: Int): ColorLaunchS {
             require(red in (MIN_INTENSITY..MAX_INTENSITY)) {
                 "Invalid red value : $red. Acceptable values are in range [0..3]."
             }

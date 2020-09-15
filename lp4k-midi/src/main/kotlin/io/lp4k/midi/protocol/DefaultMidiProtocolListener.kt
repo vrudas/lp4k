@@ -16,9 +16,9 @@
  */
 package io.lp4k.midi.protocol
 
-import io.lp4k.api.Button
-import io.lp4k.api.LaunchpadListener
-import io.lp4k.api.Pad
+import io.lp4k.api.ButtonLaunchS
+import io.lp4k.api.PadLaunchS
+import io.lp4k.launchpad.api.LaunchpadListener
 
 
 /**
@@ -36,14 +36,14 @@ class DefaultMidiProtocolListener(
         val x = note % 16
         val y = note / 16
         if (x >= 8) {
-            val button = Button.atRight(y)
+            val button = ButtonLaunchS.atRight(y)
             listener.onButtonPressed(button, timestamp)
         } else {
             require((x < 0 || y < 0 || y > 7).not()) {
                 "Invalid pad coordinates : ($x,$y). Acceptable values on either axis are in range [0..7]."
             }
 
-            listener.onPadPressed(Pad.at(x, y), timestamp)
+            listener.onPadPressed(PadLaunchS.at(x, y), timestamp)
         }
     }
 
@@ -51,26 +51,26 @@ class DefaultMidiProtocolListener(
         val x = note % 16
         val y = note / 16
         if (x >= 8) {
-            val button = Button.atRight(y)
+            val button = ButtonLaunchS.atRight(y)
             listener.onButtonReleased(button, timestamp)
         } else {
             require((x < 0 || y < 0 || y > 7).not()) {
                 "Invalid pad coordinates : ($x,$y). Acceptable values on either axis are in range [0..7]."
             }
 
-            listener.onPadReleased(Pad.at(x, y), timestamp)
+            listener.onPadReleased(PadLaunchS.at(x, y), timestamp)
         }
     }
 
     override fun onButtonOn(buttonNote: Int, timestamp: Long) {
         val midiButton = buttonNote - 104
-        val button = Button.atTop(midiButton)
+        val button = ButtonLaunchS.atTop(midiButton)
         listener.onButtonPressed(button, timestamp)
     }
 
     override fun onButtonOff(buttonNote: Int, timestamp: Long) {
         val midiButton = buttonNote - 104
-        val button = Button.atTop(midiButton)
+        val button = ButtonLaunchS.atTop(midiButton)
         listener.onButtonReleased(button, timestamp)
     }
 

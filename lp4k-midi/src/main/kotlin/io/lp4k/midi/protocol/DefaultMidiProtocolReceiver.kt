@@ -17,7 +17,7 @@
  */
 package io.lp4k.midi.protocol
 
-import io.lp4k.api.LaunchpadException
+import io.lp4k.launchpad.api.LaunchpadException
 import javax.sound.midi.MidiMessage
 import javax.sound.midi.Receiver
 import javax.sound.midi.ShortMessage

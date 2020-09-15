@@ -17,6 +17,8 @@
  */
 package io.lp4k.api
 
+import io.lp4k.launchpad.api.Button
+
 /**
  * Represents the Launchpad's 16 round buttons (8 at the top, 8 on the right side)
  *
@@ -25,14 +27,14 @@ package io.lp4k.api
  *
  * @author Olivier Croisier (olivier.croisier@gmail.com)
  */
-enum class Button(
+enum class ButtonLaunchS(
 
     /** The button coordinates  */
-    val coordinate: Int,
+    override val coordinate: Int,
 
     /** Tells if it is a top-row button (`true`), as opposed to a righ-side button (`false`)  */
-    val isTopButton: Boolean
-) {
+    override val isTopButton: Boolean
+): Button {
 
     /** The UP button (1st position from the left, on the top row)  */
     UP(0, true),
@@ -112,11 +114,11 @@ enum class Button(
          * Factory method for a top-row button.
          *
          * @param isTopButton `true` if the button is on the top row, `false` if it is on the right side
-         * @param coordinate The coordinate of the button. Must be in range [[Button.MIN_COORD],[Button.MAX_COORD]].
+         * @param coordinate The coordinate of the button. Must be in range [[ButtonLaunchS.MIN_COORD],[ButtonLaunchS.MAX_COORD]].
          * @return The button
          * @throws IllegalArgumentException if the coordinates are invalid.
          */
-        private fun at(isTopButton: Boolean, coordinate: Int): Button {
+        private fun at(isTopButton: Boolean, coordinate: Int): ButtonLaunchS {
             require(!(coordinate < MIN_COORD || coordinate > MAX_COORD)) {
                 "Invalid button coordinates : $coordinate. Value must be between $MIN_COORD and $MAX_COORD inclusive."
             }
@@ -131,19 +133,19 @@ enum class Button(
         /**
          * Factory method for a top-row button.
          *
-         * @param c The coordinate of the button. Must be in range [[Button.MIN_COORD],[Button.MAX_COORD]].
+         * @param c The coordinate of the button. Must be in range [[ButtonLaunchS.MIN_COORD],[ButtonLaunchS.MAX_COORD]].
          * @return The button
          * @throws IllegalArgumentException if the coordinates are invalid.
          */
-        fun atTop(c: Int): Button = at(true, c)
+        fun atTop(c: Int): ButtonLaunchS = at(true, c)
 
         /**
          * Factory method for a top-row button.
          *
-         * @param c The coordinate of the button. Must be in range [[Button.MIN_COORD],[Button.MAX_COORD]].
+         * @param c The coordinate of the button. Must be in range [[ButtonLaunchS.MIN_COORD],[ButtonLaunchS.MAX_COORD]].
          * @return The button
          * @throws IllegalArgumentException if the coordinates are invalid.
          */
-        fun atRight(c: Int): Button = at(false, c)
+        fun atRight(c: Int): ButtonLaunchS = at(false, c)
     }
 }

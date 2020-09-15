@@ -15,9 +15,11 @@
  *
  */
 
-dependencies {
-    implementation project(":launchpad-api")
+package io.lp4k.launchpad.api
 
-    testImplementation("org.junit.jupiter:junit-jupiter:${junitVersion}")
-    testImplementation("org.mockito:mockito-core:${mockitoVersion}")
+interface Button {
+
+    val coordinate: Int
+
+    val isTopButton: Boolean
 }

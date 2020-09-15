@@ -15,23 +15,23 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.api
+package io.lp4k.launchpad.api
 
 /**
- * Convenient empty implementation of a [net.thecodersbreakfast.lp4j.api.LaunchpadListener].
+ * Describes how the backbuffer is impacted by the operation currently applied to the write buffer.
+ *
+ * The backbuffer is defined as "the buffer that is not the current write buffer". It has nothing to do with which
+ * buffer is currently visible.
  *
  * @author Olivier Croisier (olivier.croisier@gmail.com)
  */
-abstract class LaunchpadListenerAdapter : LaunchpadListener {
+enum class BackBufferOperation {
+    /** Ths operation is applied to the write buffer only, the back buffer is not modified.  */
+    NONE,
 
-    override fun onPadPressed(pad: Pad, timestamp: Long) = Unit
+    /** The operation is applied to the write buffer and to backbuffer.  */
+    COPY,
 
-    override fun onPadReleased(pad: Pad, timestamp: Long) = Unit
-
-    override fun onButtonPressed(button: Button, timestamp: Long) = Unit
-
-    override fun onButtonReleased(button: Button, timestamp: Long) = Unit
-
-    override fun onTextScrolled(timestamp: Long) = Unit
-
+    /** The operation is applied to the write buffer, and the corresponding location on the backbuffer is cleared  */
+    CLEAR
 }

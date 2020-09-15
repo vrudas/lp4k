@@ -18,9 +18,9 @@
 
 package io.lp4k.midi
 
-import io.lp4k.api.Launchpad
-import io.lp4k.api.LaunchpadClient
-import io.lp4k.api.LaunchpadListener
+import io.lp4k.launchpad.api.Launchpad
+import io.lp4k.launchpad.api.LaunchpadClient
+import io.lp4k.launchpad.api.LaunchpadListener
 import io.lp4k.midi.protocol.DefaultMidiProtocolClient
 import io.lp4k.midi.protocol.DefaultMidiProtocolListener
 import io.lp4k.midi.protocol.DefaultMidiProtocolReceiver

@@ -17,10 +17,10 @@
 
 package io.lp4k.emulator.input
 
-import io.lp4k.api.Button
-import io.lp4k.api.LaunchpadListener
-import io.lp4k.api.Pad
+import io.lp4k.api.ButtonLaunchS
+import io.lp4k.api.PadLaunchS
 import io.lp4k.emulator.input.InputEventType.*
+import io.lp4k.launchpad.api.LaunchpadListener
 import io.vertx.core.Handler
 import io.vertx.core.eventbus.Message
 import io.vertx.core.json.JsonObject
@@ -50,37 +50,37 @@ class EventBusHandler : Handler<Message<JsonObject>> {
     private fun processPadEvent(
         body: JsonObject,
         timestamp: Long,
-        padEventConsumer: (Pad, Long) -> (Unit)
+        padEventConsumer: (PadLaunchS, Long) -> (Unit)
     ) {
         val pad = body.extractPad()
         padEventConsumer(pad, timestamp)
     }
 
-    private fun JsonObject.extractPad(): Pad {
+    private fun JsonObject.extractPad(): PadLaunchS {
         val x = extractCoordinate(PAD_X_KEY)
         val y = extractCoordinate(PAD_Y_KEY)
-        return Pad.at(x, y)
+        return PadLaunchS.at(x, y)
     }
 
     private fun processButtonEvent(
         body: JsonObject,
         timestamp: Long,
-        buttonEventConsumer: (Button, Long) -> (Unit)
+        buttonEventConsumer: (ButtonLaunchS, Long) -> (Unit)
     ) {
         val button = body.extractButton()
         buttonEventConsumer(button, timestamp)
     }
 
-    private fun JsonObject.extractButton(): Button {
+    private fun JsonObject.extractButton(): ButtonLaunchS {
         val x = extractCoordinate(BUTTON_X_KEY)
         val y = extractCoordinate(BUTTON_Y_KEY)
 
         val buttonCoordinate = calculateButtonCoordinate(x, y)
 
         return if (x == RIGHT_BUTTON_COORDINATE) {
-            Button.atRight(buttonCoordinate)
+            ButtonLaunchS.atRight(buttonCoordinate)
         } else {
-            Button.atTop(buttonCoordinate)
+            ButtonLaunchS.atTop(buttonCoordinate)
         }
     }
 

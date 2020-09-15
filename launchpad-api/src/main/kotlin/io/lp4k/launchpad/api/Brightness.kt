@@ -14,24 +14,9 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.api
 
-import org.junit.jupiter.api.Assertions.assertDoesNotThrow
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
+package io.lp4k.launchpad.api
 
-class BackBufferOperationTest {
-
-    @Test
-    fun check_back_buffer_operation_values_exists() {
-        val backBufferOperationNames = listOf("NONE", "COPY", "CLEAR")
-
-        assertEquals(backBufferOperationNames.size, BackBufferOperation.values().size)
-
-        assertDoesNotThrow {
-            backBufferOperationNames.forEach {
-                BackBufferOperation.valueOf(it)
-            }
-        }
-    }
+interface Brightness {
+    val brightnessLevel: Int
 }

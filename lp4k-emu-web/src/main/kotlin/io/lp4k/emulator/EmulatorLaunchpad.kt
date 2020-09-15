@@ -18,11 +18,11 @@
 
 package io.lp4k.emulator
 
-import io.lp4k.api.Launchpad
-import io.lp4k.api.LaunchpadClient
-import io.lp4k.api.LaunchpadListener
 import io.lp4k.emulator.input.EventBusHandler
 import io.lp4k.emulator.input.EventBusMessageDebugger
+import io.lp4k.launchpad.api.Launchpad
+import io.lp4k.launchpad.api.LaunchpadClient
+import io.lp4k.launchpad.api.LaunchpadListener
 import io.vertx.core.Vertx
 import io.vertx.ext.bridge.PermittedOptions
 import io.vertx.ext.web.Router

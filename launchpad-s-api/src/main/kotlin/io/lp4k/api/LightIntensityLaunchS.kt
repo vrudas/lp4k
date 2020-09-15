@@ -17,21 +17,21 @@
  */
 package io.lp4k.api
 
+import io.lp4k.launchpad.api.LightIntensity
+
 /**
- * Describes how the backbuffer is impacted by the operation currently applied to the write buffer.
- *
- * The backbuffer is defined as "the buffer that is not the current write buffer". It has nothing to do with which
- * buffer is currently visible.
+ * Represents a light intensity used during led testing (see [net.thecodersbreakfast.lp4j.api.LaunchpadClient.testLights].
  *
  * @author Olivier Croisier (olivier.croisier@gmail.com)
  */
-enum class BackBufferOperation {
-    /** Ths operation is applied to the write buffer only, the back buffer is not modified.  */
-    NONE,
+enum class LightIntensityLaunchS: LightIntensity {
 
-    /** The operation is applied to the write buffer and to backbuffer.  */
-    COPY,
+    /** Low light intensity  */
+    LOW,
 
-    /** The operation is applied to the write buffer, and the corresponding location on the backbuffer is cleared  */
-    CLEAR
+    /** Medium light intensity  */
+    MEDIUM,
+
+    /** High light intensity  */
+    HIGH
 }
