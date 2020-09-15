@@ -17,11 +17,11 @@
  */
 package io.lp4k.midi
 
-import io.lp4k.api.*
 import io.lp4k.launchpad.api.BackBufferOperation
 import io.lp4k.launchpad.api.Buffer
 import io.lp4k.launchpad.api.LaunchpadClient
 import io.lp4k.launchpad.api.LaunchpadException
+import io.lp4k.launchpad.api.s.*
 import io.lp4k.midi.protocol.MidiProtocolClient
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

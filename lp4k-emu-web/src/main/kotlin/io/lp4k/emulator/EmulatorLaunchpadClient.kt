@@ -18,8 +18,8 @@
 
 package io.lp4k.emulator
 
-import io.lp4k.api.ColorLaunchS
-import io.lp4k.api.LightIntensityLaunchS
+import io.lp4k.launchpad.api.s.ColorLaunchS
+import io.lp4k.launchpad.api.s.LightIntensityLaunchS
 import io.lp4k.emulator.output.OutputEventType
 import io.lp4k.launchpad.api.*
 import io.vertx.core.Vertx

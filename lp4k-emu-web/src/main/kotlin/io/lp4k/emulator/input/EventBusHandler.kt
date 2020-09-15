@@ -17,8 +17,8 @@
 
 package io.lp4k.emulator.input
 
-import io.lp4k.api.ButtonLaunchS
-import io.lp4k.api.PadLaunchS
+import io.lp4k.launchpad.api.s.ButtonLaunchS
+import io.lp4k.launchpad.api.s.PadLaunchS
 import io.lp4k.emulator.input.InputEventType.*
 import io.lp4k.launchpad.api.LaunchpadListener
 import io.vertx.core.Handler
