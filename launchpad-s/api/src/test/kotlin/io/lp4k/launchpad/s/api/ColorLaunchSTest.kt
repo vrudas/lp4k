@@ -14,7 +14,7 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.launchpad.api.s
+package io.lp4k.launchpad.s.api
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals

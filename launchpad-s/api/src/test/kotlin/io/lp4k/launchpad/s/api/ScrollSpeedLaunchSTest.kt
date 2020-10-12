@@ -14,9 +14,9 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.launchpad.api.s
+package io.lp4k.launchpad.s.api
 
-import io.lp4k.launchpad.api.s.ScrollSpeedLaunchS.Companion.of
+import io.lp4k.launchpad.s.api.ScrollSpeedLaunchS.Companion.of
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Test
