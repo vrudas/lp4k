@@ -14,10 +14,11 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.midi
+package io.lp4k.launchpad.midi.s
 
 import io.lp4k.launchpad.api.Launchpad
 import io.lp4k.launchpad.api.LaunchpadListenerAdapter
+import io.lp4k.midi.MidiDeviceConfiguration
 import io.lp4k.midi.protocol.DefaultMidiProtocolReceiver
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
@@ -26,9 +27,11 @@ import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.*
 import org.mockito.junit.jupiter.MockitoExtension
 import javax.sound.midi.MidiDevice
+import javax.sound.midi.Receiver
+import javax.sound.midi.Transmitter
 
 @ExtendWith(MockitoExtension::class)
-internal class MidiLaunchpadTest {
+internal class MidiLaunchpadSTest {
 
     private lateinit var launchpad: Launchpad
 
@@ -44,9 +47,9 @@ internal class MidiLaunchpadTest {
         return deviceConfiguration
     }
 
-    private fun mockOutputDevice(isOpen: Boolean): FakeMidiDevice {
-        val receiver = mock(FakeReceiver::class.java)
-        val outputDevice = mock(FakeMidiDevice::class.java)
+    private fun mockOutputDevice(isOpen: Boolean): MidiDevice {
+        val receiver = mock(Receiver::class.java)
+        val outputDevice = mock(MidiDevice::class.java)
 
         `when`(outputDevice.isOpen).thenReturn(isOpen)
         `when`(outputDevice.receiver).thenReturn(receiver)
@@ -54,9 +57,9 @@ internal class MidiLaunchpadTest {
         return outputDevice
     }
 
-    private fun mockInputDevice(isOpen: Boolean): FakeMidiDevice {
-        val transmitter = mock(FakeTransmitter::class.java)
-        val inputDevice = mock(FakeMidiDevice::class.java)
+    private fun mockInputDevice(isOpen: Boolean): MidiDevice {
+        val transmitter = mock(Transmitter::class.java)
+        val inputDevice = mock(MidiDevice::class.java)
 
         `when`(inputDevice.isOpen).thenReturn(isOpen)
         `when`(inputDevice.transmitter).thenReturn(transmitter)
@@ -68,7 +71,7 @@ internal class MidiLaunchpadTest {
     fun midi_launchpad_created_with_already_opened_receiver() {
         val outputDevice = mockOutputDevice(true)
 
-        launchpad = MidiLaunchpad(
+        launchpad = MidiLaunchpadS(
             mockDeviceConfiguration(
                 mockInputDevice(true),
                 outputDevice
@@ -82,7 +85,7 @@ internal class MidiLaunchpadTest {
     fun midi_launchpad_created_with_not_opened_receiver() {
         val outputDevice = mockOutputDevice(false)
 
-        launchpad = MidiLaunchpad(
+        launchpad = MidiLaunchpadS(
             mockDeviceConfiguration(
                 mockInputDevice(false),
                 outputDevice
@@ -96,7 +99,7 @@ internal class MidiLaunchpadTest {
     fun midi_launchpad_created_with_already_opened_transmitter() {
         val inputDevice = mockInputDevice(true)
 
-        launchpad = MidiLaunchpad(
+        launchpad = MidiLaunchpadS(
             mockDeviceConfiguration(
                 inputDevice,
                 mockOutputDevice(false)
@@ -110,7 +113,7 @@ internal class MidiLaunchpadTest {
     fun midi_launchpad_created_with_not_opened_transmitter() {
         val inputDevice = mockInputDevice(false)
 
-        launchpad = MidiLaunchpad(
+        launchpad = MidiLaunchpadS(
             mockDeviceConfiguration(
                 inputDevice,
                 mockOutputDevice(false)
@@ -122,7 +125,7 @@ internal class MidiLaunchpadTest {
 
     @Test
     fun launchpad_client_was_returned() {
-        launchpad = MidiLaunchpad(
+        launchpad = MidiLaunchpadS(
             mockDeviceConfiguration(
                 mockInputDevice(false),
                 mockOutputDevice(false)
@@ -134,7 +137,7 @@ internal class MidiLaunchpadTest {
 
     @Test
     fun listener_set_was_successful() {
-        val transmitter = mock(FakeTransmitter::class.java)
+        val transmitter = mock(Transmitter::class.java)
         val inputDevice = mockInputDevice(true)
 
         `when`(inputDevice.transmitter).thenReturn(transmitter)
@@ -144,7 +147,7 @@ internal class MidiLaunchpadTest {
             mockOutputDevice(true)
         )
 
-        launchpad = MidiLaunchpad(deviceConfiguration)
+        launchpad = MidiLaunchpadS(deviceConfiguration)
         launchpad.setListener(object : LaunchpadListenerAdapter() {})
 
         verify(transmitter).receiver = any(DefaultMidiProtocolReceiver::class.java)
@@ -154,7 +157,7 @@ internal class MidiLaunchpadTest {
     fun output_device_was_not_closed_because_device_is_not_open() {
         val outputDevice = mockOutputDevice(false)
 
-        launchpad = MidiLaunchpad(
+        launchpad = MidiLaunchpadS(
             mockDeviceConfiguration(
                 mockInputDevice(false),
                 outputDevice
@@ -170,7 +173,7 @@ internal class MidiLaunchpadTest {
     fun output_device_was_closed() {
         val outputDevice = mockOutputDevice(true)
 
-        launchpad = MidiLaunchpad(
+        launchpad = MidiLaunchpadS(
             mockDeviceConfiguration(
                 mockInputDevice(true),
                 outputDevice
@@ -186,7 +189,7 @@ internal class MidiLaunchpadTest {
     fun input_device_was_not_closed_because_device_is_not_open() {
         val inputDevice = mockInputDevice(false)
 
-        launchpad = MidiLaunchpad(
+        launchpad = MidiLaunchpadS(
             mockDeviceConfiguration(
                 inputDevice,
                 mockOutputDevice(false)
@@ -202,7 +205,7 @@ internal class MidiLaunchpadTest {
     fun input_device_was_closed() {
         val inputDevice = mockInputDevice(true)
 
-        launchpad = MidiLaunchpad(
+        launchpad = MidiLaunchpadS(
             mockDeviceConfiguration(
                 inputDevice,
                 mockOutputDevice(false)
@@ -219,7 +222,7 @@ internal class MidiLaunchpadTest {
         val inputDevice = mockInputDevice(false)
         val outputDevice = mockOutputDevice(false)
 
-        launchpad = MidiLaunchpad(
+        launchpad = MidiLaunchpadS(
             mockDeviceConfiguration(
                 inputDevice,
                 outputDevice
@@ -237,7 +240,7 @@ internal class MidiLaunchpadTest {
         val inputDevice = mockInputDevice(true)
         val outputDevice = mockOutputDevice(true)
 
-        launchpad = MidiLaunchpad(
+        launchpad = MidiLaunchpadS(
             mockDeviceConfiguration(
                 inputDevice,
                 outputDevice

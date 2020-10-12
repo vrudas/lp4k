@@ -19,9 +19,7 @@
 package io.lp4k.midi
 
 import io.lp4k.launchpad.api.Launchpad
-import io.lp4k.launchpad.api.LaunchpadClient
 import io.lp4k.launchpad.api.LaunchpadListener
-import io.lp4k.midi.protocol.DefaultMidiProtocolClient
 import io.lp4k.midi.protocol.DefaultMidiProtocolListener
 import io.lp4k.midi.protocol.DefaultMidiProtocolReceiver
 import javax.sound.midi.MidiUnavailableException
@@ -34,7 +32,7 @@ import javax.sound.midi.Transmitter
  * @param configuration The MIDI configuration to use. Must not be null.
  * @author Olivier Croisier (olivier.croisier@gmail.com)
  */
-class MidiLaunchpad(
+abstract class MidiLaunchpad(
     /**
      * The MIDI configuration holder.
      * @throws MidiUnavailableException If the input or output channels cannot be opened.
@@ -45,7 +43,7 @@ class MidiLaunchpad(
     /**
      * The Launchpad's input channel (Device -> LP4J).
      */
-    private val receiver: Receiver
+    protected val receiver: Receiver
 
     /**
      * The Launchpad's output channel (LP4J -> Device).
@@ -66,8 +64,6 @@ class MidiLaunchpad(
         this.receiver = openReceiver()
         this.transmitter = openTransmitter()
     }
-
-    override val client: LaunchpadClient = MidiLaunchpadClient(DefaultMidiProtocolClient(this.receiver))
 
     private fun openReceiver(): Receiver {
         val outputDevice = configuration.outputDevice

@@ -15,13 +15,20 @@
  *
  */
 
-dependencies {
-    implementation(project(":launchpad-s:api"))
-    implementation(project(":lp4k-midi"))
+package io.lp4k.launchpad.midi.s
 
-    testImplementation(project(":lp4k-midi"))
+import io.lp4k.launchpad.api.LaunchpadClient
+import io.lp4k.midi.MidiDeviceConfiguration
+import io.lp4k.midi.MidiLaunchpad
+import io.lp4k.midi.MidiLaunchpadClient
+import io.lp4k.midi.protocol.DefaultMidiProtocolClient
 
-    testImplementation("org.junit.jupiter:junit-jupiter:${junitVersion}")
-    testImplementation("org.mockito:mockito-core:${mockitoVersion}")
-    testImplementation("org.mockito:mockito-junit-jupiter:${mockitoVersion}")
+class MidiLaunchpadS(
+    configuration: MidiDeviceConfiguration
+) : MidiLaunchpad(configuration) {
+
+    override val client: LaunchpadClient = MidiLaunchpadClient(
+        DefaultMidiProtocolClient(this.receiver)
+    )
+
 }
