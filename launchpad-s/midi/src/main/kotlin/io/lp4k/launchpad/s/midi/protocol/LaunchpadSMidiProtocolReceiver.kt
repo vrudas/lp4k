@@ -1,6 +1,5 @@
 /*
  *    Copyright 2020 Vasyl Rudas
- *    Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,9 +14,10 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.midi.protocol
+package io.lp4k.launchpad.s.midi.protocol
 
 import io.lp4k.launchpad.api.LaunchpadException
+import io.lp4k.midi.protocol.MidiProtocolListener
 import javax.sound.midi.MidiMessage
 import javax.sound.midi.Receiver
 import javax.sound.midi.ShortMessage
@@ -29,7 +29,7 @@ import javax.sound.midi.ShortMessage
  *
  * @author Olivier Croisier (olivier.croisier@gmail.com)
  */
-class DefaultMidiProtocolReceiver(
+class LaunchpadSMidiProtocolReceiver(
     /**
      * The MidiProtocolListener to to notify when commands are received.
      */

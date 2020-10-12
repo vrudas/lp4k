@@ -14,11 +14,12 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.midi.protocol
+package io.lp4k.launchpad.s.midi.protocol
 
+import io.lp4k.launchpad.api.LaunchpadListener
 import io.lp4k.launchpad.s.api.ButtonLaunchS
 import io.lp4k.launchpad.s.api.PadLaunchS
-import io.lp4k.launchpad.api.LaunchpadListener
+import io.lp4k.midi.protocol.MidiProtocolListener
 
 
 /**
@@ -28,7 +29,7 @@ import io.lp4k.launchpad.api.LaunchpadListener
  *
  * @author Olivier Croisier (olivier.croisier@gmail.com)
  */
-class DefaultMidiProtocolListener(
+class LaunchpadSMidiProtocolListener(
     private val listener: LaunchpadListener
 ) : MidiProtocolListener {
 

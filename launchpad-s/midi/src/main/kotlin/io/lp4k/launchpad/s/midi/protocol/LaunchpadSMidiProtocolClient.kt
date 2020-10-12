@@ -1,7 +1,6 @@
 /*
  *    Copyright 2020 Vasyl Rudas
- *    Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
- * 
+ *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
  *    You may obtain a copy of the License at
@@ -15,8 +14,9 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.midi.protocol
+package io.lp4k.launchpad.s.midi.protocol
 
+import io.lp4k.midi.protocol.MidiProtocolClient
 import java.nio.charset.StandardCharsets
 import javax.sound.midi.*
 
@@ -27,7 +27,7 @@ import javax.sound.midi.*
  *
  * @author Olivier Croisier (olivier.croisier@gmail.com)
  */
-class DefaultMidiProtocolClient(
+class LaunchpadSMidiProtocolClient(
 
     private val receiver: Receiver
 ) : MidiProtocolClient {

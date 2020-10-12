@@ -1,6 +1,5 @@
 /*
  *    Copyright 2020 Vasyl Rudas
- *    Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +14,9 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.midi.protocol
+package io.lp4k.launchpad.s.midi.protocol
 
+import io.lp4k.midi.protocol.MidiProtocolClient
 import org.junit.jupiter.api.Assertions.assertArrayEquals
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -34,7 +34,7 @@ import javax.sound.midi.ShortMessage
 import javax.sound.midi.SysexMessage
 
 @ExtendWith(MockitoExtension::class)
-class DefaultMidiProtocolClientTest {
+class LaunchpadSMidiProtocolClientTest {
 
     @Mock
     private lateinit var receiver: Receiver
@@ -49,7 +49,7 @@ class DefaultMidiProtocolClientTest {
 
     @BeforeEach
     fun init() {
-        midiProtocolClient = DefaultMidiProtocolClient(receiver)
+        midiProtocolClient = LaunchpadSMidiProtocolClient(receiver)
     }
 
     /*
