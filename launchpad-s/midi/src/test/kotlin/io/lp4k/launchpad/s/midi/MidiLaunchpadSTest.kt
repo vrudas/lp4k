@@ -14,7 +14,7 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.launchpad.midi.s
+package io.lp4k.launchpad.s.midi
 
 import io.lp4k.launchpad.api.Launchpad
 import io.lp4k.launchpad.api.LaunchpadListenerAdapter
