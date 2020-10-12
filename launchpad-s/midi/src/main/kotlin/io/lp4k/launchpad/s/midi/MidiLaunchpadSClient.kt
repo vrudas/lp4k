@@ -15,7 +15,7 @@
  *
  */
 
-package io.lp4k.launchpad.midi.s
+package io.lp4k.launchpad.s.midi
 
 import io.lp4k.launchpad.api.*
 import io.lp4k.launchpad.api.s.ColorLaunchS
