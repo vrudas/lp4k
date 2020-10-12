@@ -19,7 +19,7 @@ package io.lp4k.emulator
 import io.lp4k.emulator.output.OutputEventType
 import io.lp4k.launchpad.api.BackBufferOperation
 import io.lp4k.launchpad.api.Buffer
-import io.lp4k.launchpad.api.s.*
+import io.lp4k.launchpad.s.api.*
 import io.vertx.core.json.JsonObject
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

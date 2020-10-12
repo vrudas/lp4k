@@ -18,8 +18,8 @@ package io.lp4k.emulator.input
 
 import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.verify
-import io.lp4k.launchpad.api.s.ButtonLaunchS
-import io.lp4k.launchpad.api.s.PadLaunchS
+import io.lp4k.launchpad.s.api.ButtonLaunchS
+import io.lp4k.launchpad.s.api.PadLaunchS
 import io.lp4k.launchpad.api.LaunchpadListener
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
