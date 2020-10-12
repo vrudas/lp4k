@@ -20,7 +20,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":launchpad-s-api:api"))
+    implementation(project(":launchpad-s:api"))
 
     implementation("io.vertx:vertx-web:3.8.5")
 
