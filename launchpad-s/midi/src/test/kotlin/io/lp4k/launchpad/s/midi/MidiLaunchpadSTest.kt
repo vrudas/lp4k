@@ -18,8 +18,8 @@ package io.lp4k.launchpad.s.midi
 
 import io.lp4k.launchpad.api.Launchpad
 import io.lp4k.launchpad.api.LaunchpadListenerAdapter
+import io.lp4k.launchpad.s.midi.protocol.LaunchpadSMidiProtocolReceiver
 import io.lp4k.midi.MidiDeviceConfiguration
-import io.lp4k.midi.protocol.DefaultMidiProtocolReceiver
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -150,7 +150,7 @@ internal class MidiLaunchpadSTest {
         launchpad = MidiLaunchpadS(deviceConfiguration)
         launchpad.setListener(object : LaunchpadListenerAdapter() {})
 
-        verify(transmitter).receiver = any(DefaultMidiProtocolReceiver::class.java)
+        verify(transmitter).receiver = any(LaunchpadSMidiProtocolReceiver::class.java)
     }
 
     @Test

@@ -1,6 +1,5 @@
 /*
  *    Copyright 2020 Vasyl Rudas
- *    Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,18 +14,19 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.midi.protocol
+package io.lp4k.launchpad.s.midi.protocol
 
+import io.lp4k.launchpad.api.LaunchpadListener
 import io.lp4k.launchpad.s.api.ButtonLaunchS
 import io.lp4k.launchpad.s.api.PadLaunchS
-import io.lp4k.launchpad.api.LaunchpadListener
+import io.lp4k.midi.protocol.MidiProtocolListener
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 
-class DefaultMidiProtocolListenerTest {
+class LaunchpadSMidiProtocolListenerTest {
     
     private lateinit var midiProtocolListener: MidiProtocolListener
     private lateinit var listener: LaunchpadListener
@@ -34,7 +34,7 @@ class DefaultMidiProtocolListenerTest {
     @BeforeEach
     fun init() {
         listener = mock(LaunchpadListener::class.java)
-        midiProtocolListener = DefaultMidiProtocolListener(listener)
+        midiProtocolListener = LaunchpadSMidiProtocolListener(listener)
     }
 
     @Test
