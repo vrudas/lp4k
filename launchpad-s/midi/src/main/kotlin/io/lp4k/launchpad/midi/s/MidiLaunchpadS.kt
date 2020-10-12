@@ -20,14 +20,13 @@ package io.lp4k.launchpad.midi.s
 import io.lp4k.launchpad.api.LaunchpadClient
 import io.lp4k.midi.MidiDeviceConfiguration
 import io.lp4k.midi.MidiLaunchpad
-import io.lp4k.midi.MidiLaunchpadClient
 import io.lp4k.midi.protocol.DefaultMidiProtocolClient
 
 class MidiLaunchpadS(
     configuration: MidiDeviceConfiguration
 ) : MidiLaunchpad(configuration) {
 
-    override val client: LaunchpadClient = MidiLaunchpadClient(
+    override val client: LaunchpadClient = MidiLaunchpadSClient(
         DefaultMidiProtocolClient(this.receiver)
     )
 
