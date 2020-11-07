@@ -14,7 +14,7 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.midi
+package io.lp4k.launchpad.midi
 
 class DeviceNotFoundException private constructor(message: String) : RuntimeException(message) {
     companion object {
