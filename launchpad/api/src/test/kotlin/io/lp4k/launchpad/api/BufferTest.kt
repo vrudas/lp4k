@@ -16,7 +16,6 @@
  */
 package io.lp4k.launchpad.api
 
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
