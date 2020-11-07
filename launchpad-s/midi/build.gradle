@@ -17,7 +17,7 @@
 
 dependencies {
     implementation(project(":launchpad-s:api"))
-    implementation(project(":launchpad-midi"))
+    implementation(project(":launchpad:midi"))
 
     testImplementation("org.junit.jupiter:junit-jupiter:${junitVersion}")
     testImplementation("org.mockito:mockito-core:${mockitoVersion}")
