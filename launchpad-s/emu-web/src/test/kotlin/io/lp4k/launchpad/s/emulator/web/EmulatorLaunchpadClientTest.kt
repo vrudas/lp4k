@@ -14,9 +14,9 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.emulator
+package io.lp4k.launchpad.s.emulator.web
 
-import io.lp4k.emulator.output.OutputEventType
+import io.lp4k.launchpad.s.emulator.web.output.OutputEventType
 import io.lp4k.launchpad.api.BackBufferOperation
 import io.lp4k.launchpad.api.Buffer
 import io.lp4k.launchpad.s.api.*

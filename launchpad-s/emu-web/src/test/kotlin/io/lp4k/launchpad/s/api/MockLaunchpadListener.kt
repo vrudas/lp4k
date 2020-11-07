@@ -14,33 +14,37 @@
  *    limitations under the License.
  *
  */
+package io.lp4k.launchpad.s.api
 
-package io.lp4k.emulator.input
+import io.lp4k.launchpad.api.Button
+import io.lp4k.launchpad.api.LaunchpadListener
+import io.lp4k.launchpad.api.Pad
 
-enum class InputEventType {
-    /**
-     * Pad pressed
-     */
-    PP,
-
-    /**
-     * Pad released
-     */
-    PR,
+interface MockLaunchpadListener : LaunchpadListener {
 
     /**
-     * Button pressed
+     * {@inheritDoc}
      */
-    BP,
+    override fun onPadPressed(pad: Pad, timestamp: Long) = Unit
 
     /**
-     * Button released
+     * {@inheritDoc}
      */
-    BR,
+    override fun onPadReleased(pad: Pad, timestamp: Long) = Unit
 
     /**
-     * Text scrolled
+     * {@inheritDoc}
      */
-    TS
+    override fun onButtonPressed(button: Button, timestamp: Long) = Unit
+
+    /**
+     * {@inheritDoc}
+     */
+    override fun onButtonReleased(button: Button, timestamp: Long) = Unit
+
+    /**
+     * {@inheritDoc}
+     */
+    override fun onTextScrolled(timestamp: Long) = Unit
 
 }

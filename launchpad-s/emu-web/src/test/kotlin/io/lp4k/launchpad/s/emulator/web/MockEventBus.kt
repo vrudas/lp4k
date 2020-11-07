@@ -14,7 +14,7 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.emulator
+package io.lp4k.launchpad.s.emulator.web
 
 import io.vertx.core.eventbus.EventBus
 

@@ -14,10 +14,10 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.emulator
+package io.lp4k.launchpad.s.emulator.web
 
-import io.lp4k.launchpad.api.s.MockLaunchpadListener
-import io.lp4k.emulator.input.EventBusHandler
+import io.lp4k.launchpad.s.api.MockLaunchpadListener
+import io.lp4k.launchpad.s.emulator.web.input.EventBusHandler
 import io.vertx.core.Vertx
 import io.vertx.ext.web.Router
 import io.vertx.junit5.VertxExtension

@@ -14,7 +14,7 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.emulator.input
+package io.lp4k.launchpad.s.emulator.web.input
 
 import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.verify

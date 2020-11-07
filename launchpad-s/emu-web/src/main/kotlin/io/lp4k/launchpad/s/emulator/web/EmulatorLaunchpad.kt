@@ -1,6 +1,5 @@
 /*
  *    Copyright 2020 Vasyl Rudas
- *    Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,10 +15,10 @@
  *
  */
 
-package io.lp4k.emulator
+package io.lp4k.launchpad.s.emulator.web
 
-import io.lp4k.emulator.input.EventBusHandler
-import io.lp4k.emulator.input.EventBusMessageDebugger
+import io.lp4k.launchpad.s.emulator.web.input.EventBusHandler
+import io.lp4k.launchpad.s.emulator.web.input.EventBusMessageDebugger
 import io.lp4k.launchpad.api.Launchpad
 import io.lp4k.launchpad.api.LaunchpadClient
 import io.lp4k.launchpad.api.LaunchpadListener

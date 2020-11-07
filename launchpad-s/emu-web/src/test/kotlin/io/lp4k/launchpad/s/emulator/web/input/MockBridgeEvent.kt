@@ -14,6 +14,8 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.emulator.input
+package io.lp4k.launchpad.s.emulator.web.input
 
-internal class Coordinate (val keyName: String, val coordinateValue: Int?)
+import io.vertx.ext.web.handler.sockjs.BridgeEvent
+
+interface MockBridgeEvent : BridgeEvent 
