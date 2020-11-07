@@ -65,7 +65,10 @@ For example, the following Listener sends commands back to the Launchpad to put 
 Please also note the use of a CountDownLatch to wait for the user to press the "STOP" button before exiting the application.
 
 ```kotlin
-import io.lp4k.api.*
+import io.lp4k.launchpad.api.*
+import io.lp4k.launchpad.midi.MidiDeviceConfiguration
+import io.lp4k.launchpad.s.api.ButtonLaunchS
+import io.lp4k.launchpad.s.api.ColorLaunchS
 import java.util.concurrent.CountDownLatch
 
 
