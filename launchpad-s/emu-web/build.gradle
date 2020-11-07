@@ -19,6 +19,8 @@ plugins {
     id "java"
 }
 
+group = "io.lp4k.launchpad.s.emulator.web"
+
 dependencies {
     implementation(project(":launchpad-s:api"))
 
