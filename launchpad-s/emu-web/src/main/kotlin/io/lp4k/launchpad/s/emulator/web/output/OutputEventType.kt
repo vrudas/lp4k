@@ -14,13 +14,40 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.emulator
+package io.lp4k.launchpad.s.emulator.web.output
 
-import io.vertx.core.Vertx
-import io.vertx.core.eventbus.EventBus
+/**
+ * Types of events sent to the emulator, on the browser side
+ */
+enum class OutputEventType {
+    /**
+     * Reset
+     */
+    RST,
 
-interface MockVertx : Vertx {
+    /**
+     * Padlight
+     */
+    PADLGT,
 
-    override fun eventBus(): EventBus
+    /**
+     * Button light
+     */
+    BTNLGT,
+
+    /**
+     * Test
+     */
+    TST,
+
+    /**
+     * Brightness
+     */
+    BRGHT,
+
+    /**
+     * SetBuffers
+     */
+    BUF
 
 }

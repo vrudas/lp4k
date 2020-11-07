@@ -1,6 +1,5 @@
 /*
  *    Copyright 2020 Vasyl Rudas
- *    Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,11 +15,11 @@
  *
  */
 
-package io.lp4k.emulator
+package io.lp4k.launchpad.s.emulator.web
 
 import io.lp4k.launchpad.s.api.ColorLaunchS
 import io.lp4k.launchpad.s.api.LightIntensityLaunchS
-import io.lp4k.emulator.output.OutputEventType
+import io.lp4k.launchpad.s.emulator.web.output.OutputEventType
 import io.lp4k.launchpad.api.*
 import io.vertx.core.Vertx
 import io.vertx.core.json.JsonObject

@@ -15,11 +15,11 @@
  *
  */
 
-package io.lp4k.emulator.input
+package io.lp4k.launchpad.s.emulator.web.input
 
 import io.lp4k.launchpad.s.api.ButtonLaunchS
 import io.lp4k.launchpad.s.api.PadLaunchS
-import io.lp4k.emulator.input.InputEventType.*
+import io.lp4k.launchpad.s.emulator.web.input.InputEventType.*
 import io.lp4k.launchpad.api.LaunchpadListener
 import io.vertx.core.Handler
 import io.vertx.core.eventbus.Message
