@@ -14,12 +14,12 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.midi
+package io.lp4k.launchpad.midi
 
 import io.lp4k.launchpad.api.Buffer
 import io.lp4k.launchpad.api.LaunchpadClient
 import io.lp4k.launchpad.api.LaunchpadException
-import io.lp4k.midi.protocol.MidiProtocolClient
+import io.lp4k.launchpad.midi.protocol.MidiProtocolClient
 import javax.sound.midi.InvalidMidiDataException
 
 /**

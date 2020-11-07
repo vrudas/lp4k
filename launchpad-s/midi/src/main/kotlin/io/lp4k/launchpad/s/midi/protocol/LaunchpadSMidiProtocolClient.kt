@@ -16,7 +16,7 @@
  */
 package io.lp4k.launchpad.s.midi.protocol
 
-import io.lp4k.midi.protocol.MidiProtocolClient
+import io.lp4k.launchpad.midi.protocol.MidiProtocolClient
 import java.nio.charset.StandardCharsets
 import javax.sound.midi.*
 

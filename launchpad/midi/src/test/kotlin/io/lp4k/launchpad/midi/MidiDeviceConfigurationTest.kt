@@ -1,6 +1,5 @@
 /*
  *    Copyright 2020 Vasyl Rudas
- *    Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,11 +14,11 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.midi
+package io.lp4k.launchpad.midi
 
-import io.lp4k.midi.MidiDeviceConfiguration.Companion.autodetect
-import io.lp4k.midi.MidiDeviceConfiguration.Companion.autodetectInputDevice
-import io.lp4k.midi.MidiDeviceConfiguration.Companion.autodetectOutputDevice
+import io.lp4k.launchpad.midi.MidiDeviceConfiguration.Companion.autodetect
+import io.lp4k.launchpad.midi.MidiDeviceConfiguration.Companion.autodetectInputDevice
+import io.lp4k.launchpad.midi.MidiDeviceConfiguration.Companion.autodetectOutputDevice
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach

@@ -20,8 +20,8 @@ package io.lp4k.launchpad.s.midi
 import io.lp4k.launchpad.api.*
 import io.lp4k.launchpad.s.api.ColorLaunchS
 import io.lp4k.launchpad.s.api.LightIntensityLaunchS
-import io.lp4k.midi.MidiLaunchpadClient
-import io.lp4k.midi.protocol.MidiProtocolClient
+import io.lp4k.launchpad.midi.MidiLaunchpadClient
+import io.lp4k.launchpad.midi.protocol.MidiProtocolClient
 import javax.sound.midi.InvalidMidiDataException
 
 class MidiLaunchpadSClient(

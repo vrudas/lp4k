@@ -1,6 +1,5 @@
 /*
  *    Copyright 2020 Vasyl Rudas
- *    Copyright 2015 Olivier Croisier (thecodersbreakfast.net)
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,10 +15,10 @@
  *
  */
 
-package io.lp4k.midi
+package io.lp4k.launchpad.midi
 
-import io.lp4k.midi.DeviceNotFoundException.Companion.inputDeviceNotFound
-import io.lp4k.midi.DeviceNotFoundException.Companion.outputDeviceNotFound
+import io.lp4k.launchpad.midi.DeviceNotFoundException.Companion.inputDeviceNotFound
+import io.lp4k.launchpad.midi.DeviceNotFoundException.Companion.outputDeviceNotFound
 import javax.sound.midi.MidiDevice
 import javax.sound.midi.MidiSystem
 import javax.sound.midi.MidiUnavailableException

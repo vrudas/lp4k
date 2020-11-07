@@ -15,7 +15,7 @@
  *    limitations under the License.
  *
  */
-package io.lp4k.midi.protocol
+package io.lp4k.launchpad.midi.protocol
 
 /**
  * This listener allows to be notified of any MIDI event occurring on the Launchpad

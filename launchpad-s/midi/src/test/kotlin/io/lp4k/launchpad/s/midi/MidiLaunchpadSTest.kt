@@ -18,8 +18,8 @@ package io.lp4k.launchpad.s.midi
 
 import io.lp4k.launchpad.api.Launchpad
 import io.lp4k.launchpad.api.LaunchpadListenerAdapter
+import io.lp4k.launchpad.midi.MidiDeviceConfiguration
 import io.lp4k.launchpad.s.midi.protocol.LaunchpadSMidiProtocolReceiver
-import io.lp4k.midi.MidiDeviceConfiguration
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith

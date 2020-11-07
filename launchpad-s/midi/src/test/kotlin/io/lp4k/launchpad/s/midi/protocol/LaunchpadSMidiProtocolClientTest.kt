@@ -16,7 +16,7 @@
  */
 package io.lp4k.launchpad.s.midi.protocol
 
-import io.lp4k.midi.protocol.MidiProtocolClient
+import io.lp4k.launchpad.midi.protocol.MidiProtocolClient
 import org.junit.jupiter.api.Assertions.assertArrayEquals
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach

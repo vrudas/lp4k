@@ -19,11 +19,11 @@ package io.lp4k.launchpad.s.midi
 
 import io.lp4k.launchpad.api.LaunchpadClient
 import io.lp4k.launchpad.api.LaunchpadListener
+import io.lp4k.launchpad.midi.MidiDeviceConfiguration
 import io.lp4k.launchpad.s.midi.protocol.LaunchpadSMidiProtocolClient
 import io.lp4k.launchpad.s.midi.protocol.LaunchpadSMidiProtocolListener
 import io.lp4k.launchpad.s.midi.protocol.LaunchpadSMidiProtocolReceiver
-import io.lp4k.midi.MidiDeviceConfiguration
-import io.lp4k.midi.MidiLaunchpad
+import io.lp4k.launchpad.midi.MidiLaunchpad
 
 class MidiLaunchpadS(
     configuration: MidiDeviceConfiguration
