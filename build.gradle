@@ -31,7 +31,7 @@ wrapper {
 
 ext {
     junitVersion = "5.6.0"
-    mockitoVersion = "3.2.4"
+    mockitoVersion = "3.7.7"
     mockitoKotlinVersion = "2.2.0"
     slf4jVersion = "1.7.30"
 }
