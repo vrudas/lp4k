@@ -16,8 +16,7 @@
  */
 package io.lp4k.launchpad.s.emulator.web.input
 
-import io.vertx.core.AsyncResult
-import io.vertx.core.Handler
+import io.vertx.core.Future
 import io.vertx.core.MultiMap
 import io.vertx.core.eventbus.DeliveryOptions
 import io.vertx.core.eventbus.Message
@@ -41,16 +40,12 @@ class MockMessage (
 
     override fun reply(message: Any) = Unit
 
-    override fun <R> reply(message: Any, replyHandler: Handler<AsyncResult<Message<R>>>) = Unit
-
     override fun reply(message: Any, options: DeliveryOptions) = Unit
 
-    override fun <R> reply(
-        message: Any,
-        options: DeliveryOptions,
-        replyHandler: Handler<AsyncResult<Message<R>>>
-    ) = Unit
-
     override fun fail(failureCode: Int, message: String) = Unit
+
+    override fun <R : Any?> replyAndRequest(message: Any?, options: DeliveryOptions?): Future<Message<R>> {
+        return Future.succeededFuture<Message<R>>()
+    }
 
 }
