@@ -17,16 +17,16 @@
 
 package io.lp4k.launchpad.s.emulator.web
 
-import io.lp4k.launchpad.s.emulator.web.input.EventBusHandler
-import io.lp4k.launchpad.s.emulator.web.input.EventBusMessageDebugger
 import io.lp4k.launchpad.api.Launchpad
 import io.lp4k.launchpad.api.LaunchpadClient
 import io.lp4k.launchpad.api.LaunchpadListener
+import io.lp4k.launchpad.s.emulator.web.input.EventBusHandler
+import io.lp4k.launchpad.s.emulator.web.input.EventBusMessageDebugger
 import io.vertx.core.Vertx
 import io.vertx.ext.bridge.PermittedOptions
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.handler.StaticHandler
-import io.vertx.ext.web.handler.sockjs.BridgeOptions
+import io.vertx.ext.web.handler.sockjs.SockJSBridgeOptions
 import io.vertx.ext.web.handler.sockjs.SockJSHandler
 import org.slf4j.LoggerFactory
 
@@ -76,7 +76,7 @@ class EmulatorLaunchpad : Launchpad {
 
         val sockJSHandler = SockJSHandler.create(vertx)
 
-        val options = BridgeOptions()
+        val options = SockJSBridgeOptions()
             .addOutboundPermitted(PermittedOptions())
             .addInboundPermitted(PermittedOptions())
 
