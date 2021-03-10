@@ -17,10 +17,10 @@
 
 package io.lp4k.launchpad.s.emulator.web.input
 
+import io.lp4k.launchpad.api.LaunchpadListener
 import io.lp4k.launchpad.s.api.ButtonLaunchS
 import io.lp4k.launchpad.s.api.PadLaunchS
 import io.lp4k.launchpad.s.emulator.web.input.InputEventType.*
-import io.lp4k.launchpad.api.LaunchpadListener
 import io.vertx.core.Handler
 import io.vertx.core.eventbus.Message
 import io.vertx.core.json.JsonObject
@@ -45,7 +45,11 @@ class EventBusHandler : Handler<Message<JsonObject>> {
         }
     }
 
-    private fun JsonObject.extractInputEventType(): InputEventType = valueOf(getString(EVENT_TYPE_KEY))
+    private fun JsonObject.extractInputEventType(): InputEventType {
+        return getString(EVENT_TYPE_KEY)
+            ?.let { InputEventType.valueOf(it) }
+            ?: throw IllegalArgumentException("Not supported eventType")
+    }
 
     private fun processPadEvent(
         body: JsonObject,
