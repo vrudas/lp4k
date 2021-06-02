@@ -32,5 +32,5 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:${junitVersion}")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:${mockitoKotlinVersion}")
     testImplementation("org.mockito:mockito-junit-jupiter:${mockitoVersion}")
-    testImplementation("io.vertx:vertx-junit5:4.0.3")
+    testImplementation("io.vertx:vertx-junit5:4.1.0")
 }
