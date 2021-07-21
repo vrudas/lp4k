@@ -33,7 +33,7 @@ ext {
     junitVersion = "5.7.2"
     mockitoVersion = "3.12.4"
     mockitoKotlinVersion = "2.2.0"
-    slf4jVersion = "1.7.30"
+    slf4jVersion = "1.7.32"
 }
 
 sonarqube {
