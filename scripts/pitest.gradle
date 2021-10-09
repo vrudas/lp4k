@@ -31,6 +31,6 @@ allprojects {
     }
 
     dependencies {
-        testImplementation("org.pitest:pitest-junit5-plugin:0.12")
+        testImplementation("org.pitest:pitest-junit5-plugin:0.15")
     }
 }
