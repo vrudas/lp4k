@@ -1,0 +1,8 @@
+pull_request_rules:
+  - name: Automatic merge ⬇️ of dependabot pull requests
+    conditions:
+      - check-success: build
+      - author: dependabot
+    actions:
+      merge:
+        method: merge
