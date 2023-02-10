@@ -24,7 +24,7 @@ group = "io.lp4k.launchpad.s.emulator.web"
 dependencies {
     implementation(project(":launchpad-s:api"))
 
-    implementation("io.vertx:vertx-web:4.3.7")
+    implementation("io.vertx:vertx-web:4.3.8")
 
     implementation("org.slf4j:slf4j-api:${slf4jVersion}")
     implementation("org.slf4j:slf4j-simple:${slf4jVersion}")
