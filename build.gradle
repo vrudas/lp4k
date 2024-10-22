@@ -30,7 +30,7 @@ wrapper {
 }
 
 ext {
-    junitVersion = "5.11.2"
+    junitVersion = "5.11.3"
     mockitoVersion = "5.14.2"
     mockitoKotlinVersion = "2.2.0"
     slf4jVersion = "2.0.16"
